@@ -84,9 +84,17 @@ d. Indicadores Econômicos:
 
 ---
 
-  > i. Inflação: A inflação afeta diretamente o poder de compra e pode tornar mais difícil para o indivíduo pagar suas dívidas.  
-  > ii. Taxa CAGED: A taxa de empregos formais pode indicar a saúde econômica e estabilidade no mercado de trabalho, impactando a capacidade de pagamento das dívidas.  
-  > iii. Taxa Selic: A Selic afeta as taxas de juros, influenciando o custo do crédito e a capacidade de pagamento das dívidas. Altas taxas de juros podem aumentar a inadimplência.
+> i. Inflação:
+
+  * A inflação afeta diretamente o poder de compra e pode tornar mais difícil para o indivíduo pagar suas dívidas.  
+
+> ii. Taxa CAGED:
+
+  *   A taxa de empregos formais pode indicar a saúde econômica e estabilidade no mercado de trabalho, impactando a capacidade de pagamento das dívidas.
+     
+> iii. Taxa Selic:
+
+  *   A Selic afeta as taxas de juros, influenciando o custo do crédito e a capacidade de pagamento das dívidas. Altas taxas de juros podem aumentar a inadimplência.
 
 2\. Cálculo do Score de Crédito:
 
@@ -112,26 +120,26 @@ O Score de Crédito será retornado ao funcionário do banco em tempo real, perm
    
 ---
 
-> * Automatização do cálculo de risco de crédito: O sistema será capaz de calcular automaticamente o risco de crédito baseado em diferentes variáveis.  
-> * Algoritmos de análise de dados: O cálculo do Score de Crédito será realizado com base machine learning, programados em Java.  
-> * Resultados imediatos: O sistema fornecerá os resultados rapidamente, com feedback em tempo real sobre a análise de risco.
+ * Automatização do cálculo de risco de crédito: O sistema será capaz de calcular automaticamente o risco de crédito baseado em diferentes variáveis.  
+ * Algoritmos de análise de dados: O cálculo do Score de Crédito será realizado com base machine learning, programados em Java.  
+ * Resultados imediatos: O sistema fornecerá os resultados rapidamente, com feedback em tempo real sobre a análise de risco.
 
 5. Tecnologias Utilizadas:
 
 ---
 
-> * Linguagem de Programação: Java será a principal linguagem de desenvolvimento do sistema.  
-> * Banco de Dados: Será utilizado o DBeaver e o MySQL para gerenciamento do banco de dados.  
-> * Versionamento e colaboração: GitHub para versionamento de código e colaboração entre desenvolvedores, proporcionando controle de versão eficiente, rastreamento de alterações e integração contínua.  
-> * Bibliotecas para Análise de Dados:  
-> *   Apache Commons Math para processamento matemático.  
-> *   Weka (caso seja necessário aplicar algoritmos de aprendizado de máquina).
+ * Linguagem de Programação: Java será a principal linguagem de desenvolvimento do sistema.  
+ * Banco de Dados: Será utilizado o DBeaver e o MySQL para gerenciamento do banco de dados.
+ * Versionamento e colaboração: GitHub para versionamento de código e colaboração entre desenvolvedores, proporcionando controle de versão eficiente, rastreamento de alterações e integração contínua.  
+ * Bibliotecas para Análise de Dados:  
+ *   Apache Commons Math para processamento matemático.  
+ *   Weka (caso seja necessário aplicar algoritmos de aprendizado de máquina).
 
 6. Expectativas de Resultados:
 
 ---
    
-> * Eficiência na tomada de decisão: O sistema permitirá decisões rápidas sobre concessão de crédito, aumentando a eficiência do processo.  
-> * Precisão na análise de risco: O algoritmo desenvolvido em Java será capaz de calcular um Score de Crédito, com base nos dados fornecidos.  
-> * Facilidade de uso: A simplicidade do programa garantirá que os funcionários possam usar o sistema sem dificuldades, permitindo uma experiência intuitiva e sem erros.
+ * Eficiência na tomada de decisão: O sistema permitirá decisões rápidas sobre concessão de crédito, aumentando a eficiência do processo.  
+ * Precisão na análise de risco: O algoritmo desenvolvido em Java será capaz de calcular um Score de Crédito, com base nos dados fornecidos.  
+ * Facilidade de uso: A simplicidade do programa garantirá que os funcionários possam usar o sistema sem dificuldades, permitindo uma experiência intuitiva e sem erros.
 
