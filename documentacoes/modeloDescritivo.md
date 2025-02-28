@@ -1,59 +1,107 @@
-## Modelo Descritivo
+**MODELO DESCRITIVO**
 
-* Objetivo do Projeto
-> Desenvolver um programa de **Análise de Risco de Crédito**, com o objetivo de calcular o Score de Crédito de clientes. Esse score ajudará os funcionários do Agibank a tomar decisões rápidas e precisas sobre a concessão de crédito.
+Modelo Descritivo do Projeto (SafeScore): AnÃ¡lise de Risco de CrÃ©dito
 
-* Descrição do sistema
+Principais Etapas do Projeto:
 
-> O sistema será uma aplicação que recebe um identificador único do cidadão, baseando-se nisso realiza o cálculo automatizado do Score de Crédito a partir de dados financeiros e pessoais do cliente.Por fim, retornando o *Score* e uma recomendação perante a decisão de aprovação de crédito.
+1. Coleta de Dados:
 
-### Principais etapas do projeto
+A ferramenta iniciarÃ¡ com a entrada do CPF do cliente. A partir disso:
 
-**Coleta de Dados**:
+- SerÃ¡ feita a busca na tabela "usuÃ¡rio" para identificar o cliente.
+
+Com essa identificaÃ§Ã£o, serÃ£o recuperados diversos dados pessoais e financeiros, como:
+
+1. Dados Pessoais:  
+   1. UsuÃ¡rio:   
+      1. CPF: NÃºmero Ãºnico de identificaÃ§Ã£o do usuÃ¡rio.  
+      2. Nome: Nome completo do usuÃ¡rio.  
+      3. Data de Nascimento: Data de nascimento (D/M/A) do usuÃ¡rio.  
+      4. Dependentes:  Quantidade de dependentes financeiros do cliente.  
+   2. Estado Civil:  
+      1. Estado civil: DescriÃ§Ã£o do estado civil do usuÃ¡rio (solteiro, casado, divorciado etc.).  Casados podem ter mais estabilidade financeira, porÃ©m pode enfrentar riscos dependendo das condiÃ§Ãµes do casamento (se houver separaÃ§Ã£o, pode aumentar o risco).  
+   3. Escolaridade:  
+      1. Grau de escolaridade: NÃ­vel de educaÃ§Ã£o formal do usuÃ¡rio.  
+   4. EndereÃ§o:  
+      1. CEP: CÃ³digo postal do endereÃ§o.  
+   5. Contrato Residencial:  
+      1. Data inicial de moradia no endereÃ§o: Data de inÃ­cio do contrato residencial.  
+      2. Data final de moradia endereÃ§o: Data de tÃ©rmino do contrato residencial.  
+   6. Tipo de contrato:  
+      1.  Tipo de contrato: Tipo de contrato de moradia (aluguel, financiamento, posse etc.).  
+   7. Emprego:  
+      1. SalÃ¡rio: MÃ©dia do salÃ¡rio mensal.  
+      2. Data de inÃ­cio do emprego: Data de inÃ­cio do emprego atual.  
+      3. Data final do emprego: Data de tÃ©rmino do emprego (se aplicÃ¡vel).  
+   8. VÃ­nculo Profissional:  
+      1. VÃ­nculo profissional: Se Ã© CLT, autÃ´nomo, aposentado, etc.  
+           
+2. InformaÃ§Ãµes financeiras:  
+   1. PatrimÃ´nio:  
+      1. Montante de investimentos: Valor total investido pelo usuÃ¡rio em aplicaÃ§Ãµes financeiras.  
+      2. Montante de bens: Valor total dos bens fÃ­sicos e imÃ³veis do usuÃ¡rio.  
+      3. Saldo do patrimÃ´nio: Saldo total disponÃ­vel no patrimÃ´nio do usuÃ¡rio.  
+   2. HistÃ³rico de CrÃ©dito:  
+      1. Valor da parcela: Valor de cada parcela do crÃ©dito tomado pelo usuÃ¡rio.  
+      2. Meses em atraso: Quantidade de meses que o usuÃ¡rio estÃ¡ em atraso com pagamentos.  
+      3. NÃºmero de parcelas restantes: NÃºmero de parcelas restantes para quitar o crÃ©dito.  
+      4. Valor restante do crÃ©dito: Valor total que ainda precisa ser pago pelo usuÃ¡rio.  
+      5. Valor do crÃ©dito: Valor total do crÃ©dito adquirido pelo usuÃ¡rio.  
+      6. Se estÃ¡ Inadimplente: Indica se o usuÃ¡rio estÃ¡ inadimplente.  
+   3. TransaÃ§Ãµes:  
+      1. Se o salÃ¡rio estÃ¡ incluso:  Indica se nas transaÃ§Ãµes, houve entrada de salÃ¡rio.  
+      2. Data do recorte das transaÃ§Ãµes: Data no formato (M/A) para cada transaÃ§Ã£o.  
+      3. Valores de entrada: Valor de entrada na conta do usuÃ¡rio.  
+      4. Valores de saÃ­da: Valor de saÃ­da na conta do usuÃ¡rio.  
+3. InformaÃ§Ãµes internas do programa:  
+   1. Acessos:   
+      1. NÃºmero de acessos: A quantidade de acessos pelo score de um usuÃ¡rio especÃ­fico, o que pode significar uma instabilidade.  
+   2. Score:   
+      1. Valor calculado do score: Armazenamento dos scores, que serÃ¡ calculado no primeiro acesso do dia para evitar gasto de processamento em eventuais acessos no mesmo dia.  
+      2.   
+4. Indicadores EconÃ´micos:  
+   1. InflaÃ§Ã£o: A inflaÃ§Ã£o afeta diretamente o poder de compra e pode tornar mais difÃ­cil para o indivÃ­duo pagar suas dÃ­vidas.  
+   2. Taxa CAGED: A taxa de empregos formais pode indicar a saÃºde econÃ´mica e estabilidade no mercado de trabalho, impactando a capacidade de pagamento das dÃ­vidas.  
+   3. Taxa Selic: A Selic afeta as taxas de juros, influenciando o custo do crÃ©dito e a capacidade de pagamento das dÃ­vidas. Altas taxas de juros podem aumentar a inadimplÃªncia.
+
+2\. CÃ¡lculo do Score de CrÃ©dito:
+
+Um algoritmo serÃ¡ desenvolvido para calcular o Score de CrÃ©dito com base nos dados coletados utilizando machine learning.
+
+O Score de CrÃ©dito serÃ¡ calculado dentro de uma faixa numÃ©rica especÃ­fica, de 0 a 1000\. O resultado determinarÃ¡ o risco associado Ã  concessÃ£o de crÃ©dito ao cliente.
+
+3\. Resultado do Score de CrÃ©dito:
+
+O sistema exibirÃ¡ o Score de CrÃ©dito do cliente. Juntamente com o score, o sistema fornecerÃ¡ uma recomendaÃ§Ã£o automatizada sobre a concessÃ£o de crÃ©dito, com base no score gerado:
+
+1. "Risco baixo" \[701-1000\];  
+2. "Risco moderado" \[401-700\];  
+3. â€œRisco altoâ€ \[0-400\].
+
+O Score de CrÃ©dito serÃ¡ retornado ao funcionÃ¡rio do banco em tempo real, permitindo uma decisÃ£o rÃ¡pida.
+
+4. Principais CaracterÃ­sticas do Sistema:
+
+* AutomatizaÃ§Ã£o do cÃ¡lculo de risco de crÃ©dito: O sistema serÃ¡ capaz de calcular automaticamente o risco de crÃ©dito baseado em diferentes variÃ¡veis.  
+* Algoritmos de anÃ¡lise de dados: O cÃ¡lculo do Score de CrÃ©dito serÃ¡ realizado com base machine learning, programados em Java.  
+* Resultados imediatos: O sistema fornecerÃ¡ os resultados rapidamente, com feedback em tempo real sobre a anÃ¡lise de risco.
+
+5. Tecnologias Utilizadas:
+
    
-A ferramenta iniciará com a entrada do CPF do cliente.
 
-A partir disso:
-> * Será feita a busca na tabela "usuário" para identificar o cliente.
-> * Com essa identificação, serão recuperados diversos dados pessoais e financeiros, como:
-  
-a. *Dados Pessoais*:
+* Linguagem de ProgramaÃ§Ã£o: Java serÃ¡ a principal linguagem de desenvolvimento do sistema.  
+* Banco de Dados: SerÃ¡ utilizado o DBeaver e o MySQL para gerenciamento do banco de dados.  
+* Versionamento e colaboraÃ§Ã£o: GitHub para versionamento de cÃ³digo e colaboraÃ§Ã£o entre desenvolvedores, proporcionando controle de versÃ£o eficiente, rastreamento de alteraÃ§Ãµes e integraÃ§Ã£o contÃ­nua.  
+* Bibliotecas para AnÃ¡lise de Dados:  
+*   Apache Commons Math para processamento matemÃ¡tico.  
+*   Weka (caso seja necessÃ¡rio aplicar algoritmos de aprendizado de mÃ¡quina).
 
-> * Idade (Data de nascimento): Faixa etária do solicitante.
-> * Estado civil: Casado, solteiro, divorciado, etc.
-> * Número de dependentes: Quantidade de dependentes financeiros do cliente.
-> * Estado Civil: Casados podem ter mais estabilidade financeira, porém pode enfrentar riscos dependendo das condições do casamento (se houver separação, pode aumentar o risco).
-> * Grau de escolaridade: Nível de educação formal do solicitante.
-> * Endereço: Frequentemente mudar de residência pode indicar instabilidade financeira. A estabilidade de residência pode ser vista como um bom sinal.
-> * Patrimônio: Em alguns casos, o banco pode exigir garantias para concessão de crédito, como imóveis, veículos ou outros bens. A presença de garantias pode reduzir o risco para o banco e facilitar a aprovação do crédito.
+6. Expectativas de Resultados:
 
-b. *Dados de emprego e renda*:
+   
 
-> * Renda mensal: Quanto o cliente recebe mensalmente.
-> * Tempo no emprego atual: Quanto tempo o cliente está no emprego atual.
-> * Tipo de contrato de trabalho: Se é CLT, autônomo, freelancer, etc.
-> * Estabilidade profissional: Indicadores de estabilidade ou mudança frequente de emprego.
+* EficiÃªncia na tomada de decisÃ£o: O sistema permitirÃ¡ decisÃµes rÃ¡pidas sobre concessÃ£o de crÃ©dito, aumentando a eficiÃªncia do processo.  
+* PrecisÃ£o na anÃ¡lise de risco: O algoritmo desenvolvido em Java serÃ¡ capaz de calcular um Score de CrÃ©dito, com base nos dados fornecidos.  
+* Facilidade de uso: A simplicidade do programa garantirÃ¡ que os funcionÃ¡rios possam usar o sistema sem dificuldades, permitindo uma experiÃªncia intuitiva e sem erros.
 
-c. *Dados de Crédito*:
-
-> * Histórico de crédito: Se o cliente já teve empréstimos ou financiamentos anteriores.
-> * Score de crédito: Pontuação fornecida por agências de crédito que avalia o risco de inadimplência do cliente.
-> * Número de consultas de crédito: Frequência com que o cliente tem solicitado crédito recentemente.
-
-d. *Dados de Endividamento*:
-
-> * Relação dívida/renda: Percentual da renda comprometido com dívidas.
-> * Parcelas em atraso: Quantidade de parcelas de dívidas anteriores que o cliente deixou de pagar.
-> * Empréstimos pendentes: Número de empréstimos ou financiamentos que o cliente possui em aberto.
-
-e. *Comportamento de Pagamento*:
-
-> * Histórico de inadimplência: Quantidade de vezes que o cliente ficou inadimplente (com atrasos significativos).
-> * Frequência de pagamentos atrasados: Número de vezes que o cliente pagou suas dívidas com atraso.
-> * Quantidade de renegociações: Casos em que o cliente precisou renegociar suas dívidas devido à inadimplência.
-
-f. *Indicadores Econômicos*:
-
-> * Inflação: A inflação afeta diretamente o poder de compra e pode tornar mais difícil para o indivíduo pagar suas dívidas.
-> * Taxa CAGED: A taxa de empregos formais pode indicar a saúde econômica e estabilidade no mercado de trabalho, impactando a capacidade de pagamento das dívidas.
-> * Taxa Selic: A Selic afeta as taxas de juros, influenciando o custo do crédito e a capacidade de pagamento das dívidas. Altas taxas de juros podem aumentar a inadimplência.
