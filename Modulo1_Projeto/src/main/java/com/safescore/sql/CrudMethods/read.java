@@ -1,7 +1,7 @@
 class ReadData {
     public static void listarUsuarios() {
         String sql = "SELECT * FROM usuario";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DBconexao.connect();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
@@ -20,7 +20,7 @@ class ReadData {
 
     public static void listarEmpregos() {
         String sql = "SELECT * FROM emprego";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DBconexao.connect();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
@@ -39,7 +39,7 @@ class ReadData {
 
     public static void listarHistoricoCredito() {
         String sql = "SELECT * FROM historicoCredito";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DBconexao.connect();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
