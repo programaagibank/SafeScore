@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'net.datafaker:datafaker:2.0.0'  // Dependência do JFaker
+    implementation 'net.datafaker:datafaker:2.0.0'  // JFaker
     implementation 'mysql:mysql-connector-java:8.0.33'  // MySQL
 
     testImplementation platform('org.junit:junit-bom:5.10.0')
