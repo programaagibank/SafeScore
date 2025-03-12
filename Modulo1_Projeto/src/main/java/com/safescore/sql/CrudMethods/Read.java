@@ -1,4 +1,13 @@
-class ReadData {
+package com.safescore.sql.CrudMethods;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import com.safescore.sql.DBconexao;
+
+class Read {
     public static void listarUsuarios() {
         String sql = "SELECT * FROM usuario";
         try (Connection conn = DBconexao.connect();

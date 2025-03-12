@@ -1,4 +1,6 @@
-package com.safescore;
+package com.safescore.sql.CrudMethods;
+
+import com.safescore.sql.CrudMethods.Read;
 
 public class Main {
   public static void main(String[] args) {
@@ -6,12 +8,12 @@ public class Main {
     System.out.println("<>Main<>");
 
     System.out.println("Usuários:");
-    ReadData.listarUsuarios();
+    Read.listarUsuarios();
 
     System.out.println("\nEmpregos:");
-    ReadData.listarEmpregos();
+    Read.listarEmpregos();
 
     System.out.println("\nHistórico de Crédito:");
-    ReadData.listarHistoricoCredito();
+    Read.listarHistoricoCredito();
   }
 }
