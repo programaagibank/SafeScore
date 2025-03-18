@@ -2,21 +2,39 @@ package com.safescore.sql;
 
 import net.datafaker.Faker;
 
+import com.safescore.service.BuscadorEnderecoPorCep;
+
 //import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.ZoneId;
 //import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 public class DatabaseSeeder {
   static Faker faker = new Faker(Locale.of("pt", "BR"));
 
   public static void test() {
+    LocalDate data = faker.date().birthday(18, 100).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    int[] nivelAltoValores = {1000, 7000, 100000};
+    int nivel = faker.number().numberBetween(1, 10);
+    int saldoTotal = sorteadorDeRenda(nivel, nivelAltoValores);
 
+    String cpfUsuario = criarUsuarioAleatorio(data);
+    criarHistoricoCredito(cpfUsuario);
+    criarPatrimonioAleatorio(cpfUsuario, nivel, saldoTotal ,nivelAltoValores);
+    criarEmpregoAleatorio(cpfUsuario, nivel,data);
+    criarEnderecoAleatorio(cpfUsuario, data);
+    criarTransacaoAleatorio(cpfUsuario, nivel, saldoTotal ,nivelAltoValores);
+
+  }
+
+  public static String criarUsuarioAleatorio(LocalDate dataNascimento) {
     //usuario
-    LocalDate dataNascimento = faker.date().birthday(18, 100).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     System.out.println("---------USUARIO---------");
-    System.out.println("Nome: " + faker.name().name());
+    String cpf = faker.cpf().valid();
+    System.out.println(cpf);
+    System.out.println("Nome: " + faker.name().firstName() + " " + faker.name().lastName());
     System.out.println("Aniversario: " + dataNascimento);
 
     System.out.println("Dependentes: " + faker.number().numberBetween(0, 5));
@@ -43,6 +61,10 @@ public class DatabaseSeeder {
     String[] estadoCivil =
             {"Solteiro", "Casado", " Viuvo", "Divorciado"};
     System.out.println("Estado civil: " + dadoAleatorio(estadoCivil));
+    return cpf;
+  }
+
+  public static void criarHistoricoCredito(String cpf) {
 
     //historicoCredito
     System.out.println("---------HISTORICO DE CREDITO---------");
@@ -64,32 +86,34 @@ public class DatabaseSeeder {
     System.out.println("CreditoRestante: " + creditorestante);
     System.out.println("Valor Total: " + valorCredito);
     //e cpf
+  }
 
+  public static void criarPatrimonioAleatorio(String cpf, int nivelRenda,int saldo, int[] valoresAltosNivelRenda) {
     //patrimonio
     //1/4
     System.out.println("---------PATRIMONIO---------");
-    int[] valoresAltosNivelRenda = {1000, 7000, 100000};
-    int nivelRenda = faker.number().numberBetween(1, 10);
-    int saldo = sorteadorDeRenda(nivelRenda, valoresAltosNivelRenda);
+
     System.out.println("Investimentos: " + (nivelRenda < 8 ? 0 : sorteadorDeRenda(nivelRenda, valoresAltosNivelRenda)));
     System.out.println("Bens: " + (sorteadorDeRenda(nivelRenda, valoresAltosNivelRenda) + saldo));
     System.out.println("Saldo: " + saldo);
     //e cpf
 
-    //score
-    //?
+  }
 
+  public static void criarTransacaoAleatorio(String cpf, int saldo, int nivelRenda, int[] valoresAltosNivelRenda){
     //transacao
     System.out.println("---------TRANSACAO---------");
     System.out.println("Salario Incluso: " + faker.bool().bool());
-//    Timestamp dataRegistroTransacao = new Timestamp(System.currentTimeMillis());
     int anosNoBanco = faker.number().numberBetween(0, 6);
     int anoAtual = 2025;
     System.out.println("Data pagamento: " + geradorData(10, faker.number().numberBetween(1, 12), anoAtual - anosNoBanco));
     int entrada = valorMonetario(saldo);
     System.out.println("Valor entrada: " + entrada);
-    System.out.println("Valor Saida: " + (faker.bool().bool() ? sorteadorDeRenda(nivelRenda, valoresAltosNivelRenda) : sorteadorDeRenda(entrada, valoresAltosNivelRenda)));
+    System.out.println("Valor Saida: " + (faker.bool().bool() ? sorteadorDeRenda(nivelRenda, valoresAltosNivelRenda) : valorMonetario(entrada)));
 
+  }
+
+  public static void criarEmpregoAleatorio(String cpf, int nivelRenda, LocalDate dataNascimento){
     //emprego
     int[] valoresSalarioNivelRenda = {35, 200, 10000};
     int diaInicioEmprego = faker.number().numberBetween(1, 31);
@@ -102,10 +126,39 @@ public class DatabaseSeeder {
     System.out.println("Salario: "+Math.max(1518, sorteadorDeRenda(nivelRenda, valoresSalarioNivelRenda)));
     System.out.println("DataInicio: "+dataInicioEmprego);
     System.out.println("DataFim: "+geradorDataFim(dataInicioEmprego));
-//
+
+
+    String[] vinculoTrabalista = {
+            "Estagio",
+            "CLT",
+            "Autonomo",
+            "PJ",
+    };
+
+    System.out.println("VinculoTrabalista: "+calculadorProbabilidade(1,vinculoTrabalista));
+
   }
 
+  public static void criarEnderecoAleatorio(String cpf, LocalDate dataNascimento){
+    System.out.println("---------ENDERECO---------");
 
+    String cep = faker.number().numberBetween(0,1) == 1 ? faker.address().postcode() : null;
+    //cep
+    System.out.println("CEP: "+ cep);
+    System.out.println("Numero: "+ Math.min(faker.number().numberBetween(1,2500),faker.number().numberBetween(1,2500)));
+    String estado = cep == null? faker.address().state() : BuscadorEnderecoPorCep.buscarEstadoPorCEP(cep);
+    System.out.println("Estado: "+ estado);
+    //contratoResidencial
+    int diaInicioEndereco = faker.number().numberBetween(1, 31);
+    int mesInicioEndereco = faker.number().numberBetween(1, 12);
+    int anoInicioEndereco = faker.number().numberBetween(dataNascimento.getYear(), 2025);
+
+    LocalDate dataInicioEndereco = geradorData(dataNascimento.getDayOfMonth(), dataNascimento.getMonthValue(), dataNascimento.getYear());
+
+
+    System.out.println("DataInicio: "+dataInicioEndereco);
+    System.out.println("DataFim: "+geradorDataFim(dataInicioEndereco));
+  }
   public static int sorteadorDeRenda(int nivelRenda, int[] valores) {
     return switch (nivelRenda) {
       case 1, 2, 3, 4, 5, 6, 7 -> valorMonetario(valores[0] * 100);
@@ -115,26 +168,14 @@ public class DatabaseSeeder {
     };
   }
 
+
   public static LocalDate geradorData(int dia, int mes, int ano) {
-    return LocalDate.of(ano,mes,dia);
+    return LocalDate.of(ano, mes, dia);
   }
 
-
   public static LocalDate geradorDataFim(LocalDate dataInicio) {
-    int diaFimEmprego;
-    int mesFimEmprego;
-    int anoFimEmprego;
-    do {
-
-      diaFimEmprego = faker.number().numberBetween(1, 31);
-      mesFimEmprego = faker.number().numberBetween(1, 12);
-      anoFimEmprego = faker.number().numberBetween(dataInicio.getYear(), 2025);
-    } while ((anoFimEmprego != dataInicio.getYear() || mesFimEmprego != dataInicio.getMonthValue() || diaFimEmprego <= dataInicio.getDayOfMonth()) && (anoFimEmprego != dataInicio.getYear() || mesFimEmprego <= dataInicio.getMonthValue()));
-
-
-    return LocalDate.of(anoFimEmprego,mesFimEmprego,diaFimEmprego);
-
-
+    long diasAdicionais = faker.number().numberBetween(1, (int) ChronoUnit.DAYS.between(dataInicio, LocalDate.of(2025, 12, 31)) + 1);
+    return dataInicio.plusDays(diasAdicionais);
   }
 
   public static int valorMonetario(int maximo) {
