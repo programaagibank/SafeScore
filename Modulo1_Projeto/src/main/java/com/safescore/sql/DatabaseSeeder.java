@@ -3,6 +3,7 @@ package com.safescore.sql;
 import net.datafaker.Faker;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -18,17 +19,24 @@ public class DatabaseSeeder {
 
     String cpfUsuario = criarUsuarioAleatorio(data);
 
-    if(faker.bool().bool()){
-      int totalCreditos  = faker.number().numberBetween(1,5);
+    if (faker.bool().bool()) {
+      int totalCreditos = faker.number().numberBetween(1, 5);
       for (int i = 0; i <= totalCreditos; i++) {
         criarHistoricoCredito(cpfUsuario);
       }
     }
-;
 
     criarPatrimonioAleatorio(cpfUsuario, nivel, saldoTotal, nivelAltoValores);
 
-    criarEmpregoAleatorio(cpfUsuario, nivel, data);
+    int totalEmpregos = faker.number().numberBetween(1, 5);
+    LocalDate dataFinalEmprego = data;
+    for (int i = 0; i <= totalEmpregos; i++) {
+      Boolean ultimoEmprego = i == totalEmpregos -1 ;
+      dataFinalEmprego = criarEmpregoAleatorio(cpfUsuario, nivel, dataFinalEmprego, (faker.bool().bool() && ultimoEmprego));
+      LocalDate dataFinal = (dataFinalEmprego == null) ? LocalDate.now() : dataFinalEmprego;
+      if (Period.between(data, dataFinal).getYears() >= 70) {
+        break;
+      }    }
 
     int totalEnderecos = faker.number().numberBetween(1, 5);
     String estadoNascenca = criarEnderecoAleatorio(cpfUsuario, data, true, totalEnderecos == 1, faker.address().state());
@@ -89,9 +97,9 @@ public class DatabaseSeeder {
     }
 
     double parcela = valorCredito / parcelasAPagar;
-    int parcelasRestantes =  faker.bool().bool() ? 0 : faker.number().numberBetween(0, parcelasAPagar);
+    int parcelasRestantes = faker.bool().bool() ? 0 : faker.number().numberBetween(0, parcelasAPagar);
     double creditorestante = parcela * (parcelasAPagar - parcelasRestantes);
-    boolean estaInandinplente = parcelasRestantes == 0 ? false : faker.bool().bool();
+    boolean estaInandinplente = parcelasRestantes != 0 && faker.bool().bool();
     int mesesAtrasado = estaInandinplente ? Math.min(faker.number().numberBetween(0, 100), faker.number().numberBetween(0, 100)) : 0;
     System.out.println("ParcelaRestante: " + parcelasRestantes);
     System.out.println("Parcela: " + Math.round(parcela));
@@ -127,29 +135,29 @@ public class DatabaseSeeder {
 
   }
 
-  public static void criarEmpregoAleatorio(String cpf, int nivelRenda, LocalDate dataNascimento) {
+  public static LocalDate criarEmpregoAleatorio(String cpf, int nivelRenda, LocalDate dataInicioEmprego, Boolean empregoAtual) {
     //emprego
     int[] valoresSalarioNivelRenda = {35, 200, 10000};
-    int diaInicioEmprego = faker.number().numberBetween(1, 31);
-    int mesInicioEmprego = faker.number().numberBetween(1, 12);
-    int anoInicioEmprego = faker.number().numberBetween(dataNascimento.getYear() + 18, 2025);
 
-    LocalDate dataInicioEmprego = geradorData(diaInicioEmprego, mesInicioEmprego, anoInicioEmprego);
+    dataInicioEmprego = dataInicioEmprego.getYear() == 2025 ? dataInicioEmprego : dataInicioEmprego.plusDays(faker.number().numberBetween(0, 365));
     System.out.println("---------EMPREGO---------");
-
-    System.out.println("Salario: " + Math.max(1518, sorteadorDeRenda(nivelRenda, valoresSalarioNivelRenda)));
-    System.out.println("DataInicio: " + dataInicioEmprego);
-    System.out.println("DataFim: " + geradorDataFim(dataInicioEmprego));
-
-    String[] vinculoTrabalista = {
+    String[] vinculosTrabalistas = {
             "Estagio",
             "CLT",
             "Autonomo",
             "PJ",
     };
+    String vinculoTrabalista = calculadorProbabilidade(1, vinculosTrabalistas);
 
-    System.out.println("VinculoTrabalista: " + calculadorProbabilidade(1, vinculoTrabalista));
+    int salario = Objects.equals(vinculoTrabalista, "Estagio") ? faker.number().numberBetween(1528, 3500) : Math.max(1518, (Math.max(sorteadorDeRenda(nivelRenda, valoresSalarioNivelRenda), sorteadorDeRenda(nivelRenda, valoresSalarioNivelRenda))));
+    System.out.println("Salario: " + salario);
+    System.out.println("DataInicio: " + dataInicioEmprego);
+    LocalDate dataFimEmprego = empregoAtual ? LocalDate.now() : geradorDataFim(dataInicioEmprego);
+    System.out.println("DataFim: " + dataFimEmprego);
 
+
+    System.out.println("VinculoTrabalista: " + vinculoTrabalista);
+    return dataFimEmprego;
   }
 
   public static String criarEnderecoAleatorio(String cpf, LocalDate dataNascimento, Boolean primeiroEndereco, Boolean ultimoEndereco, String estadoUltimoEndereco) {
@@ -168,7 +176,7 @@ public class DatabaseSeeder {
     int anoInicioEndereco = faker.number().numberBetween(dataNascimento.getYear(), 2025);
     LocalDate dataInicioEndereco = primeiroEndereco ? geradorData(dataNascimento.getDayOfMonth(), dataNascimento.getMonthValue(), dataNascimento.getYear()) : geradorData(diaInicioEndereco, mesInicioEndereco, anoInicioEndereco);
     System.out.println("DataInicio: " + dataInicioEndereco);
-    System.out.println("DataFim: " + (ultimoEndereco ?  null : geradorDataFim(dataInicioEndereco)));
+    System.out.println("DataFim: " + (ultimoEndereco ? null : geradorDataFim(dataInicioEndereco)));
 
     return estado;
   }
@@ -188,8 +196,8 @@ public class DatabaseSeeder {
   }
 
   public static LocalDate geradorDataFim(LocalDate dataInicio) {
-    long diasAdicionais = faker.number().numberBetween(1, (int) ChronoUnit.DAYS.between(dataInicio, LocalDate.of(2025, 12, 31)) + 1);
-    return dataInicio.plusDays(diasAdicionais);
+//    long diasAdicionais = faker.number().numberBetween(1, (int) ChronoUnit.DAYS.between(dataInicio, LocalDate.of(2025, 12, 31)) + 1);
+    return dataInicio.plusDays(faker.bool().bool() ? faker.number().numberBetween(30, 365 * 4) : faker.number().numberBetween(365 * 4, 365 * 50));
   }
 
   public static int valorMonetario(int maximo) {
