@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import com.safescore.sql.DBconexao;
 
-public class Delete {
+public class delete {
     public static void deletarUsuario(String cpf) {
         String sqlDeleteUsuario = "DELETE FROM usuario WHERE cpf = ?";
         String sqlDeleteContratos = "DELETE FROM contratoResidencial WHERE cpf = ?";
