@@ -1,13 +1,15 @@
 package com.safescore.sql;
 
-
 import net.datafaker.Faker;
-
 
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.List;
 
 public class DatabaseSeeder {
   static Faker faker = new Faker(Locale.of("pt", "BR"));
@@ -28,9 +30,7 @@ public class DatabaseSeeder {
         criarHistoricoCredito(cpfUsuario);
       }
     }
-
     criarPatrimonioAleatorio(cpfUsuario, nivel, saldoTotal, nivelAltoValores);
-
     LocalDate comecoEmprego = data.plusYears(18);
     LocalDate fimEmprego;
     LocalDate dataAposentadoria = data.plusYears(70);
@@ -84,7 +84,7 @@ public class DatabaseSeeder {
     int anosNoBanco = faker.number().numberBetween(0, 6);
     LocalDate comecoNoBanco = LocalDate.now().minusYears(anosNoBanco);
 
-    int mesesNoBanco = faker.number().numberBetween(-12,0) + (int) ChronoUnit.MONTHS.between(comecoNoBanco, LocalDate.now());
+    int mesesNoBanco = faker.number().numberBetween(-12, 0) + (int) ChronoUnit.MONTHS.between(comecoNoBanco, LocalDate.now());
 
     for (int i = 0; i < mesesNoBanco; i++) {
       LocalDate dataTransacao = geradorData(5, comecoNoBanco.plusMonths(i));
@@ -100,11 +100,12 @@ public class DatabaseSeeder {
     System.out.println("---------USUARIO---------");
     String cpf = faker.cpf().valid();
     System.out.println(cpf);
-    System.out.println("Nome: " + faker.name().firstName() + " " + faker.name().lastName());
+    String nome = faker.name().firstName() + " " + faker.name().lastName();
+    System.out.println("Nome: " + nome);
     System.out.println("Aniversario: " + dataNascimento);
 
-
-    System.out.println("Dependentes: " + faker.number().numberBetween(0, 5));
+    int dependentes = faker.number().numberBetween(0, 5);
+    System.out.println("Dependentes: " + dependentes);
 
 
     //escolaridade
@@ -131,6 +132,10 @@ public class DatabaseSeeder {
     String[] estadoCivil =
             {"Solteiro", "Casado", " Viuvo", "Divorciado"};
     System.out.println("Estado civil: " + dadoAleatorio(estadoCivil));
+
+//    cpf, nome, dataNascimento, dependentes, id escolaridade, id estado civil
+
+    create("usuario", new String[]{"cpf", "nome", "dataNascimento", "dependentes", "idEscolaridade", "idEstadoCivil"}, new Object[]{cpf, nome, dataNascimento, dependentes, 1, 1});
     return cpf;
   }
 
@@ -305,6 +310,30 @@ public class DatabaseSeeder {
     return null;
   }
 
+  public static void create(String tabelaNome, String[] colunaNomes, Object[] valores) {
+    if (colunaNomes.length != valores.length) {
+      throw new IllegalArgumentException("Column names and values must have the same length");
+    }
+
+    String colunas = String.join(", ", colunaNomes);
+    String posicaoValores = String.join(", ", new String[colunaNomes.length]).replaceAll("null", "?");
+
+    String sql = "INSERT INTO " + tabelaNome + " (" + colunas + ") VALUES (" + posicaoValores + ")";
+
+    try (Connection conn = DBconexao.connect()) {
+      assert conn != null;
+      try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        for (int i = 0; i < valores.length; i++) {
+          pstmt.setObject(i + 1, valores[i]);
+        }
+        pstmt.executeUpdate();
+        System.out.println("Inserted into " + tabelaNome + " successfully.");
+
+      }
+    } catch (SQLException e) {
+      System.out.println("[ERROR] SQLException" + e);
+    }
+  }
 
   public static void main(String[] args) {
     test();
