@@ -1,4 +1,4 @@
-package com.safescore.sql.CrudMethods;
+package com.safescore;
 
 import com.safescore.sql.CrudMethods.Read;
 
@@ -43,8 +43,8 @@ public class Main {
 //    System.out.println("\n=== Endereços ===");
 //    Read.listarEnderecos();
 
-//    System.out.println("\n=== Dados do Usuário Específico ===");
-//    Read.listarDadosUsuario("00011122233");
+    System.out.println("\n=== Dados do Usuário Específico ===");
+    Read.listarDadosUsuario("00011122233");
 
   }
 }

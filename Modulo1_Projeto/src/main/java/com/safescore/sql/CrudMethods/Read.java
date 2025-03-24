@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import com.safescore.sql.DBconexao;
 import java.sql.PreparedStatement;
 
-class Read {
+public class Read {
 
     public static void listarUsuarios() {
         String sql = "SELECT * FROM usuario";
