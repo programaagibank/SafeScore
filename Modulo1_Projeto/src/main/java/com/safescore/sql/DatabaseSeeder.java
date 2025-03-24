@@ -63,30 +63,26 @@ public class DatabaseSeeder {
     }
 
 
-    // Inside the test() method
     int totalEnderecos = faker.number().numberBetween(1, 5);
     LocalDate inicioEndereco = data;
     String estadoNascenca = faker.address().stateAbbr();
     LocalDate dataFimEndereco;
-    Integer latestIdEndereco = null; // To store the latest idEndereco
+    Integer latestIdEndereco = null;
     Object[] enderecoResult;
 
-    System.out.println(totalEnderecos);
     if (totalEnderecos != 1) {
       for (int i = 0; i < totalEnderecos; i++) {
         boolean ultimoEndereco = (i == totalEnderecos - 1);
         enderecoResult = criarEnderecoAleatorio(
                 cpfUsuario, inicioEndereco, ultimoEndereco, estadoNascenca
         );
-        latestIdEndereco = (Integer) enderecoResult[0]; // Capture idEndereco
+        latestIdEndereco = (Integer) enderecoResult[0];
         dataFimEndereco = (LocalDate) enderecoResult[2];
 
         if (dataFimEndereco != null) {
           inicioEndereco = dataFimEndereco;
         }
-        System.out.println(latestIdEndereco);
         if (latestIdEndereco != null && latestIdEndereco > 0) {
-          System.out.println(Arrays.toString(new Object[]{enderecoResult[1], enderecoResult[2], cpfUsuario, 1, latestIdEndereco}));
 
           LocalDate enderecoInicialContratoResidencial = (LocalDate) enderecoResult[1];
           LocalDate enderecoFinalContratoResidencial = (LocalDate) enderecoResult[2];
@@ -105,7 +101,7 @@ public class DatabaseSeeder {
 
     }
 
-// Use the latestIdEndereco to create contratoResidencial
+
 
 //TODO: AJUSTAR O TIPO CONTRATO RESIDENCIA
 
@@ -125,7 +121,7 @@ public class DatabaseSeeder {
   public static Object[] criarUsuarioAleatorio(LocalDate dataNascimento) {
     String cpf = faker.cpf().valid();
     String nome = faker.name().firstName() + " " + faker.name().lastName();
-    System.out.println("Criando " + nome + " com CPF: " + cpf);
+    System.out.println("\nCriando " + nome + " com CPF: " + cpf);
     int dependentes = faker.number().numberBetween(0, 5);
 
     String[] escolaridades = {
@@ -240,7 +236,7 @@ public class DatabaseSeeder {
     LocalDate dataInicioEndereco = dataInicio.plusDays(faker.number().numberBetween(1, 60));
     LocalDate dataFimEndereco = ultimoEndereco ? null : geradorDataFim(dataInicioEndereco);
 
-    // Insert endereco and get the generated ID
+
     int idEndereco = create("endereco", new String[]{"cep", "numero", "estado"}, new Object[]{cep, numero, estado});
 
     return
@@ -319,7 +315,7 @@ public class DatabaseSeeder {
     try (Connection conn = DBconexao.connect()) {
       assert conn != null;
 
-      // Use RETURN_GENERATED_KEYS only for the "endereco" table
+
       boolean isEnderecoTable = tabelaNome.equals("endereco");
       try (PreparedStatement pstmt = isEnderecoTable
               ? conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)
@@ -335,17 +331,17 @@ public class DatabaseSeeder {
           throw new SQLException("Creating " + tabelaNome + " failed, no rows affected.");
         }
 
-        // Retrieve generated keys only for "endereco"
+
         if (isEnderecoTable) {
           try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
             if (generatedKeys.next()) {
-              return generatedKeys.getInt(1); // Return the generated ID
+              return generatedKeys.getInt(1);
             } else {
               throw new SQLException("Creating " + tabelaNome + " failed, no ID obtained.");
             }
           }
         } else {
-          return 0; // No generated key to return
+          return 0;
         }
       }
     } catch (SQLException e) {
@@ -364,7 +360,6 @@ public class DatabaseSeeder {
 
   }
 }
-
 
 
 
