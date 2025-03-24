@@ -16,9 +16,13 @@ java {
 }
 
 dependencies {
+    implementation 'net.datafaker:datafaker:2.0.0'  // JFaker
+    implementation 'mysql:mysql-connector-java:8.0.33'  // MySQL
+
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
-    implementation 'mysql:mysql-connector-java:8.0.33'
-
 }
 
+test {
+    useJUnitPlatform()
+}
