@@ -24,7 +24,6 @@ public class DatabaseSeeder {
     int saldoTotal = sorteadorDeRenda(nivel, nivelAltoValores);
 
     String cpfUsuario = (String) criarUsuarioAleatorio(data)[0];
-    System.out.println(cpfUsuario);
     if (faker.bool().bool()) {
       int totalCreditos = faker.number().numberBetween(1, 5);
       for (int i = 0; i <= totalCreditos; i++) {
@@ -70,27 +69,44 @@ public class DatabaseSeeder {
     String estadoNascenca = faker.address().stateAbbr();
     LocalDate dataFimEndereco;
     Integer latestIdEndereco = null; // To store the latest idEndereco
+    Object[] enderecoResult;
 
+    System.out.println(totalEnderecos);
     if (totalEnderecos != 1) {
-      for (int i = 1; i < totalEnderecos; i++) {
+      for (int i = 0; i < totalEnderecos; i++) {
         boolean ultimoEndereco = (i == totalEnderecos - 1);
-        Object[] enderecoResult = criarEnderecoAleatorio(
-                cpfUsuario, inicioEndereco, false, ultimoEndereco, estadoNascenca
+        enderecoResult = criarEnderecoAleatorio(
+                cpfUsuario, inicioEndereco, ultimoEndereco, estadoNascenca
         );
         latestIdEndereco = (Integer) enderecoResult[0]; // Capture idEndereco
-        dataFimEndereco = (LocalDate) enderecoResult[1];
+        dataFimEndereco = (LocalDate) enderecoResult[2];
 
-        if (dataFimEndereco == null) break;
-        inicioEndereco = dataFimEndereco;
+        if (dataFimEndereco != null) {
+          inicioEndereco = dataFimEndereco;
+        }
+        System.out.println(latestIdEndereco);
+        if (latestIdEndereco != null && latestIdEndereco > 0) {
+          System.out.println(Arrays.toString(new Object[]{enderecoResult[1], enderecoResult[2], cpfUsuario, 1, latestIdEndereco}));
+
+          LocalDate enderecoInicialContratoResidencial = (LocalDate) enderecoResult[1];
+          LocalDate enderecoFinalContratoResidencial = (LocalDate) enderecoResult[2];
+          enderecoFinalContratoResidencial = enderecoFinalContratoResidencial != null ? (enderecoFinalContratoResidencial.isAfter(enderecoInicialContratoResidencial) ? enderecoFinalContratoResidencial : null) : enderecoFinalContratoResidencial;
+          create("contratoResidencial",
+                  new String[]{"dataInicialEndereco", "dataFinalEndereco", "cpf", "idTipoContratoResidencial", "idEndereco"},
+                  new Object[]{enderecoInicialContratoResidencial,enderecoFinalContratoResidencial, cpfUsuario, 1, latestIdEndereco});
+        }
       }
+    } else {
+      enderecoResult = criarEnderecoAleatorio(
+              cpfUsuario, inicioEndereco, true, estadoNascenca);
+      create("contratoResidencial",
+              new String[]{"dataInicialEndereco", "dataFinalEndereco", "cpf", "idTipoContratoResidencial", "idEndereco"},
+              new Object[]{enderecoResult[1], enderecoResult[2], cpfUsuario, 1, enderecoResult[0]});
+
     }
 
 // Use the latestIdEndereco to create contratoResidencial
-    if (latestIdEndereco != null && latestIdEndereco > 0) {
-      create("contratoResidencial",
-              new String[]{"dataInicialEndereco", "dataFinalEndereco", "cpf", "idTipoContratoResidencial", "idEndereco"},
-              new Object[]{LocalDate.now(), null, cpfUsuario, 1, latestIdEndereco});
-    }
+
 //TODO: AJUSTAR O TIPO CONTRATO RESIDENCIA
 
     int anosNoBanco = faker.number().numberBetween(0, 3);
@@ -108,8 +124,8 @@ public class DatabaseSeeder {
 
   public static Object[] criarUsuarioAleatorio(LocalDate dataNascimento) {
     String cpf = faker.cpf().valid();
-    System.out.println(cpf);
     String nome = faker.name().firstName() + " " + faker.name().lastName();
+    System.out.println("Criando " + nome + " com CPF: " + cpf);
     int dependentes = faker.number().numberBetween(0, 5);
 
     String[] escolaridades = {
@@ -140,9 +156,9 @@ public class DatabaseSeeder {
 
   public static Object[] criarHistoricoCredito(String cpf) {
 
-    int parcelasAPagar = faker.number().numberBetween(0, 100);
+    int parcelasAPagar = faker.number().numberBetween(2, 100);
     double valorCredito = faker.number().numberBetween(1, 100);
-    for (int i = 0; i < faker.number().numberBetween(0, 6); i++) {
+    for (int i = 0; i < faker.number().numberBetween(1, 5); i++) {
       valorCredito *= 10;
     }
 
@@ -199,7 +215,6 @@ public class DatabaseSeeder {
       }
     }
 
-    System.out.println("---------EMPREGO---------");
     String[] vinculosTrabalistas = {"Estagio", "CLT", "Autonomo", "PJ"};
     String vinculoTrabalista = calculadorProbabilidade(1, vinculosTrabalistas);
 
@@ -215,9 +230,8 @@ public class DatabaseSeeder {
   }
 
   public static Object[] criarEnderecoAleatorio(
-          String cpf, LocalDate dataInicio, Boolean primeiroEndereco, Boolean ultimoEndereco, String estadoUltimoEndereco) {
+          String cpf, LocalDate dataInicio, Boolean ultimoEndereco, String estadoUltimoEndereco) {
 
-    System.out.println("---------ENDERECO---------");
 
     String cep = faker.bool().bool() ? faker.address().postcode() : null;
     String estado = faker.bool().bool() ? faker.address().stateAbbr() : estadoUltimoEndereco;
@@ -229,7 +243,8 @@ public class DatabaseSeeder {
     // Insert endereco and get the generated ID
     int idEndereco = create("endereco", new String[]{"cep", "numero", "estado"}, new Object[]{cep, numero, estado});
 
-    return new Object[]{idEndereco, dataFimEndereco};
+    return
+            new Object[]{idEndereco, dataInicioEndereco, dataFimEndereco, cep, numero, estado};
   }
 
 
@@ -253,7 +268,7 @@ public class DatabaseSeeder {
 
 
   public static int valorMonetario(int maximo) {
-    return Math.min(faker.number().numberBetween(0, maximo), faker.number().numberBetween(0, maximo));
+    return Math.min(faker.number().numberBetween(1, maximo), faker.number().numberBetween(1, maximo));
   }
 
 
@@ -345,7 +360,6 @@ public class DatabaseSeeder {
     for (int i = 0; i < 30; i++) {
       test();
     }
-
 
 
   }
