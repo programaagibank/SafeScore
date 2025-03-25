@@ -1,4 +1,4 @@
-package com.safescore.sql.CrudMethods;
+package com.safescore.dao.CrudMethods;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

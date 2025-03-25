@@ -1,10 +1,10 @@
-package com.safescore.sql.CrudMethods;
+package com.safescore.dao.CrudMethods;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
-import com.safescore.sql.DBconexao;
+import com.safescore.dao.db.DBconexao;
 import java.sql.PreparedStatement;
 
 public class Read {

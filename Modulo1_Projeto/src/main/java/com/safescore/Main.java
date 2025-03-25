@@ -1,8 +1,8 @@
 package com.safescore;
 
-import com.safescore.sql.CrudMethods.Read;
-import com.safescore.sql.DBconexao;
-import com.safescore.sql.CrudMethods.Update;
+import com.safescore.dao.CrudMethods.Read;
+import com.safescore.dao.db.DBconexao;
+import com.safescore.dao.CrudMethods.Update;
 import java.sql.Connection;
 import java.sql.SQLException;
 

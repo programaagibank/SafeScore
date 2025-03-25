@@ -1,9 +1,9 @@
-package com.safescore.sql.CrudMethods;
+package com.safescore.dao.CrudMethods;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import com.safescore.sql.DBconexao;
+import com.safescore.dao.db.DBconexao;
 
 public class Delete {
     public static void deletarUsuario(String cpf) {
