@@ -1,6 +1,6 @@
 package com.safescore;
 
-import com.safescore.dao.CrudMethods.Read;
+/*import com.safescore.dao.CrudMethods.Read;
 import com.safescore.dao.db.DBconexao;
 import com.safescore.dao.CrudMethods.Update;
 import java.sql.Connection;
@@ -78,4 +78,31 @@ public class Main {
       System.out.println("Erro ao executar update: " + e.getMessage());
     }
   }
+}*/
+
+import weka.core.Instances;
+import weka.core.converters.ConverterUtils.DataSource;
+
+public class Main {
+  public static void main(String[] args) {
+    try {
+      // Caminho do arquivo ARFF
+      DataSource source = new DataSource("Modulo1_Projeto/src/main/sources/vendas.arff");
+      Instances data = source.getDataSet();
+
+      // Verificar se o dataset foi carregado corretamente
+      if (data.numInstances() == 0) {
+        System.out.println("Dataset carregado, mas está vazio.");
+      } else {
+        System.out.println("Dataset carregado com sucesso!");
+        // Exibindo as instâncias carregadas
+        for (int i = 0; i < data.numInstances(); i++) {
+          System.out.println(data.instance(i));
+        }
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
 }
+

@@ -1,0 +1,100 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.formdev",
+    "module": "flatlaf",
+    "version": "2.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "7.3.3"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "files": [
+        {
+          "name": "flatlaf-2.0.jar",
+          "url": "flatlaf-2.0.jar",
+          "size": 674859,
+          "sha512": "d6f80d0fe033d604eba557a1df87332de70cd387fdba5d0da28c5921eb718417adc654b0aa42f09c4245835562dc71922c2d581ab50371d08a681fdb07389e6d",
+          "sha256": "01fad44e8ea946dc758cdcf29c7d1de59f1c5d3cdc2aa536de7dd5286b6bea2a",
+          "sha1": "a45856e4115136977c662298bac02f3b428082db",
+          "md5": "0a3605cbe345192e1f606f405bad6b5b"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "flatlaf-2.0.jar",
+          "url": "flatlaf-2.0.jar",
+          "size": 674859,
+          "sha512": "d6f80d0fe033d604eba557a1df87332de70cd387fdba5d0da28c5921eb718417adc654b0aa42f09c4245835562dc71922c2d581ab50371d08a681fdb07389e6d",
+          "sha256": "01fad44e8ea946dc758cdcf29c7d1de59f1c5d3cdc2aa536de7dd5286b6bea2a",
+          "sha1": "a45856e4115136977c662298bac02f3b428082db",
+          "md5": "0a3605cbe345192e1f606f405bad6b5b"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "flatlaf-2.0-sources.jar",
+          "url": "flatlaf-2.0-sources.jar",
+          "size": 441755,
+          "sha512": "8d238b2d116d4a880056f17f642ce9705b3b66639a67da42ce31dc29af1839f6fd9ce9640283c61a94e8763bbedae1aab1f0f3e00410ea4bf4d6359075ca0326",
+          "sha256": "3632980663401394f456593d789ae222dfb6adab3ffbe5370c012f47a7b92c19",
+          "sha1": "54bf6017104e114ba9e62714c4fb874648118e22",
+          "md5": "e5a9d4ff863e152eeb71cf096700308a"
+        }
+      ]
+    },
+    {
+      "name": "javadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "flatlaf-2.0-javadoc.jar",
+          "url": "flatlaf-2.0-javadoc.jar",
+          "size": 1854821,
+          "sha512": "2b35d19ee4873a9d027523524ee4a65738b49ef111a642ffc3b837413a9f7d5639d29c76dcf6b575e4924021a0734f064b8770c0984835907b8a57e56cc3f89d",
+          "sha256": "42231768d12ebcda7190098cd5da1ddd7302dade91270a3df374f8b6c7da9b66",
+          "sha1": "45ee3a3d690783d2a5225e838f1efa526ffdc90d",
+          "md5": "5875ad7913263ba63dd446174d72fff1"
+        }
+      ]
+    }
+  ]
+}
