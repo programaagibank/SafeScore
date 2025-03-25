@@ -9,6 +9,12 @@ repositories {
     mavenCentral()
 }
 
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
+}
+
 dependencies {
     implementation 'net.datafaker:datafaker:2.0.0'  // JFaker
     implementation 'mysql:mysql-connector-java:8.0.33'  // MySQL

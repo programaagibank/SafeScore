@@ -1,4 +1,4 @@
 package com.safescore.model;
 
-public class Usuario {
+public class Score {
 }

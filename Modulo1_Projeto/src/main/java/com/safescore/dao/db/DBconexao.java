@@ -1,4 +1,4 @@
-package com.safescore.sql;
+package com.safescore.dao.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -18,10 +18,6 @@ public class DBconexao {
             System.out.println("Erro na conexao: " + e.getMessage());
             return null;
         }
-    }
-
-    public static void main(String[] args) {
-        connect(); // Testa a conexão
     }
 }
 

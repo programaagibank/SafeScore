@@ -1,5 +1,6 @@
-package com.safescore.sql;
+package com.safescore.script;
 
+import com.safescore.dao.db.DBconexao;
 import net.datafaker.Faker;
 
 import java.sql.ResultSet;
@@ -10,7 +11,6 @@ import java.util.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.List;
 
 public class DatabaseSeeder {
   static Faker faker = new Faker(Locale.of("pt", "BR"));
