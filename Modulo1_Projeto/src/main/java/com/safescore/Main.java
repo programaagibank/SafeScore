@@ -103,7 +103,11 @@ public class Main {
         for (int i = 0; i < data.numInstances(); i++) {
           System.out.println(data.instance(i));
         }
-      }*/
+      }
+
+       *CHAMADA DO CREATE*
+      Create.registrarAcessoECalcularScore("12345678900");
+      */
 
       data.setClassIndex(3);
 
