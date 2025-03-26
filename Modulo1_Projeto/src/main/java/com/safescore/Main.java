@@ -80,6 +80,9 @@ public class Main {
   }
 }*/
 
+import weka.classifiers.bayes.NaiveBayes;
+import weka.core.DenseInstance;
+import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
 
@@ -89,8 +92,9 @@ public class Main {
       // Caminho do arquivo ARFF
       DataSource source = new DataSource("Modulo1_Projeto/src/main/sources/vendas.arff");
       Instances data = source.getDataSet();
+      //System.out.println(data.toString());
 
-      // Verificar se o dataset foi carregado corretamente
+      /*// Verificar se o dataset foi carregado corretamente
       if (data.numInstances() == 0) {
         System.out.println("Dataset carregado, mas está vazio.");
       } else {
@@ -99,7 +103,23 @@ public class Main {
         for (int i = 0; i < data.numInstances(); i++) {
           System.out.println(data.instance(i));
         }
-      }
+      }*/
+
+      data.setClassIndex(3);
+
+      NaiveBayes nb = new NaiveBayes();
+      nb.buildClassifier(data);
+
+      Instance novo = new DenseInstance(4);
+      novo.setDataset(data);
+      novo.setValue(0, "M");
+      novo.setValue(1, "20-39");
+      novo.setValue(2, "Nao");
+
+      double probabilidade[] = nb.distributionForInstance(novo);
+      System.out.println("Sim:" + probabilidade[1]);
+      System.out.println("Não:" + probabilidade[0]);
+
     } catch (Exception e) {
       e.printStackTrace();
     }
