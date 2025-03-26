@@ -89,7 +89,7 @@ public class DatabaseSeeder {
           enderecoFinalContratoResidencial = enderecoFinalContratoResidencial != null ? (enderecoFinalContratoResidencial.isAfter(enderecoInicialContratoResidencial) ? enderecoFinalContratoResidencial : null) : enderecoFinalContratoResidencial;
           create("contratoResidencial",
                   new String[]{"dataInicialEndereco", "dataFinalEndereco", "cpf", "idTipoContratoResidencial", "idEndereco"},
-                  new Object[]{enderecoInicialContratoResidencial,enderecoFinalContratoResidencial, cpfUsuario, 1, latestIdEndereco});
+                  new Object[]{enderecoInicialContratoResidencial,enderecoFinalContratoResidencial, cpfUsuario, enderecoResult[6], latestIdEndereco});
         }
       }
     } else {
@@ -97,7 +97,7 @@ public class DatabaseSeeder {
               cpfUsuario, inicioEndereco, true, estadoNascenca);
       create("contratoResidencial",
               new String[]{"dataInicialEndereco", "dataFinalEndereco", "cpf", "idTipoContratoResidencial", "idEndereco"},
-              new Object[]{enderecoResult[1], enderecoResult[2], cpfUsuario, 1, enderecoResult[0]});
+              new Object[]{enderecoResult[1], enderecoResult[2], cpfUsuario, enderecoResult[6], enderecoResult[0]});
 
     }
 
@@ -139,15 +139,17 @@ public class DatabaseSeeder {
             "Pós-doutorado"
     };
 
-    String[] estadoCivil =
+    String[] estadosCivis =
             {"Solteiro", "Casado", " Viuvo", "Divorciado"};
 
-//TODO:AJUSTAR OS IDS DE ESCOLARIDADE E ESTADO CIVIL
+    int escolaridade =  faker.number().numberBetween(1,12);
+    int estadoCivil =  faker.number().numberBetween(1,4);
+
     create("usuario",
             new String[]{"cpf", "nome", "dataNascimento", "dependentes", "idEscolaridade", "idEstadoCivil"},
-            new Object[]{cpf, nome, dataNascimento, dependentes, 1, 1});
+            new Object[]{cpf, nome, dataNascimento, dependentes, escolaridade, estadoCivil});
 
-    return new Object[]{cpf, nome, dataNascimento, dependentes, 1, 1};
+    return new Object[]{cpf, nome, dataNascimento, dependentes, escolaridade, estadoCivil};
   }
 
   public static Object[] criarHistoricoCredito(String cpf) {
@@ -212,17 +214,18 @@ public class DatabaseSeeder {
     }
 
     String[] vinculosTrabalistas = {"Estagio", "CLT", "Autonomo", "PJ"};
-    String vinculoTrabalista = calculadorProbabilidade(1, vinculosTrabalistas);
+    String tipoVinculoTrabalista = calculadorProbabilidade(1, vinculosTrabalistas);
 
-    int salario = Objects.equals(vinculoTrabalista, "Estagio") ?
+    int salario = Objects.equals(tipoVinculoTrabalista, "Estagio") ?
             faker.number().numberBetween(1528, 3500) :
             Math.max(1518, Math.max(sorteadorDeRenda(nivelRenda, valoresSalarioNivelRenda), sorteadorDeRenda(nivelRenda, valoresSalarioNivelRenda)));
 
-    //TODO:ATUALIZAR A ALEATORIEDADE DO VINCULO TRABALISTA
-    create("emprego", new String[]{"salarioEsperado", "dataInicioEmprego", "dataFinalEmprego", "idVinculoTrabalhista", "cpf"},
-            new Object[]{salario, comecoEmprego, fimEmprego, 1, cpf});
 
-    return new Object[]{salario, comecoEmprego, fimEmprego, 1, cpf};
+    int vinculoTrabalista =  faker.number().numberBetween(1,4);
+    create("emprego", new String[]{"salarioEsperado", "dataInicioEmprego", "dataFinalEmprego", "idVinculoTrabalhista", "cpf"},
+            new Object[]{salario, comecoEmprego, fimEmprego,vinculoTrabalista, cpf});
+
+    return new Object[]{salario, comecoEmprego, fimEmprego,vinculoTrabalista, cpf};
   }
 
   public static Object[] criarEnderecoAleatorio(
@@ -236,11 +239,11 @@ public class DatabaseSeeder {
     LocalDate dataInicioEndereco = dataInicio.plusDays(faker.number().numberBetween(1, 60));
     LocalDate dataFimEndereco = ultimoEndereco ? null : geradorDataFim(dataInicioEndereco);
 
-
+    int contratoResidencial = faker.number().numberBetween(1,3);
     int idEndereco = create("endereco", new String[]{"cep", "numero", "estado"}, new Object[]{cep, numero, estado});
 
     return
-            new Object[]{idEndereco, dataInicioEndereco, dataFimEndereco, cep, numero, estado};
+            new Object[]{idEndereco, dataInicioEndereco, dataFimEndereco, cep, numero, estado,contratoResidencial };
   }
 
 
@@ -353,7 +356,7 @@ public class DatabaseSeeder {
 
   public static void main(String[] args) {
 
-    for (int i = 0; i < 30; i++) {
+    for (int i = 0; i < 2; i++) {
       test();
     }
 
