@@ -6,6 +6,8 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import com.safescore.dao.db.DBconexao;
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Read {
 
@@ -180,6 +182,31 @@ public class Read {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+
+    public static List<Object[]> listarContratosResidenciaisPorCPF(String cpf) {
+        String sql = "SELECT * FROM contratoResidencial WHERE cpf = ?";
+        List<Object[]> contratos = new ArrayList<>();
+
+        try (Connection conn = DBconexao.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, cpf);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Object[] contrato = new Object[4];
+                contrato[0] = rs.getInt("idContratoResidencial");
+                contrato[1] = rs.getString("cpf");
+                contrato[2] = rs.getDate("dataInicialEndereco");
+                contrato[3] = rs.getDate("dataFinalEndereco");
+                contratos.add(contrato);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Idealmente, você pode tratar o erro de outra forma
+        }
+
+        return contratos;
     }
 
     public static void listarContratosResidenciais() {
