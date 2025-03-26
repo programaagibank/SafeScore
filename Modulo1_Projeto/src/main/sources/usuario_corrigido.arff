@@ -1,0 +1,14 @@
+@relation risco_credito
+
+@attribute saldo numeric
+@attribute investimentos numeric
+@attribute bens numeric
+@attribute media_parcela numeric
+@attribute credito_restante numeric
+@attribute meses_atrasado numeric
+@attribute entrada_media numeric
+@attribute saida_media numeric
+@attribute salario numeric
+@attribute score numeric
+
+@data
