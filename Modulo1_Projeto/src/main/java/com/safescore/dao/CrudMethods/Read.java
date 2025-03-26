@@ -185,7 +185,7 @@ public class Read {
     }
 
 
-    public static List<Object[]> listarContratosResidenciaisPorCPF(String cpf) {
+    public static List<Object[]> listarContratosResidenciais(String cpf) {
         String sql = "SELECT * FROM contratoResidencial WHERE cpf = ?";
         List<Object[]> contratos = new ArrayList<>();
 
