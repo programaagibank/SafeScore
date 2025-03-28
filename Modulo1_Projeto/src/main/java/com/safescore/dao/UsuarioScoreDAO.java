@@ -34,34 +34,60 @@ public class UsuarioScoreDAO {
         dataInicialEndereco = new Date(((Date) contratoResidencial[2]).getTime());
         LocalDate dataInicialLocalDate = dataInicialEndereco.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate dataHoje = LocalDate.now();
-        tempoEnderecoAtualDias = (int) ChronoUnit.DAYS.between(dataInicialLocalDate, dataHoje);
+        tempoEnderecoAtualDias = (int) ChronoUnit.YEARS.between(dataInicialLocalDate, dataHoje);
 
         break;
       }
     }
 
     String estado = (String) Read.listarEnderecos(idEndereco)[2];
-    int taxaCaged = getTaxaCaged(estado);
-    int totalEnderecos = contratos.size();
+    int taxaCaged = getTaxasEstaduais(estado)[0];
+    int taxaInadimplencia = getTaxasEstaduais(estado)[1];
     String tipoContratoResidencial = (String) Read.listarTipoContratoResidencial(idContratoResidencial)[1];
 
-    return new Object[]{totalEnderecos, tempoEnderecoAtualDias, taxaCaged, tipoContratoResidencial};
+    return new Object[]{tempoEnderecoAtualDias, tipoContratoResidencial, taxaCaged, taxaInadimplencia};
   }
 
-  private static int getTaxaCaged(String estado) {
-    Map<String, Integer> saldoPorEstado = Map.ofEntries(
-            Map.entry("AC", 1183), Map.entry("AL", -9589), Map.entry("AM", 3200),
-            Map.entry("AP", 277), Map.entry("BA", 12482), Map.entry("CE", 6185),
-            Map.entry("DF", 7023), Map.entry("ES", 6101), Map.entry("GO", 15742),
-            Map.entry("MA", 2777), Map.entry("MG", 40796), Map.entry("MS", 4197),
-            Map.entry("MT", 1085), Map.entry("PA", 2006), Map.entry("PB", 263),
-            Map.entry("PE", 1364), Map.entry("PI", 3015), Map.entry("PR", 17858),
-            Map.entry("RJ", 24466), Map.entry("RN", 1415), Map.entry("RO", 1395),
-            Map.entry("RR", 632), Map.entry("RS", 10490), Map.entry("SC", 13892),
-            Map.entry("SE", -1875), Map.entry("SP", 76941), Map.entry("TO", 977)
+//  public static void Object[] informacoesPessoais(String cpf){
+//    //rangeIdade
+//     //dependentes
+//     //estadoCivil
+//     //escolaridade
+//
+//    return;
+//  }
+
+  private static int[] getTaxasEstaduais(String estado) {
+    Map<String, int[]> saldoPorEstado = Map.ofEntries(
+            Map.entry("AC", new int[]{1183, 61}),
+            Map.entry("AL", new int[]{-9589, 44}),
+            Map.entry("AM", new int[]{3200, 54}),
+            Map.entry("AP", new int[]{277, 62}),
+            Map.entry("BA", new int[]{12482, 41}),
+            Map.entry("CE", new int[]{6185, 49}),
+            Map.entry("DF", new int[]{7023, 59}),
+            Map.entry("ES", new int[]{6101, 41}),
+            Map.entry("GO", new int[]{15742, 43}),
+            Map.entry("MA", new int[]{2777, 43}),
+            Map.entry("MG", new int[]{40796, 43}),
+            Map.entry("MS", new int[]{4197, 54}),
+            Map.entry("MT", new int[]{1085, 49}),
+            Map.entry("PA", new int[]{2006, 44}),
+            Map.entry("PB", new int[]{263, 41}),
+            Map.entry("PE", new int[]{1364, 46}),
+            Map.entry("PI", new int[]{3015, 37}),
+            Map.entry("PR", new int[]{17858, 42}),
+            Map.entry("RJ", new int[]{24466, 56}),
+            Map.entry("RN", new int[]{1415, 47}),
+            Map.entry("RO", new int[]{1395, 48}),
+            Map.entry("RR", new int[]{632, 50}),
+            Map.entry("RS", new int[]{10490, 41}),
+            Map.entry("SC", new int[]{13892, 36}),
+            Map.entry("SE", new int[]{-1875, 44}),
+            Map.entry("SP", new int[]{76941, 49}),
+            Map.entry("TO", new int[]{977, 51})
     );
 
-    int taxaCaged = saldoPorEstado.get(estado);
-    return taxaCaged;
+    return saldoPorEstado.getOrDefault(estado.toUpperCase(), new int[]{0, 0});
   }
 }
