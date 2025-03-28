@@ -8,10 +8,10 @@ import com.safescore.controller.UsuarioScoreController;
 public class Main {
   public static void main(String[] args) {
     try {
-      String cpf = "12345678900"; // exemplo
+      String cpf = "006.061.768-37"; // exemplo
 
       UsuarioScoreController analisador = new UsuarioScoreController();
-      analisador.treinarModelo("Modulo1_Projeto/src/main/sources/usuario.arff");
+      analisador.treinarModelo("Modulo1_Projeto/src/main/sources/usuario_categorizado.arff");
 
       Instance novoUsuario = analisador.extrairAtributosDeUsuario(cpf);
       double score = analisador.preverScore(novoUsuario);

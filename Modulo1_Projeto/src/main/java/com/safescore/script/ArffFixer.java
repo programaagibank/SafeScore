@@ -2,25 +2,27 @@ package com.safescore.script;
 
 import java.io.*;
 import java.nio.file.*;
-import java.util.regex.*;
+import java.util.*;
 
 public class ArffFixer {
 
     public static void corrigirArquivoArff(String entrada, String saida) {
-        try (BufferedReader reader = Files.newBufferedReader(Paths.get(entrada));
-             PrintWriter writer = new PrintWriter(Files.newBufferedWriter(Paths.get(saida)))) {
-
+        try (
+                BufferedReader reader = Files.newBufferedReader(Paths.get(entrada));
+                PrintWriter writer = new PrintWriter(Files.newBufferedWriter(Paths.get(saida)))
+        ) {
             String linha;
             boolean dentroDoData = false;
             int linhaAtual = 0;
 
-            Pattern virgulaDecimal = Pattern.compile("(?<=\\d),(?=\\d)");
-
             while ((linha = reader.readLine()) != null) {
                 linhaAtual++;
 
-                // Mantém cabeçalho como está
                 if (!dentroDoData) {
+                    if (linha.trim().equalsIgnoreCase("@attribute score numeric")) {
+                        writer.println("@attribute score {baixo,medio,alto}");
+                        continue;
+                    }
                     writer.println(linha);
                     if (linha.trim().equalsIgnoreCase("@data")) {
                         dentroDoData = true;
@@ -28,23 +30,31 @@ public class ArffFixer {
                     continue;
                 }
 
-                // Corrige linhas @data
                 if (linha.trim().isEmpty()) continue;
 
-                // Substitui vírgula decimal por ponto
-                String linhaCorrigida = virgulaDecimal.matcher(linha).replaceAll(".");
-
-                // Divide e valida número de colunas
-                String[] colunas = linhaCorrigida.split(",");
+                String[] colunas = linha.trim().split(",");
                 if (colunas.length != 10) {
-                    System.out.println("⚠️ Linha ignorada (colunas ≠ 10) [linha " + linhaAtual + "]: " + linhaCorrigida);
+                    System.out.println("⚠️ Linha ignorada (colunas ≠ 10): " + linhaAtual);
                     continue;
                 }
 
-                writer.println(linhaCorrigida);
+                List<String> dados = new ArrayList<>(Arrays.asList(colunas));
+
+                try {
+                    double score = Double.parseDouble(dados.get(9));
+                    String categoria;
+                    if (score <= 400) categoria = "baixo";
+                    else if (score <= 700) categoria = "medio";
+                    else categoria = "alto";
+
+                    dados.set(9, categoria); // substitui valor do score
+                    writer.println(String.join(",", dados));
+                } catch (NumberFormatException e) {
+                    System.out.println("❌ Erro ao converter score na linha " + linhaAtual + ": " + colunas[9]);
+                }
             }
 
-            System.out.println("✅ Arquivo corrigido gerado com sucesso em: " + saida);
+            System.out.println("✅ Arquivo categorizado gerado em: " + saida);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -53,8 +63,8 @@ public class ArffFixer {
 
     public static void main(String[] args) {
         corrigirArquivoArff(
-                "Modulo1_Projeto/src/main/sources/usuario.arff",            // arquivo original
-                "Modulo1_Projeto/src/main/sources/usuario_corrigido.arff"   // saída corrigida
+                "Modulo1_Projeto/src/main/sources/usuario.arff",
+                "Modulo1_Projeto/src/main/sources/usuario_categorizado.arff"
         );
     }
 }
