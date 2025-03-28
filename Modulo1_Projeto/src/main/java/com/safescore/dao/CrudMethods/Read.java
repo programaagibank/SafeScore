@@ -32,6 +32,32 @@ public class Read {
     }
   }
 
+  public static Object[] listarUsuarios(String cpf) {
+    String sql = "SELECT * FROM usuario WHERE cpf = ?";
+    Object[] usuario = new Object[6];
+
+    try (Connection conn = DBconexao.connect();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+      pstmt.setString(1, cpf);
+      ResultSet rs = pstmt.executeQuery();
+
+      while (rs.next()) {
+        usuario = new Object[6];
+        usuario[0] = rs.getString("cpf");
+        usuario[1] = rs.getString("nome");
+        usuario[2] = rs.getDate("dataNascimento");
+        usuario[3] = rs.getInt("dependentes");
+        usuario[4] = rs.getInt("idEscolaridade");
+        usuario[5] = rs.getInt("idEstadoCivil");
+      }
+    } catch (SQLException e) {
+      e.printStackTrace(); // Idealmente, você pode tratar o erro de outra forma
+    }
+    return usuario;
+  }
+
+
   public static void listarEmpregos() {
     String sql = "SELECT * FROM emprego";
     try (Connection conn = DBconexao.connect();
@@ -210,7 +236,6 @@ public class Read {
     } catch (SQLException e) {
       e.printStackTrace(); // Idealmente, você pode tratar o erro de outra forma
     }
-
     return contratos;
   }
 

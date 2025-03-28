@@ -4,6 +4,7 @@ import com.safescore.dao.CrudMethods.Read;
 
 import javax.xml.crypto.Data;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
@@ -48,14 +49,33 @@ public class UsuarioScoreDAO {
     return new Object[]{tempoEnderecoAtualDias, tipoContratoResidencial, taxaCaged, taxaInadimplencia};
   }
 
-//  public static void Object[] informacoesPessoais(String cpf){
-//    //rangeIdade
-//     //dependentes
-//     //estadoCivil
-//     //escolaridade
-//
-//    return;
-//  }
+  public static Object[] informacoesPessoais(String cpf) {
+    Object[] usuario = Read.listarUsuarios(cpf);
+
+    Date dataNascimento = new Date(((Date) usuario[2]).getTime());
+    LocalDate dataNascLocal = dataNascimento.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    int idade = Period.between(dataNascLocal, LocalDate.now()).getYears();
+    String rangeIdade = calcularRangeIdade(idade);
+
+
+    int dependentes = (int) usuario[3];
+    return new Object[]{
+            rangeIdade,
+            dependentes,
+    };
+  }
+
+  private static String calcularRangeIdade(int idade) {
+    if (idade <= 25) {
+      return "até 25";
+    } else if (idade <= 40) {
+      return "26 a 40";
+    } else if (idade <= 60) {
+      return "41 a 60";
+    } else {
+      return "acima de 60";
+    }
+  }
 
   private static int[] getTaxasEstaduais(String estado) {
     Map<String, int[]> saldoPorEstado = Map.ofEntries(
