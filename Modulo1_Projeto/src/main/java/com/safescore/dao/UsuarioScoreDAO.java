@@ -17,6 +17,7 @@ public class UsuarioScoreDAO {
 
   public static void main(String[] args) {
     estabilidadeEndereco("418.463.818-00");
+    informacoesPessoais("418.463.818-00");
   }
 
   public static Object[] estabilidadeEndereco(String cpf) {
@@ -57,11 +58,17 @@ public class UsuarioScoreDAO {
     int idade = Period.between(dataNascLocal, LocalDate.now()).getYears();
     String rangeIdade = calcularRangeIdade(idade);
 
-
     int dependentes = (int) usuario[3];
+
+    String escolaridade = (String) Read.listarEscolaridades((Integer) usuario[4])[1];
+
+    String estadoCivil = (String) Read.listarEstadoCivil((Integer) usuario[5])[1];
+
     return new Object[]{
             rangeIdade,
             dependentes,
+            escolaridade,
+            estadoCivil
     };
   }
 

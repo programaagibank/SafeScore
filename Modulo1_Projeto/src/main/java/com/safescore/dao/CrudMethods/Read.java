@@ -182,6 +182,27 @@ public class Read {
     }
   }
 
+  public static Object[] listarEstadoCivil(int idEstadoCivil) {
+    String sql = "SELECT * FROM estadoCivil WHERE idEstadoCivil = ?";
+    Object[] estadoCivil = new Object[2];
+
+    try (Connection conn = DBconexao.connect();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+      pstmt.setInt(1, idEstadoCivil);
+      ResultSet rs = pstmt.executeQuery();
+
+      while (rs.next()) {
+        estadoCivil = new Object[2];
+        estadoCivil[0] = rs.getString("idEstadoCivil");
+        estadoCivil[1] = rs.getString("estadoCivil");
+      }
+    } catch (SQLException e) {
+      e.printStackTrace(); // Idealmente, você pode tratar o erro de outra forma
+    }
+    return estadoCivil;
+  }
+
   public static void listarEscolaridades() {
     String sql = "SELECT * FROM escolaridade";
     try (Connection conn = DBconexao.connect();
@@ -195,6 +216,27 @@ public class Read {
     } catch (SQLException e) {
       e.printStackTrace();
     }
+  }
+
+  public static Object[] listarEscolaridades(int idEscolaridade) {
+    String sql = "SELECT * FROM escolaridade WHERE idEscolaridade = ?";
+    Object[] escolaridade = new Object[2];
+
+    try (Connection conn = DBconexao.connect();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+      pstmt.setInt(1, idEscolaridade);
+      ResultSet rs = pstmt.executeQuery();
+
+      while (rs.next()) {
+        escolaridade = new Object[2];
+        escolaridade[0] = rs.getString("idEscolaridade");
+        escolaridade[1] = rs.getString("escolaridade");
+      }
+    } catch (SQLException e) {
+      e.printStackTrace(); // Idealmente, você pode tratar o erro de outra forma
+    }
+    return escolaridade;
   }
 
   public static void listarVinculosTrabalhistas() {
