@@ -89,7 +89,6 @@ import java.sql.SQLException;
         // Testando a criação de um usuário
         Usuario usuario = new Usuario();
         usuario.setCpf("12345678900");
-        usuario.setNome("João Silva");
         usuario.setNumeroDependentes(2);
         usuario.setEscolaridade("Superior Completo");
         usuario.setEstadoCivil("Casado");
@@ -101,7 +100,6 @@ import java.sql.SQLException;
         // Testando a busca do usuário pelo CPF
         Usuario usuarioBuscado = Usuario.buscarUsuario("12345678900");
         if (usuarioBuscado != null) {
-            System.out.println("Usuário encontrado: " + usuarioBuscado.getNome());
             System.out.println("Score do usuário: " + usuarioBuscado.getScore());
         } else {
             System.out.println("Usuário não encontrado.");

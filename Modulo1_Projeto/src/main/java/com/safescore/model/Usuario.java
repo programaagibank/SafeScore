@@ -9,7 +9,6 @@ import com.safescore.dao.db.DBconexao;
 public class Usuario {
     // Atributos privados
     private String cpf;
-    private String nome;
     private String rangeIdade;
     private int numeroDependentes;
     private String estadoCivil;
@@ -45,7 +44,6 @@ public class Usuario {
             if (rs.next()) {
                 Usuario usuario = new Usuario();
                 usuario.setCpf(rs.getString("cpf"));
-                usuario.setNome(rs.getString("nome"));
                 usuario.setNumeroDependentes(rs.getInt("dependentes"));
                 usuario.setEscolaridade(rs.getString("escolaridade"));
                 usuario.setEstadoCivil(rs.getString("estadoCivil"));
@@ -61,9 +59,6 @@ public class Usuario {
     // Getters e Setters
     public String getCpf() { return cpf; }
     public void setCpf(String cpf) { this.cpf = cpf; }
-
-    public String getNome() { return nome; }
-    public void setNome(String nome) { this.nome = nome; }
 
     public String getRangeIdade() { return rangeIdade; }
     public void setRangeIdade(String rangeIdade) { this.rangeIdade = rangeIdade; }
@@ -130,15 +125,14 @@ public class Usuario {
 
     // Método para salvar usuário no banco
     public void salvarUsuario() {
-        String sql = "INSERT INTO usuario (cpf, nome, dependentes, escolaridade, estadoCivil, score) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO usuario (cpf, dependentes, escolaridade, estadoCivil, score) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = DBconexao.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, this.cpf);
-            pstmt.setString(2, this.nome);
-            pstmt.setInt(3, this.numeroDependentes);
-            pstmt.setString(4, this.escolaridade);
-            pstmt.setString(5, this.estadoCivil);
-            pstmt.setInt(6, this.score); // Incluindo o campo score
+            pstmt.setInt(2, this.numeroDependentes);
+            pstmt.setString(3, this.escolaridade);
+            pstmt.setString(4, this.estadoCivil);
+            pstmt.setInt(5, this.score); // Incluindo o campo score
             pstmt.executeUpdate();
             System.out.println("Usuário cadastrado com sucesso!");
         } catch (SQLException e) {
@@ -146,4 +140,3 @@ public class Usuario {
         }
     }
 }
-
