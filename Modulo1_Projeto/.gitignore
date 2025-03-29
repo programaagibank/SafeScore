@@ -2,5 +2,6 @@ build/
 # Ignorar pastas e arquivos gerados pelo build e IDE
 .gradle/
 build/
+*.lock
 .idea/
 *.jar
