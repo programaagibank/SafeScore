@@ -4,7 +4,8 @@ import weka.classifiers.Classifier;
 import weka.classifiers.trees.J48;
 import weka.core.*;
 import weka.core.converters.ConverterUtils.DataSource;
-
+import weka.classifiers.Evaluation;
+import java.util.Random;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,6 +83,32 @@ public class UsuarioScoreController {
         novo.setDataset(trainingData); // precisa apontar para o dataset com metadados
         return novo;
     }
+
+    public void avaliarModelo() {
+        try {
+            if (trainingData == null || model == null) {
+                System.out.println("⚠️ Modelo não treinado ainda. Treinando agora...");
+                treinarModelo("Modulo1_Projeto/src/main/sources/usuario_categorizado.arff");
+            }
+
+            Evaluation avaliacao = new Evaluation(trainingData);
+            int folds = Math.min(10, trainingData.numInstances()); // evita erro com poucos dados
+            avaliacao.crossValidateModel(model, trainingData, folds, new Random(1));
+
+            System.out.println("\n🔍 === Avaliação do Modelo ===");
+            System.out.printf("✅ Acurácia: %.2f%%\n", (1 - avaliacao.errorRate()) * 100);
+            System.out.println("\n📊 Detalhes por Classe:");
+            System.out.println(avaliacao.toClassDetailsString());
+
+            System.out.println("\n📌 Matriz de Confusão:");
+            System.out.println(avaliacao.toMatrixString());
+
+        } catch (Exception e) {
+            System.out.println("❌ Erro durante avaliação: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
 
     public double preverScore(Instance instancia) throws Exception {
         return model.classifyInstance(instancia);

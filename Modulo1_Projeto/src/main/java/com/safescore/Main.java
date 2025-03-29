@@ -22,6 +22,10 @@ public class Main {
       } else {
         System.out.println("✅ Risco de crédito: BAIXO");
       }
+
+      UsuarioScoreController analisador1 = new UsuarioScoreController();
+      analisador1.avaliarModelo();
+
     } catch (Exception e) {
       e.printStackTrace();
     }
