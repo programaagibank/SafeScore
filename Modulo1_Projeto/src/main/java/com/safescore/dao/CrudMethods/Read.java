@@ -52,7 +52,7 @@ public class Read {
         usuario[5] = rs.getInt("idEstadoCivil");
       }
     } catch (SQLException e) {
-      e.printStackTrace(); // Idealmente, você pode tratar o erro de outra forma
+      e.printStackTrace();
     }
     return usuario;
   }
@@ -75,6 +75,33 @@ public class Read {
     } catch (SQLException e) {
       e.printStackTrace();
     }
+  }
+
+  public static List<Object[]> listarEmpregos(String cpf) {
+    String sql = "SELECT * FROM emprego WHERE cpf = ?";
+    List<Object[]> empregos = new ArrayList<>();
+
+    try (Connection conn = DBconexao.connect();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      pstmt.setString(1, cpf);
+      ResultSet rs = pstmt.executeQuery();
+
+      while (rs.next()) {
+        Object[] emprego = new Object[6];
+        emprego[0] = rs.getInt("idEmprego");
+        emprego[1] = rs.getDouble("salarioEsperado");
+        emprego[2] = rs.getDate("dataInicioEmprego");
+        emprego[3] = rs.getDate("dataFinalEmprego");
+        emprego[4] = rs.getInt("idVinculoTrabalhista");
+        emprego[5] = rs.getString("cpf");
+
+
+        empregos.add(emprego);
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return empregos;
   }
 
   public static void listarHistoricoCredito() {
@@ -198,7 +225,7 @@ public class Read {
         estadoCivil[1] = rs.getString("estadoCivil");
       }
     } catch (SQLException e) {
-      e.printStackTrace(); // Idealmente, você pode tratar o erro de outra forma
+      e.printStackTrace();
     }
     return estadoCivil;
   }
@@ -234,7 +261,7 @@ public class Read {
         escolaridade[1] = rs.getString("escolaridade");
       }
     } catch (SQLException e) {
-      e.printStackTrace(); // Idealmente, você pode tratar o erro de outra forma
+      e.printStackTrace();
     }
     return escolaridade;
   }
@@ -252,6 +279,27 @@ public class Read {
     } catch (SQLException e) {
       e.printStackTrace();
     }
+  }
+
+  public static Object[] listarVinculoTrabalhista(int idVinculoTrabalhista) {
+    String sql = "SELECT * FROM vinculoTrabalhista WHERE idVinculoTrabalhista = ?";
+    Object[] vinculo = new Object[2];
+
+    try (Connection conn = DBconexao.connect();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+      pstmt.setInt(1, idVinculoTrabalhista);
+      ResultSet rs = pstmt.executeQuery();
+
+      while (rs.next()) {
+        vinculo = new Object[2];
+        vinculo[0] = rs.getInt("idVinculoTrabalhista"); // ID como String (igual ao exemplo)
+        vinculo[1] = rs.getString("vinculo"); // Nome do vínculo
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return vinculo;
   }
 
 
@@ -276,7 +324,7 @@ public class Read {
         contratos.add(contrato);
       }
     } catch (SQLException e) {
-      e.printStackTrace(); // Idealmente, você pode tratar o erro de outra forma
+      e.printStackTrace();
     }
     return contratos;
   }
@@ -323,7 +371,6 @@ public class Read {
          ResultSet rs = stmt.executeQuery(sql)) {
 
       while (rs.next()) {
-        // Ajuste o tamanho conforme as colunas da tabela
         tipo[0] = rs.getString("idTipoContratoResidencial");
         tipo[1] = rs.getString("tipo");;
       }
@@ -342,7 +389,6 @@ public class Read {
          ResultSet rs = stmt.executeQuery(sql)) {
 
       while (rs.next()) {
-         // Ajuste o tamanho conforme as colunas da tabela
         endereco[0] = rs.getString("cep");
         endereco[1] = rs.getInt("numero");
         endereco[2] = rs.getString("estado");

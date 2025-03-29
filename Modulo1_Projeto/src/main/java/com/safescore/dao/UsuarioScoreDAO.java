@@ -2,7 +2,6 @@ package com.safescore.dao;
 
 import com.safescore.dao.CrudMethods.Read;
 
-import javax.xml.crypto.Data;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
@@ -16,12 +15,13 @@ public class UsuarioScoreDAO {
 
 
   public static void main(String[] args) {
-    estabilidadeEndereco("418.463.818-00");
-    informacoesPessoais("418.463.818-00");
+//    estabilidadeEndereco("418.463.818-00");
+//    informacoesPessoais("418.463.818-00");
+    empregoVinculoTrabalhista("418.463.818-00");
   }
 
   public static Object[] estabilidadeEndereco(String cpf) {
-    int tempoEnderecoAtualDias = 0;
+    int tempoEnderecoAtualAnos = 0;
     int idEndereco = 0;
     int idContratoResidencial = 0;
     Date dataInicialEndereco;
@@ -36,7 +36,7 @@ public class UsuarioScoreDAO {
         dataInicialEndereco = new Date(((Date) contratoResidencial[2]).getTime());
         LocalDate dataInicialLocalDate = dataInicialEndereco.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate dataHoje = LocalDate.now();
-        tempoEnderecoAtualDias = (int) ChronoUnit.YEARS.between(dataInicialLocalDate, dataHoje);
+        tempoEnderecoAtualAnos = (int) ChronoUnit.YEARS.between(dataInicialLocalDate, dataHoje);
 
         break;
       }
@@ -47,7 +47,7 @@ public class UsuarioScoreDAO {
     int taxaInadimplencia = getTaxasEstaduais(estado)[1];
     String tipoContratoResidencial = (String) Read.listarTipoContratoResidencial(idContratoResidencial)[1];
 
-    return new Object[]{tempoEnderecoAtualDias, tipoContratoResidencial, taxaCaged, taxaInadimplencia};
+    return new Object[]{tempoEnderecoAtualAnos, tipoContratoResidencial, taxaCaged, taxaInadimplencia};
   }
 
   public static Object[] informacoesPessoais(String cpf) {
@@ -59,9 +59,7 @@ public class UsuarioScoreDAO {
     String rangeIdade = calcularRangeIdade(idade);
 
     int dependentes = (int) usuario[3];
-
     String escolaridade = (String) Read.listarEscolaridades((Integer) usuario[4])[1];
-
     String estadoCivil = (String) Read.listarEstadoCivil((Integer) usuario[5])[1];
 
     return new Object[]{
@@ -71,6 +69,37 @@ public class UsuarioScoreDAO {
             estadoCivil
     };
   }
+
+  public static Object[] empregoVinculoTrabalhista(String cpf) {
+    List<Object[]> empregos = Read.listarEmpregos(cpf);
+
+    if (empregos.isEmpty()) {
+      return new Object[]{0, 0, "Sem vínculo"};
+    }
+
+    Object[] emprego = empregos.getLast();
+
+    double salarioEsperado = (double) emprego[1];
+
+    java.sql.Date dataInicioEmprego = (java.sql.Date) emprego[2];
+    LocalDate dataInicioEmpregoLocalDate = dataInicioEmprego.toLocalDate();
+
+    LocalDate dataHoje = LocalDate.now();
+    int tempoEmpregoAnos = (int) ChronoUnit.YEARS.between(dataInicioEmpregoLocalDate, dataHoje);
+
+    int idVinculo = (int) emprego[4];
+    Object[] vinculo = Read.listarVinculoTrabalhista(idVinculo);
+    String tipoVinculo = vinculo.length > 1 ? (String) vinculo[1] : "Desconhecido";
+    System.out.println(salarioEsperado);
+    System.out.println(tempoEmpregoAnos);
+    System.out.println(tipoVinculo);
+    return new Object[]{
+            (int) salarioEsperado,
+            tempoEmpregoAnos,
+            tipoVinculo
+    };
+  }
+
 
   private static String calcularRangeIdade(int idade) {
     if (idade <= 25) {
