@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.safescore.dao.db.DBconexao;
 
-public class UsuarioScoreController {
+public class WekaController {
     private Classifier model;
     private Instances trainingData;
 

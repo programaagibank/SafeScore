@@ -1,16 +1,14 @@
 package com.safescore;
 
 import weka.core.Instance;
-import weka.core.Instances;
-import weka.core.converters.ConverterUtils.DataSource;
-import com.safescore.controller.UsuarioScoreController;
+import com.safescore.controller.WekaController;
 
 public class Main {
   public static void main(String[] args) {
     try {
       String cpf = "006.061.768-37"; // exemplo
 
-      UsuarioScoreController analisador = new UsuarioScoreController();
+      WekaController analisador = new WekaController();
       analisador.treinarModelo("Modulo1_Projeto/src/main/sources/usuario_categorizado.arff");
 
       Instance novoUsuario = analisador.extrairAtributosDeUsuario(cpf);
@@ -23,7 +21,7 @@ public class Main {
         System.out.println("✅ Risco de crédito: BAIXO");
       }
 
-      UsuarioScoreController analisador1 = new UsuarioScoreController();
+      WekaController analisador1 = new WekaController();
       analisador1.avaliarModelo();
 
     } catch (Exception e) {
