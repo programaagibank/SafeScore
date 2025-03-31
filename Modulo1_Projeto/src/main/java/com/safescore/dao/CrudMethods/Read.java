@@ -125,6 +125,35 @@ public class Read {
     }
   }
 
+  public static List<Object[]> listarHistoricoCredito(String cpf) {
+    String sql = "SELECT * FROM historicoCredito WHERE cpf = ?";
+    List<Object[]> historicos = new ArrayList<>();
+
+    try (Connection conn = DBconexao.connect();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+      pstmt.setString(1, cpf);
+      ResultSet rs = pstmt.executeQuery();
+
+      while (rs.next()) {
+        Object[] historico = new Object[8];
+        historico[0] = rs.getInt("idCredito");
+        historico[1] = rs.getString("cpf");
+        historico[2] = rs.getInt("parcelasRestantes");
+        historico[3] = rs.getDouble("valorParcela");
+        historico[4] = rs.getInt("mesesAtrasado");
+        historico[5] = rs.getBoolean("estaInadimplente");
+        historico[6] = rs.getDouble("valorCreditoRestante");
+        historico[7] = rs.getDouble("valorCredito");
+
+        historicos.add(historico);
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return historicos;
+  }
+
   public static void listarAcessos() {
     String sql = "SELECT * FROM acessos";
     try (Connection conn = DBconexao.connect();
@@ -157,6 +186,31 @@ public class Read {
     } catch (SQLException e) {
       e.printStackTrace();
     }
+  }
+
+  public static Object[] listarPatrimonios(String cpf) {
+    String sql = "SELECT * FROM patrimonio WHERE cpf = ?";
+    List<Object[]> patrimonios = new ArrayList<>();
+
+    try (Connection conn = DBconexao.connect();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+      pstmt.setString(1, cpf);
+      ResultSet rs = pstmt.executeQuery();
+
+      while (rs.next()) {
+        Object[] patrimonio = new Object[5];
+        patrimonio[0] = rs.getInt("idPatrimonio");
+        patrimonio[1] = rs.getString("cpf");
+        patrimonio[2] = rs.getDouble("montanteInvestimentos");
+        patrimonio[3] = rs.getDouble("montanteBens");
+        patrimonio[4] = rs.getDouble("saldo");
+        patrimonios.add(patrimonio);
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return patrimonios.toArray(new Object[0][]);
   }
 
   public static void listarScores() {
@@ -192,6 +246,32 @@ public class Read {
     } catch (SQLException e) {
       e.printStackTrace();
     }
+  }
+
+  public static List<Object[]> listarTransacoes(String cpf) {
+    String sql = "SELECT * FROM transacao WHERE cpf = ?";
+    List<Object[]> transacoes = new ArrayList<>();
+
+    try (Connection conn = DBconexao.connect();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+      pstmt.setString(1, cpf);
+      ResultSet rs = pstmt.executeQuery();
+
+      while (rs.next()) {
+        Object[] transacao = new Object[5];
+        transacao[0] = rs.getInt("idTransacao");
+        transacao[1] = rs.getString("cpf");
+        transacao[2] = rs.getDate("dataRecorteTransacao");
+        transacao[3] = rs.getDouble("valorEntrada");
+        transacao[4] = rs.getDouble("valorSaida");
+
+        transacoes.add(transacao);
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return transacoes;
   }
 
   public static void listarEstadosCivis() {
@@ -293,8 +373,8 @@ public class Read {
 
       while (rs.next()) {
         vinculo = new Object[2];
-        vinculo[0] = rs.getInt("idVinculoTrabalhista"); // ID como String (igual ao exemplo)
-        vinculo[1] = rs.getString("vinculo"); // Nome do vínculo
+        vinculo[0] = rs.getInt("idVinculoTrabalhista");
+        vinculo[1] = rs.getString("vinculo");
       }
     } catch (SQLException e) {
       e.printStackTrace();

@@ -13,13 +13,6 @@ import java.util.Map;
 
 public class UsuarioScoreDAO {
 
-
-  public static void main(String[] args) {
-//    estabilidadeEndereco("418.463.818-00");
-//    informacoesPessoais("418.463.818-00");
-    empregoVinculoTrabalhista("418.463.818-00");
-  }
-
   public static Object[] estabilidadeEndereco(String cpf) {
     int tempoEnderecoAtualAnos = 0;
     int idEndereco = 0;
@@ -73,10 +66,6 @@ public class UsuarioScoreDAO {
   public static Object[] empregoVinculoTrabalhista(String cpf) {
     List<Object[]> empregos = Read.listarEmpregos(cpf);
 
-    if (empregos.isEmpty()) {
-      return new Object[]{0, 0, "Sem vínculo"};
-    }
-
     Object[] emprego = empregos.getLast();
 
     double salarioEsperado = (double) emprego[1];
@@ -89,14 +78,50 @@ public class UsuarioScoreDAO {
 
     int idVinculo = (int) emprego[4];
     Object[] vinculo = Read.listarVinculoTrabalhista(idVinculo);
-    String tipoVinculo = vinculo.length > 1 ? (String) vinculo[1] : "Desconhecido";
-    System.out.println(salarioEsperado);
-    System.out.println(tempoEmpregoAnos);
-    System.out.println(tipoVinculo);
+    String tipoVinculo = (String) vinculo[1];
+
     return new Object[]{
             (int) salarioEsperado,
             tempoEmpregoAnos,
             tipoVinculo
+    };
+  }
+
+  public static Object[] historicoFinanceiro(String cpf) {
+    Object[] patrimonio = Read.listarPatrimonios(cpf);
+    int montanteInvestimentos = (int) patrimonio[2];
+    int montanteBens = (int) patrimonio[3];
+    int saldoBancario = (int) patrimonio[4];
+
+    Object[] ultimaTransacao = Read.listarTransacoes(cpf).getLast();
+    int restanteMensal = ((int) ultimaTransacao[3]) - ((int) ultimaTransacao[4]);
+
+    List<Object[]> creditos = Read.listarHistoricoCredito(cpf);
+    boolean jaFoiInadimplente = false;
+    int valorParcelasAtivas = 0;
+    int mesesAtrasado = 0;
+    int valorCreditoRestanteTotal = 0;
+
+    for (Object[] credito : creditos){
+      if ((boolean) credito[5]) {
+        jaFoiInadimplente = true;
+      }
+      valorParcelasAtivas += (int) credito[6] == 0? 0 : (int) credito[3];
+
+      mesesAtrasado = Math.max(mesesAtrasado, (int) credito[4]);
+
+      valorCreditoRestanteTotal += (int) credito[6] == 0? 0 : (int) credito[6];
+    }
+
+    return new Object[]{
+            montanteInvestimentos,
+            montanteBens,
+            saldoBancario,
+            restanteMensal,
+            jaFoiInadimplente,
+            valorParcelasAtivas,
+            mesesAtrasado,
+            valorCreditoRestanteTotal
     };
   }
 
