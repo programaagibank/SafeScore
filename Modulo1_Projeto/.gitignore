@@ -1,6 +1,10 @@
 build/
+
 # Ignorar pastas e arquivos gerados pelo build e IDE
-.gradle/
-build/
 .idea/
 *.jar
+
+# Ignorar arquivos do Gradle
+Modulo1_Projeto/.gradle/
+
+
