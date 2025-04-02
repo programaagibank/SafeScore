@@ -1,11 +1,5 @@
 package com.safescore.model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import com.safescore.dao.db.DBconexao;
-
 public class Usuario {
     // Atributos privados
     private String cpf;
@@ -15,9 +9,7 @@ public class Usuario {
     private String escolaridade;
     private int tempoEnderecoAnos;
     private String nivelInadimplenciaEstado;
-    private double taxaCAGED;
     private String tipoContratoResidencia;
-    private double taxaSELIC;
     private String tipoEmprego;
     private int tempoEmpregoAtual;
     private double salarioLiquidoMensal;
@@ -26,34 +18,35 @@ public class Usuario {
     private double saldo;
     private double restanteMensal;
     private boolean estaInadimplente;
-    private double valorParcela;
+    private double valorParcelaAtiva;
     private int mesesAtrasado;
-    private double valorCreditoRestante;
-    private int score;
+    private double valorCreditoRestanteTotal;
 
     // Construtor
-    public Usuario() {}
-
-    // Método para buscar usuário pelo CPF
-    public static Usuario buscarUsuario(String cpf) {
-        String sql = "SELECT * FROM usuario WHERE cpf = ?";
-        try (Connection conn = DBconexao.connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, cpf);
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                Usuario usuario = new Usuario();
-                usuario.setCpf(rs.getString("cpf"));
-                usuario.setNumeroDependentes(rs.getInt("dependentes"));
-                usuario.setEscolaridade(rs.getString("escolaridade"));
-                usuario.setEstadoCivil(rs.getString("estadoCivil"));
-                usuario.setScore(rs.getInt("score")); // Adicionando o campo score
-                return usuario;
-            }
-        } catch (SQLException e) {
-            System.out.println("Erro ao buscar usuário: " + e.getMessage());
-        }
-        return null; // Retorna null se não encontrar o usuário
+        public Usuario(String cpf, String rangeIdade, int numeroDependentes, String estadoCivil, String escolaridade,
+                   int tempoEnderecoAnos, String nivelInadimplenciaEstado, String tipoContratoResidencia,
+                   String tipoEmprego, int tempoEmpregoAtual, double salarioLiquidoMensal,
+                   double montanteInvestimentos, double montanteBens, double saldo, double restanteMensal,
+                   boolean estaInadimplente, double valorParcelaAtiva, int mesesAtrasado, double valorCreditoRestanteTotal) {
+        this.cpf = cpf;
+        this.rangeIdade = rangeIdade;
+        this.numeroDependentes = numeroDependentes;
+        this.estadoCivil = estadoCivil;
+        this.escolaridade = escolaridade;
+        this.tempoEnderecoAnos = tempoEnderecoAnos;
+        this.nivelInadimplenciaEstado = nivelInadimplenciaEstado;
+        this.tipoContratoResidencia = tipoContratoResidencia;
+        this.tipoEmprego = tipoEmprego;
+        this.tempoEmpregoAtual = tempoEmpregoAtual;
+        this.salarioLiquidoMensal = salarioLiquidoMensal;
+        this.montanteInvestimentos = montanteInvestimentos;
+        this.montanteBens = montanteBens;
+        this.saldo = saldo;
+        this.restanteMensal = restanteMensal;
+        this.estaInadimplente = estaInadimplente;
+        this.valorParcelaAtiva = valorParcelaAtiva;
+        this.mesesAtrasado = mesesAtrasado;
+        this.valorCreditoRestanteTotal = valorCreditoRestanteTotal;
     }
 
     // Getters e Setters
@@ -78,14 +71,8 @@ public class Usuario {
     public String getNivelInadimplenciaEstado() { return nivelInadimplenciaEstado; }
     public void setNivelInadimplenciaEstado(String nivelInadimplenciaEstado) { this.nivelInadimplenciaEstado = nivelInadimplenciaEstado; }
 
-    public double getTaxaCAGED() { return taxaCAGED; }
-    public void setTaxaCAGED(double taxaCAGED) { this.taxaCAGED = taxaCAGED; }
-
     public String getTipoContratoResidencia() { return tipoContratoResidencia; }
     public void setTipoContratoResidencia(String tipoContratoResidencia) { this.tipoContratoResidencia = tipoContratoResidencia; }
-
-    public double getTaxaSELIC() { return taxaSELIC; }
-    public void setTaxaSELIC(double taxaSELIC) { this.taxaSELIC = taxaSELIC; }
 
     public String getTipoEmprego() { return tipoEmprego; }
     public void setTipoEmprego(String tipoEmprego) { this.tipoEmprego = tipoEmprego; }
@@ -111,32 +98,14 @@ public class Usuario {
     public boolean isEstaInadimplente() { return estaInadimplente; }
     public void setEstaInadimplente(boolean estaInadimplente) { this.estaInadimplente = estaInadimplente; }
 
-    public double getValorParcela() { return valorParcela; }
-    public void setValorParcela(double valorParcela) { this.valorParcela = valorParcela; }
+    public double getValorParcelaAtiva() { return valorParcelaAtiva; }
+    public void setValorParcelaAtiva(double valorParcelaAtiva) { this.valorParcelaAtiva = valorParcelaAtiva; }
 
     public int getMesesAtrasado() { return mesesAtrasado; }
     public void setMesesAtrasado(int mesesAtrasado) { this.mesesAtrasado = mesesAtrasado; }
 
-    public double getValorCreditoRestante() { return valorCreditoRestante; }
-    public void setValorCreditoRestante(double valorCreditoRestante) { this.valorCreditoRestante = valorCreditoRestante; }
+    public double getValorCreditoRestanteTotal() { return valorCreditoRestanteTotal; }
+    public void setValorCreditoRestanteTotal(double valorCreditoRestanteTotal) { this.valorCreditoRestanteTotal = valorCreditoRestanteTotal; }
 
-    public int getScore() { return score; }
-    public void setScore(int score) { this.score = score; }
 
-    // Método para salvar usuário no banco
-    public void salvarUsuario() {
-        String sql = "INSERT INTO usuario (cpf, dependentes, escolaridade, estadoCivil, score) VALUES (?, ?, ?, ?, ?)";
-        try (Connection conn = DBconexao.connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, this.cpf);
-            pstmt.setInt(2, this.numeroDependentes);
-            pstmt.setString(3, this.escolaridade);
-            pstmt.setString(4, this.estadoCivil);
-            pstmt.setInt(5, this.score); // Incluindo o campo score
-            pstmt.executeUpdate();
-            System.out.println("Usuário cadastrado com sucesso!");
-        } catch (SQLException e) {
-            System.out.println("Erro ao salvar usuário: " + e.getMessage());
-        }
-    }
 }
