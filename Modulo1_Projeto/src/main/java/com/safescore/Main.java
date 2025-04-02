@@ -3,6 +3,7 @@ package com.safescore;
 import com.safescore.dao.CrudMethods.Read;
 import com.safescore.dao.db.DBconexao;
 import com.safescore.dao.CrudMethods.Update;
+import com.safescore.service.IndicadoresService;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -10,6 +11,12 @@ public class Main {
   public static void main(String[] args) {
 
     System.out.println("<>Main<>");
+
+    // Exibir a Taxa Selic e Inflação
+/*    String selic = IndicadoresService.getTaxaSelic();
+    String inflacao = IndicadoresService.getInflacaoIPCA();
+    System.out.println("Taxa Selic Atual: " + selic);
+    System.out.println("Inflação (IPCA) Atual: " + inflacao);*/
 
 //    System.out.println("\n=== Usuários ===");
 //    Read.listarUsuarios();
