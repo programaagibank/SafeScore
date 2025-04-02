@@ -1,14 +1,13 @@
 package com.safescore.dao;
 
 import com.safescore.dao.CrudMethods.Read;
+import com.safescore.model.Usuario;
 
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class UsuarioScoreDAO {
 
@@ -38,8 +37,8 @@ public class UsuarioScoreDAO {
     int taxaCaged = getTaxasEstaduais(estado)[0];
     int taxaInadimplencia = getTaxasEstaduais(estado)[1];
     String tipoContratoResidencial = (String) Read.listarTipoContratoResidencial(idContratoResidencial)[1];
-
-    return new Object[]{tempoEnderecoAtualAnos, tipoContratoResidencial, taxaCaged, taxaInadimplencia};
+    //TODO TaxaCaged
+    return new Object[]{tempoEnderecoAtualAnos, taxaInadimplencia, tipoContratoResidencial};
   }
 
   public static Object[] informacoesPessoais(String cpf) {
@@ -57,8 +56,8 @@ public class UsuarioScoreDAO {
     return new Object[]{
             rangeIdade,
             dependentes,
-            escolaridade,
-            estadoCivil
+            estadoCivil,
+            escolaridade
     };
   }
 
@@ -80,36 +79,49 @@ public class UsuarioScoreDAO {
     String tipoVinculo = (String) vinculo[1];
 
     return new Object[]{
-            (int) salarioEsperado,
+            tipoVinculo,
             tempoEmpregoAnos,
-            tipoVinculo
+            (int) salarioEsperado
     };
   }
 
   public static Object[] historicoFinanceiro(String cpf) {
     Object[] patrimonio = Read.listarPatrimonios(cpf);
-    int montanteInvestimentos = (int) patrimonio[2];
-    int montanteBens = (int) patrimonio[3];
-    int saldoBancario = (int) patrimonio[4];
+    double montanteInvestimentos = (double) patrimonio[1];
+    double montanteBens = (double) patrimonio[2];
+    double saldoBancario = (double) patrimonio[3];
 
     Object[] ultimaTransacao = Read.listarTransacoes(cpf).getLast();
-    int restanteMensal = ((int) ultimaTransacao[3]) - ((int) ultimaTransacao[4]);
+    double restanteMensal = ((double) ultimaTransacao[2]) - ((double) ultimaTransacao[3]);
 
     List<Object[]> creditos = Read.listarHistoricoCredito(cpf);
-    boolean jaFoiInadimplente = false;
-    int valorParcelasAtivas = 0;
-    int mesesAtrasado = 0;
-    int valorCreditoRestanteTotal = 0;
+    if (creditos.isEmpty()) {
+      return new Object[]{
+              montanteInvestimentos,
+              montanteBens,
+              saldoBancario,
+              restanteMensal,
+              false,
+              0,
+              0,
+              0
+      };
+    }
 
-    for (Object[] credito : creditos){
-      if ((boolean) credito[5]) {
+    boolean jaFoiInadimplente = false;
+    double valorParcelasAtivas = 0;
+    int mesesAtrasado = 0;
+    double valorCreditoRestanteTotal = 0;
+
+    for (Object[] credito : creditos) {
+      if ((boolean) credito[4]) {
         jaFoiInadimplente = true;
       }
-      valorParcelasAtivas += (int) credito[6] == 0? 0 : (int) credito[3];
+      valorParcelasAtivas += (double) credito[5] == 0 ? 0 : (double) credito[2];
 
-      mesesAtrasado = Math.max(mesesAtrasado, (int) credito[4]);
+      mesesAtrasado = Math.max(mesesAtrasado, (int) credito[3]);
 
-      valorCreditoRestanteTotal += (int) credito[6] == 0? 0 : (int) credito[6];
+      valorCreditoRestanteTotal += (double) credito[5] == 0 ? 0 : (double) credito[5];
     }
 
     return new Object[]{

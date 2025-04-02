@@ -138,13 +138,14 @@ public class Read {
       while (rs.next()) {
         Object[] historico = new Object[8];
         historico[0] = rs.getInt("idCredito");
-        historico[1] = rs.getString("cpf");
-        historico[2] = rs.getInt("parcelasRestantes");
-        historico[3] = rs.getDouble("valorParcela");
-        historico[4] = rs.getInt("mesesAtrasado");
-        historico[5] = rs.getBoolean("estaInadimplente");
-        historico[6] = rs.getDouble("valorCreditoRestante");
-        historico[7] = rs.getDouble("valorCredito");
+        historico[1] = rs.getInt("parcelasRestantes");
+        historico[2] = rs.getDouble("valorParcela");
+        historico[3] = rs.getInt("mesesAtrasado");
+        historico[4] = rs.getBoolean("estaInadimplente");
+        historico[5] = rs.getDouble("valorCreditoRestante");
+        historico[6] = rs.getDouble("valorCredito");
+        historico[7] = rs.getString("cpf");
+
 
         historicos.add(historico);
       }
@@ -190,27 +191,24 @@ public class Read {
 
   public static Object[] listarPatrimonios(String cpf) {
     String sql = "SELECT * FROM patrimonio WHERE cpf = ?";
-    List<Object[]> patrimonios = new ArrayList<>();
-
+    Object[] patrimonio = new Object[5];
     try (Connection conn = DBconexao.connect();
          PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
       pstmt.setString(1, cpf);
       ResultSet rs = pstmt.executeQuery();
 
       while (rs.next()) {
-        Object[] patrimonio = new Object[5];
+
         patrimonio[0] = rs.getInt("idPatrimonio");
-        patrimonio[1] = rs.getString("cpf");
-        patrimonio[2] = rs.getDouble("montanteInvestimentos");
-        patrimonio[3] = rs.getDouble("montanteBens");
-        patrimonio[4] = rs.getDouble("saldo");
-        patrimonios.add(patrimonio);
+        patrimonio[1] = rs.getDouble("montanteInvestimentos");
+        patrimonio[2] = rs.getDouble("montanteBens");
+        patrimonio[3] = rs.getDouble("saldo");
+        patrimonio[4] = rs.getString("cpf");
       }
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return patrimonios.toArray(new Object[0][]);
+    return patrimonio;
   }
 
   public static void listarScores() {
@@ -261,10 +259,11 @@ public class Read {
       while (rs.next()) {
         Object[] transacao = new Object[5];
         transacao[0] = rs.getInt("idTransacao");
-        transacao[1] = rs.getString("cpf");
-        transacao[2] = rs.getDate("dataRecorteTransacao");
-        transacao[3] = rs.getDouble("valorEntrada");
-        transacao[4] = rs.getDouble("valorSaida");
+        transacao[1] = rs.getDate("dataRecorteTransacao");
+        transacao[2] = rs.getDouble("valorEntrada");
+        transacao[3] = rs.getDouble("valorSaida");
+        transacao[4] = rs.getString("cpf");
+
 
         transacoes.add(transacao);
       }
@@ -452,7 +451,8 @@ public class Read {
 
       while (rs.next()) {
         tipo[0] = rs.getString("idTipoContratoResidencial");
-        tipo[1] = rs.getString("tipo");;
+        tipo[1] = rs.getString("tipo");
+        ;
       }
     } catch (SQLException e) {
       e.printStackTrace();

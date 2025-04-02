@@ -8,7 +8,7 @@ public class Usuario {
     private String estadoCivil;
     private String escolaridade;
     private int tempoEnderecoAnos;
-    private String nivelInadimplenciaEstado;
+    private int nivelInadimplenciaEstado;
     private String tipoContratoResidencia;
     private String tipoEmprego;
     private int tempoEmpregoAtual;
@@ -24,10 +24,10 @@ public class Usuario {
 
     // Construtor
         public Usuario(String cpf, String rangeIdade, int numeroDependentes, String estadoCivil, String escolaridade,
-                   int tempoEnderecoAnos, String nivelInadimplenciaEstado, String tipoContratoResidencia,
-                   String tipoEmprego, int tempoEmpregoAtual, double salarioLiquidoMensal,
-                   double montanteInvestimentos, double montanteBens, double saldo, double restanteMensal,
-                   boolean estaInadimplente, double valorParcelaAtiva, int mesesAtrasado, double valorCreditoRestanteTotal) {
+                       int tempoEnderecoAnos, int nivelInadimplenciaEstado, String tipoContratoResidencia,
+                       String tipoEmprego, int tempoEmpregoAtual, double salarioLiquidoMensal,
+                       double montanteInvestimentos, double montanteBens, double saldo, double restanteMensal,
+                       boolean estaInadimplente, double valorParcelaAtiva, int mesesAtrasado, double valorCreditoRestanteTotal) {
         this.cpf = cpf;
         this.rangeIdade = rangeIdade;
         this.numeroDependentes = numeroDependentes;
@@ -68,8 +68,8 @@ public class Usuario {
     public int getTempoEnderecoAnos() { return tempoEnderecoAnos; }
     public void setTempoEnderecoAnos(int tempoEnderecoAnos) { this.tempoEnderecoAnos = tempoEnderecoAnos; }
 
-    public String getNivelInadimplenciaEstado() { return nivelInadimplenciaEstado; }
-    public void setNivelInadimplenciaEstado(String nivelInadimplenciaEstado) { this.nivelInadimplenciaEstado = nivelInadimplenciaEstado; }
+    public int getNivelInadimplenciaEstado() { return nivelInadimplenciaEstado; }
+    public void setNivelInadimplenciaEstado(int nivelInadimplenciaEstado) { this.nivelInadimplenciaEstado = nivelInadimplenciaEstado; }
 
     public String getTipoContratoResidencia() { return tipoContratoResidencia; }
     public void setTipoContratoResidencia(String tipoContratoResidencia) { this.tipoContratoResidencia = tipoContratoResidencia; }
@@ -107,5 +107,26 @@ public class Usuario {
     public double getValorCreditoRestanteTotal() { return valorCreditoRestanteTotal; }
     public void setValorCreditoRestanteTotal(double valorCreditoRestanteTotal) { this.valorCreditoRestanteTotal = valorCreditoRestanteTotal; }
 
-
+    public Object[] getAllData() {
+        return new Object[] {
+                rangeIdade,
+                numeroDependentes,
+                estadoCivil,
+                escolaridade,
+                tempoEnderecoAnos,
+                nivelInadimplenciaEstado,
+                tipoContratoResidencia,
+                tipoEmprego,
+                tempoEmpregoAtual,
+                salarioLiquidoMensal,
+                montanteInvestimentos,
+                montanteBens,
+                saldo,
+                restanteMensal,
+                estaInadimplente,
+                valorParcelaAtiva,
+                mesesAtrasado,
+                valorCreditoRestanteTotal
+        };
+    }
 }
