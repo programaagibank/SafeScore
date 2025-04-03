@@ -11,6 +11,11 @@ import java.util.*;
 
 public class UsuarioScoreDAO {
 
+
+  public static boolean usuarioExiste(String cpf){
+    return Read.usuarioExiste(cpf);
+  }
+
   public static Object[] estabilidadeEndereco(String cpf) {
     int tempoEnderecoAtualAnos = 0;
     int idEndereco = 0;

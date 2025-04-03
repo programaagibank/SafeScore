@@ -57,6 +57,23 @@ public class Read {
     return usuario;
   }
 
+  public static boolean usuarioExiste(String cpf) {
+    String sql = "SELECT EXISTS(SELECT 1 FROM usuario WHERE cpf = ?) AS user_exists";
+
+    try (Connection conn = DBconexao.connect();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+      pstmt.setString(1, cpf);
+      try (ResultSet rs = pstmt.executeQuery()) {
+        if (rs.next()) {
+          return rs.getBoolean("user_exists");
+        }
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return false;
+  }
 
   public static void listarEmpregos() {
     String sql = "SELECT * FROM emprego";

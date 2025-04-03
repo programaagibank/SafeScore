@@ -8,22 +8,27 @@ import java.util.Arrays;
 
 public class UsuarioScoreController {
 
-  public static void main(String[] args) {
-    mainController("000.227.548-14");
+  public static String entradaCPF(){
+    //Iniciar JAVAFX Scene
+    String cpf = ""; //input_do_funcionario_agi
+    //verificar cpf no banco
+    UsuarioScoreDAO.usuarioExiste(cpf);
+    //Cadastro Permitido
+    return cpf;
   }
 
-  public static void mainController(String cpf) {
-
+  public static boolean  criarRiscoCredito(String cpf) {
     Usuario usuarioScore = definirUsuario(cpf);
 
     System.out.println(Arrays.toString(usuarioScore.getAllData()));
 
-    System.out.println(automaticCreditRisk.calcularRiscoCredito(usuarioScore));
+    boolean riscoCredito = automaticCreditRisk.calcularRiscoCredito(usuarioScore);
+    System.out.println(riscoCredito);
+   return riscoCredito;
   }
 
   public static Usuario definirUsuario(String cpf) {
     try {
-      // Get data from DAO layer with validation
       Object[] informacoesPessoais = UsuarioScoreDAO.informacoesPessoais(cpf);
       Object[] estabilidadeEndereco = UsuarioScoreDAO.estabilidadeEndereco(cpf);
       Object[] empregoVinculoTrabalhista = UsuarioScoreDAO.empregoVinculoTrabalhista(cpf);
