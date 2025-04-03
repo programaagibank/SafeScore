@@ -3,8 +3,29 @@ build/
 # Ignorar pastas e arquivos gerados pelo build e IDE
 .idea/
 *.jar
+.lock
 
 # Ignorar arquivos do Gradle
 Modulo1_Projeto/.gradle/
 
+# Ignorar arquivos de log
+*.log
+
+# Configuração do IntelliJ
+*.iml
+*.iws
+out/
+
+# Arquivos do Gradle (fora do .gradle/)
+.gradle/
+!gradle-wrapper.jar
+
+# Arquivos temporários
+*.class
+*.tmp
+*.swp
+*.DS_Store
+
+# Arquivos de sistema operacional
+Thumbs.db
 
