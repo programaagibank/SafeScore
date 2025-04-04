@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: nz.ac.waikato.cms.weka.thirdparty:bounce:0.18" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="nz.ac.waikato.cms.weka.thirdparty" artifactId="bounce" version="0.18" baseVersion="0.18" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/nz.ac.waikato.cms.weka.thirdparty/bounce/0.18/d774f9a0aa5cbe08dea8907720c64c417aed861/bounce-0.18.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

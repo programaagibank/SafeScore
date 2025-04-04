@@ -1,5 +1,7 @@
 plugins {
     id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.13'
 }
 
 group = 'org.example'
@@ -18,11 +20,22 @@ java {
 dependencies {
     implementation 'net.datafaker:datafaker:2.0.0'  // JFaker
     implementation 'mysql:mysql-connector-java:8.0.33'  // MySQL
-
+    implementation 'org.openjfx:javafx-controls:21.0.1'
+    implementation 'org.openjfx:javafx-fxml:21.0.1'
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
+    implementation 'nz.ac.waikato.cms.weka:weka-stable:3.8.6'
 }
 
 test {
     useJUnitPlatform()
+}
+
+javafx {
+    version = "21.0.1"
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
+}
+
+application {
+    mainClass = 'com.safescore.view.MainApp'
 }

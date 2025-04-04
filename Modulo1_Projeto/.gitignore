@@ -9,10 +9,8 @@ out/
 *.iws
 
 # Gradle
-.gradle/
-!gradle-wrapper.jar
-*.jar
-*.lock
+**/.gradle/
+!gradle/wrapper/gradle-wrapper.jar
 
 # Arquivos temporários e logs
 *.log
@@ -24,7 +22,11 @@ out/
 .DS_Store
 Thumbs.db
 
-# Relatórios de teste (opcional)
+# Relatórios de teste
 test-output/
 coverage/
 jacoco.exec
+
+# JARs gerados
+build/**/*.jar
+out/**/*.jar

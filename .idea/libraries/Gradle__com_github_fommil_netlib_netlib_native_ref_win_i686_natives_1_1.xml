@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.fommil.netlib:netlib-native_ref-win-i686:natives:1.1" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="com.github.fommil.netlib" artifactId="netlib-native_ref-win-i686" version="1.1" baseVersion="1.1" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.fommil.netlib/netlib-native_ref-win-i686/1.1/167fb794a26cb0bfc74890c704c7137b1d5b50fd/netlib-native_ref-win-i686-1.1-natives.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
