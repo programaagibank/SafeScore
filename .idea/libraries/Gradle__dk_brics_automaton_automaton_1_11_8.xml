@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: dk.brics.automaton:automaton:1.11-8" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="dk.brics.automaton" artifactId="automaton" version="1.11-8" baseVersion="1.11-8" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/dk.brics.automaton/automaton/1.11-8/6ebfa65eb431ff4b715a23be7a750cbc4cc96d0f/automaton-1.11-8.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

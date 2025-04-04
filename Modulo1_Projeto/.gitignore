@@ -1,31 +1,30 @@
+# Diretórios de build
 build/
+out/
+**/.gradle/
 
-# Ignorar pastas e arquivos gerados pelo build e IDE
+# IDEs
 .idea/
-*.jar
-.lock
-
-# Ignorar arquivos do Gradle
-Modulo1_Projeto/.gradle/
-
-# Ignorar arquivos de log
-*.log
-
-# Configuração do IntelliJ
 *.iml
 *.iws
-out/
 
-# Arquivos do Gradle (fora do .gradle/)
+# Gradle
 .gradle/
 !gradle-wrapper.jar
+*.jar
+*.lock
 
-# Arquivos temporários
-*.class
+# Arquivos temporários e logs
+*.log
 *.tmp
 *.swp
-*.DS_Store
+*.class
 
-# Arquivos de sistema operacional
+# Arquivos do sistema operacional
+.DS_Store
 Thumbs.db
 
+# Relatórios de teste (opcional)
+test-output/
+coverage/
+jacoco.exec
