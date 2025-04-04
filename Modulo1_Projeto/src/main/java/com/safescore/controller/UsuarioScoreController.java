@@ -12,7 +12,7 @@ public class UsuarioScoreController {
     //Iniciar JAVAFX Scene
     String cpf = ""; //input_do_funcionario_agi
     //verificar cpf no banco
-    UsuarioScoreDAO.usuarioExiste(cpf);
+    UsuarioScoreDAO.usuarioExiste(cpf);//Retorna um boolean
     //Cadastro Permitido
     return cpf;
   }

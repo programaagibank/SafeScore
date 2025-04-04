@@ -57,6 +57,25 @@ public class Read {
     return usuario;
   }
 
+  public static String[] listarCpfs() {
+    String sql = "SELECT cpf FROM usuario ORDER BY RAND()";
+    List<String> cpfs = new ArrayList<>();
+
+    try (Connection conn = DBconexao.connect();
+         PreparedStatement pstmt = conn.prepareStatement(sql);
+         ResultSet rs = pstmt.executeQuery()) {
+
+      while (rs.next()) {
+        cpfs.add(rs.getString("cpf"));
+      }
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return cpfs.toArray(new String[0]);
+  }
+
   public static boolean usuarioExiste(String cpf) {
     String sql = "SELECT EXISTS(SELECT 1 FROM usuario WHERE cpf = ?) AS user_exists";
 

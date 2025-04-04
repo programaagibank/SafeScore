@@ -1,11 +1,21 @@
 package com.safescore.script;
 
+import com.safescore.controller.UsuarioScoreController;
+import com.safescore.dao.CrudMethods.Read;
 import com.safescore.model.Usuario;
 
 import java.util.Arrays;
 
 public class automaticCreditRisk {
   private static final int LIMITE_RISCO = 25;
+
+  public static void main(String[] args) {
+    String[] usuariosCpfs = Read.listarCpfs();
+    for (String usuarioCPF : usuariosCpfs){
+      Usuario usuario = UsuarioScoreController.definirUsuario(usuarioCPF);
+
+    }
+  }
 
   public static boolean calcularRiscoCredito(Usuario usuario) {
     int contadorRisco = 0;

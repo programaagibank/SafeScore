@@ -6,41 +6,41 @@ import weka.core.Instance;
 import com.safescore.controller.WekaController;
 
 public class Main {
-    public static void main(String[] args) {
-        try {
-            //INICIAR JAVAFX STAGE
-            String cpf = UsuarioScoreController.entradaCPF();//Caso Real
+  public static void main(String[] args) {
+    try {
+      WekaController analisador = new WekaController();
 
-            String cpfTeste = "006.061.768-37"; // exemplo
+      //INICIAR JAVAFX STAGE
+      String cpf = UsuarioScoreController.entradaCPF();//Caso Real
 
-            Usuario usuarioScore = UsuarioScoreController.definirUsuario(cpfTeste);
+      String cpfTeste = "006.061.768-37"; // exemplo
 
-            //Transformar o usuario Score em Instancia
-            Instance usuarioScoreInstancia = (Instance) usuarioScore;
+      Usuario usuarioScore = UsuarioScoreController.definirUsuario(cpfTeste);
 
-            //Criar o Score
-            //double score = analisador.preverScore(usuarioScoreInstancia)
+      //Transformar o usuario Score em Instancia
+      Instance usuarioScoreInstancia = (Instance) usuarioScore;
 
-            WekaController analisador = new WekaController();
+      //Criar o Score
+      double score = analisador.preverScore(usuarioScoreInstancia);
 
-            //modelo ja estaria treinado
-            analisador.treinarModelo("Modulo1_Projeto/src/main/sources/usuario_categorizado.arff");
+//      //modelo ja estaria treinado
+//      analisador.treinarModelo("Modulo1_Projeto/src/main/sources/usuario_categorizado.arff");
+//
+//      Instance novoUsuario = analisador.extrairAtributosDeUsuario(cpfTeste);
+//      double score = analisador.preverScore(novoUsuario);
 
-            Instance novoUsuario = analisador.extrairAtributosDeUsuario(cpfTeste);
-            double score = analisador.preverScore(novoUsuario);
+      System.out.printf("Score do cliente (%s): %.2f\n", cpfTeste, score);
+      if (score < 500) {
+        System.out.println("⚠️ Risco de crédito: ALTO");
+      } else {
+        System.out.println("✅ Risco de crédito: BAIXO");
+      }
 
-            System.out.printf("Score do cliente (%s): %.2f\n", cpfTeste, score);
-            if (score < 500) {
-                System.out.println("⚠️ Risco de crédito: ALTO");
-            } else {
-                System.out.println("✅ Risco de crédito: BAIXO");
-            }
+      WekaController analisador1 = new WekaController();
+      analisador1.avaliarModelo();
 
-            WekaController analisador1 = new WekaController();
-            analisador1.avaliarModelo();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    } catch (Exception e) {
+      e.printStackTrace();
     }
+  }
 }
