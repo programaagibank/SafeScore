@@ -11,13 +11,11 @@ import com.safescore.model.Usuario;
 
 public class ArffExporter {
 
-  // Method to check if file exists and has content
   private static boolean isFileInitialized(String caminhoArff) {
     File file = new File(caminhoArff);
     return file.exists() && file.length() > 0;
   }
 
-  // Method to initialize ARFF file with attributes
   public static void initializeArffFile(String caminhoArff) {
     if (isFileInitialized(caminhoArff)) {
       System.out.println("🟡 Arquivo ARFF já contém dados, pulando escrita de atributos: " + caminhoArff);
@@ -32,7 +30,6 @@ public class ArffExporter {
     }
   }
 
-  // Method to write ARFF attributes (header)
   private static void writeAttributes(PrintWriter writer) {
     writer.println("@relation risco_credito");
     writer.println();
@@ -59,7 +56,6 @@ public class ArffExporter {
     writer.println("@data");
   }
 
-  // Method to append a single user's data to ARFF file
   public static void appendUserToArff(String caminhoArff, Usuario usuario) {
     boolean seraInadimplente = automaticCreditRisk.calcularRiscoCredito(usuario);
 
@@ -71,7 +67,6 @@ public class ArffExporter {
     }
   }
 
-  // Method to write a single data line
   private static void writeDataLine(PrintWriter writer, Usuario usuario, boolean seraInadimplente) {
     String linha = String.format("'%s',%d,'%s','%s',%d,%d,'%s','%s',%d,%.2f,%.2f,%.2f,%.2f,%.2f,%d,%.2f,%d,%.2f,%d",
             usuario.getRangeIdade(),
@@ -96,22 +91,18 @@ public class ArffExporter {
     writer.println(linha);
   }
 
-  // Method to process all users
   public static void exportAllUsersToArff(String caminhoArff) {
-    // First initialize the file with attributes
     initializeArffFile(caminhoArff);
 
-    // Then process each user
     String[] usuariosCpfs = Read.listarCpfs();
     for (String usuarioCPF : usuariosCpfs) {
       Usuario usuario = UsuarioScoreController.definirUsuario(usuarioCPF);
       appendUserToArff(caminhoArff, usuario);
     }
-
-    System.out.println("✅ Todos os " + usuariosCpfs.length + " usuários foram exportados para: " + caminhoArff);
   }
 
   public static void main(String[] args) {
+    //Crie seu proprio arquivo, na hora de juntarmos nn teremos conflito 😎👍
     exportAllUsersToArff("Modulo1_Projeto/src/main/sources/usuarios_angelo.arff");
   }
 }
