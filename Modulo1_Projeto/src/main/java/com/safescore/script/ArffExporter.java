@@ -11,8 +11,19 @@ import com.safescore.model.Usuario;
 
 public class ArffExporter {
 
+  // Method to check if file exists and has content
+  private static boolean isFileInitialized(String caminhoArff) {
+    File file = new File(caminhoArff);
+    return file.exists() && file.length() > 0;
+  }
+
   // Method to initialize ARFF file with attributes
   public static void initializeArffFile(String caminhoArff) {
+    if (isFileInitialized(caminhoArff)) {
+      System.out.println("🟡 Arquivo ARFF já contém dados, pulando escrita de atributos: " + caminhoArff);
+      return;
+    }
+
     try (PrintWriter writer = new PrintWriter(new FileWriter(caminhoArff))) {
       writeAttributes(writer);
       System.out.println("✅ Arquivo ARFF inicializado com atributos: " + caminhoArff);
@@ -101,6 +112,6 @@ public class ArffExporter {
   }
 
   public static void main(String[] args) {
-    exportAllUsersToArff("usuarios.arff");
+    exportAllUsersToArff("Modulo1_Projeto/src/main/sources/usuarios_angelo.arff");
   }
 }

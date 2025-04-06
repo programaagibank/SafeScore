@@ -1,0 +1,24 @@
+@relation risco_credito
+
+@attribute rangeIdade string
+@attribute numeroDependentes numeric
+@attribute estadoCivil string
+@attribute escolaridade string
+@attribute tempoEnderecoAnos numeric
+@attribute nivelInadimplenciaEstado numeric
+@attribute tipoContratoResidencia string
+@attribute tipoEmprego string
+@attribute tempoEmpregoAtual numeric
+@attribute salarioLiquidoMensal numeric
+@attribute montanteInvestimentos numeric
+@attribute montanteBens numeric
+@attribute saldo numeric
+@attribute restanteMensal numeric
+@attribute estaInadimplente {0,1}
+@attribute valorParcelaAtiva numeric
+@attribute mesesAtrasado numeric
+@attribute valorCreditoRestanteTotal numeric
+@attribute seraInadimplente {0,1}
+
+@data
+

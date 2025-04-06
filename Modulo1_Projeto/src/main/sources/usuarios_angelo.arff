@@ -1,0 +1,25 @@
+@relation risco_credito
+
+@attribute rangeIdade string
+@attribute numeroDependentes numeric
+@attribute estadoCivil string
+@attribute escolaridade string
+@attribute tempoEnderecoAnos numeric
+@attribute nivelInadimplenciaEstado numeric
+@attribute tipoContratoResidencia string
+@attribute tipoEmprego string
+@attribute tempoEmpregoAtual numeric
+@attribute salarioLiquidoMensal numeric
+@attribute montanteInvestimentos numeric
+@attribute montanteBens numeric
+@attribute saldo numeric
+@attribute restanteMensal numeric
+@attribute estaInadimplente {0,1}
+@attribute valorParcelaAtiva numeric
+@attribute mesesAtrasado numeric
+@attribute valorCreditoRestanteTotal numeric
+@attribute seraInadimplente {0,1}
+
+@data
+'acima de 60',0,'Viuvo','Mestrado',27,51,'Proprietario','CLT',25,2462.00,0.00,99655.00,43992.00,-35964.00,0,0.00,0,0.00,0
+'41 a 60',4,'Solteiro','Sem Escolaridade',41,43,'Locatario','CLT',23,8063.00,273860.00,461464.00,424182.00,0.00,0,0.00,0,0.00,0
