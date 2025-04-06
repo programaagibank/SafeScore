@@ -91,56 +91,102 @@ public class UsuarioScoreDAO {
   }
 
   public static Object[] historicoFinanceiro(String cpf) {
-    Object[] patrimonio = Read.listarPatrimonios(cpf);
-    double montanteInvestimentos = (double) patrimonio[1];
-    double montanteBens = (double) patrimonio[2];
-    double saldoBancario = (double) patrimonio[3];
+    try {
+      // Initialize default values
+      double montanteInvestimentos = 0.0;
+      double montanteBens = 0.0;
+      double saldoBancario = 0.0;
+      double restanteMensal = 0.0;
+      boolean jaFoiInadimplente = false;
+      double valorParcelasAtivas = 0.0;
+      int mesesAtrasado = 0;
+      double valorCreditoRestanteTotal = 0.0;
 
-    Object[] ultimaTransacao = Read.listarTransacoes(cpf).getLast();
-    double restanteMensal = ((double) ultimaTransacao[2]) - ((double) ultimaTransacao[3]);
+      // Handle patrimonio data
+      try {
+        Object[] patrimonio = Read.listarPatrimonios(cpf);
+        if (patrimonio != null && patrimonio.length >= 4) {
+          montanteInvestimentos = patrimonio[1] != null ? (double) patrimonio[1] : 0.0;
+          montanteBens = patrimonio[2] != null ? (double) patrimonio[2] : 0.0;
+          saldoBancario = patrimonio[3] != null ? (double) patrimonio[3] : 0.0;
+        }
+      } catch (Exception e) {
+        System.err.println("⚠️ Erro ao ler patrimônios para CPF " + cpf + ": " + e.getMessage());
+      }
 
-    List<Object[]> creditos = Read.listarHistoricoCredito(cpf);
-    if (creditos.isEmpty()) {
+      // Handle transacoes data
+      try {
+        List<Object[]> transacoes = Read.listarTransacoes(cpf);
+        if (transacoes != null && !transacoes.isEmpty()) {
+          Object[] ultimaTransacao = transacoes.get(transacoes.size() - 1); // Safer than getLast()
+          if (ultimaTransacao != null && ultimaTransacao.length >= 4) {
+            double receita = ultimaTransacao[2] != null ? (double) ultimaTransacao[2] : 0.0;
+            double despesa = ultimaTransacao[3] != null ? (double) ultimaTransacao[3] : 0.0;
+            restanteMensal = receita - despesa;
+          }
+        }
+      } catch (Exception e) {
+        System.err.println("⚠️ Erro ao ler transações para CPF " + cpf + ": " + e.getMessage());
+      }
+
+      // Handle creditos data
+      try {
+        List<Object[]> creditos = Read.listarHistoricoCredito(cpf);
+        if (creditos != null && !creditos.isEmpty()) {
+          for (Object[] credito : creditos) {
+            if (credito != null && credito.length >= 6) {
+              // Check if has been delinquent
+              if (credito[4] != null && (boolean) credito[4]) {
+                jaFoiInadimplente = true;
+              }
+
+              // Calculate active installments
+              double valorCredito = credito[2] != null ? (double) credito[2] : 0.0;
+              double valorRestante = credito[5] != null ? (double) credito[5] : 0.0;
+
+              valorParcelasAtivas += valorRestante > 0 ? valorCredito : 0;
+
+              // Track max months late
+              int mesesAtraso = credito[3] != null ? (int) credito[3] : 0;
+              mesesAtrasado = Math.max(mesesAtrasado, mesesAtraso);
+
+              // Sum remaining credit
+              valorCreditoRestanteTotal += valorRestante > 0 ? valorRestante : 0;
+            }
+          }
+        }
+      } catch (Exception e) {
+        System.err.println("⚠️ Erro ao ler histórico de crédito para CPF " + cpf + ": " + e.getMessage());
+      }
+
       return new Object[]{
               montanteInvestimentos,
               montanteBens,
               saldoBancario,
               restanteMensal,
-              false,
-              0,
-              0,
-              0
+              jaFoiInadimplente,
+              valorParcelasAtivas,
+              mesesAtrasado,
+              valorCreditoRestanteTotal
+      };
+
+    } catch (Exception e) {
+      System.err.println("⚠️ Erro crítico ao processar histórico financeiro para CPF " + cpf);
+      e.printStackTrace();
+
+      // Return safe default values in case of critical failure
+      return new Object[]{
+              0.0,  // montanteInvestimentos
+              0.0,  // montanteBens
+              0.0,  // saldoBancario
+              0.0,  // restanteMensal
+              false, // jaFoiInadimplente
+              0.0,  // valorParcelasAtivas
+              0,    // mesesAtrasado
+              0.0   // valorCreditoRestanteTotal
       };
     }
-
-    boolean jaFoiInadimplente = false;
-    double valorParcelasAtivas = 0;
-    int mesesAtrasado = 0;
-    double valorCreditoRestanteTotal = 0;
-
-    for (Object[] credito : creditos) {
-      if ((boolean) credito[4]) {
-        jaFoiInadimplente = true;
-      }
-      valorParcelasAtivas += (double) credito[5] == 0 ? 0 : (double) credito[2];
-
-      mesesAtrasado = Math.max(mesesAtrasado, (int) credito[3]);
-
-      valorCreditoRestanteTotal += (double) credito[5] == 0 ? 0 : (double) credito[5];
-    }
-
-    return new Object[]{
-            montanteInvestimentos,
-            montanteBens,
-            saldoBancario,
-            restanteMensal,
-            jaFoiInadimplente,
-            valorParcelasAtivas,
-            mesesAtrasado,
-            valorCreditoRestanteTotal
-    };
   }
-
 
   private static String calcularRangeIdade(int idade) {
     if (idade <= 25) {

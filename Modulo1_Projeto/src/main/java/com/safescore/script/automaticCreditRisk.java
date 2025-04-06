@@ -7,7 +7,7 @@ import com.safescore.model.Usuario;
 import java.util.Arrays;
 
 public class automaticCreditRisk {
-  private static final int LIMITE_RISCO = 25;
+  private static final int LIMITE_RISCO = 16;
 
   public static void main(String[] args) {
     String[] usuariosCpfs = Read.listarCpfs();

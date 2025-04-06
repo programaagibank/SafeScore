@@ -1,75 +1,106 @@
 package com.safescore.script;
 
-import com.safescore.dao.db.DBconexao;
-
 import java.io.FileWriter;
 import java.io.PrintWriter;
-import java.sql.*;
-import com.safescore.model.Usuario;
+import java.io.BufferedWriter;
+import java.io.File;
 
+import com.safescore.controller.UsuarioScoreController;
+import com.safescore.dao.CrudMethods.Read;
+import com.safescore.model.Usuario;
 
 public class ArffExporter {
 
-    public static void exportarParaArff(String caminhoArff, Usuario usuarioAtributos) {
-      try (PrintWriter writer = new PrintWriter(new FileWriter(caminhoArff))) {
+  // Method to initialize ARFF file with attributes
+  public static void initializeArffFile(String caminhoArff) {
+    try (PrintWriter writer = new PrintWriter(new FileWriter(caminhoArff))) {
+      writeAttributes(writer);
+      System.out.println("✅ Arquivo ARFF inicializado com atributos: " + caminhoArff);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
 
-        // Escreve cabeçalho ARFF
-        writer.println("@relation risco_credito");
-        writer.println();
-        writer.println("@attribute rangeIdade string");
-        writer.println("@attribute numeroDependentes numeric");
-        writer.println("@attribute estadoCivil string");
-        writer.println("@attribute escolaridade string");
-        writer.println("@attribute tempoEnderecoAnos numeric");
-        writer.println("@attribute nivelInadimplenciaEstado numeric");
-        writer.println("@attribute tipoContratoResidencia string");
-        writer.println("@attribute tipoEmprego string");
-        writer.println("@attribute tempoEmpregoAtual numeric");
-        writer.println("@attribute salarioLiquidoMensal numeric");
-        writer.println("@attribute montanteInvestimentos numeric");
-        writer.println("@attribute montanteBens numeric");
-        writer.println("@attribute saldo numeric");
-        writer.println("@attribute restanteMensal numeric");
-        writer.println("@attribute estaInadimplente {0,1}");
-        writer.println("@attribute valorParcelaAtiva numeric");
-        writer.println("@attribute mesesAtrasado numeric");
-        writer.println("@attribute valorCreditoRestanteTotal numeric");
-        writer.println("@attribute seraInadimplente {0,1}");
-        writer.println();
-        writer.println("@data");
+  // Method to write ARFF attributes (header)
+  private static void writeAttributes(PrintWriter writer) {
+    writer.println("@relation risco_credito");
+    writer.println();
+    writer.println("@attribute rangeIdade string");
+    writer.println("@attribute numeroDependentes numeric");
+    writer.println("@attribute estadoCivil string");
+    writer.println("@attribute escolaridade string");
+    writer.println("@attribute tempoEnderecoAnos numeric");
+    writer.println("@attribute nivelInadimplenciaEstado numeric");
+    writer.println("@attribute tipoContratoResidencia string");
+    writer.println("@attribute tipoEmprego string");
+    writer.println("@attribute tempoEmpregoAtual numeric");
+    writer.println("@attribute salarioLiquidoMensal numeric");
+    writer.println("@attribute montanteInvestimentos numeric");
+    writer.println("@attribute montanteBens numeric");
+    writer.println("@attribute saldo numeric");
+    writer.println("@attribute restanteMensal numeric");
+    writer.println("@attribute estaInadimplente {0,1}");
+    writer.println("@attribute valorParcelaAtiva numeric");
+    writer.println("@attribute mesesAtrasado numeric");
+    writer.println("@attribute valorCreditoRestanteTotal numeric");
+    writer.println("@attribute seraInadimplente {0,1}");
+    writer.println();
+    writer.println("@data");
+  }
 
-            boolean seraInadimplente = automaticCreditRisk.calcularRiscoCredito(usuarioAtributos);
+  // Method to append a single user's data to ARFF file
+  public static void appendUserToArff(String caminhoArff, Usuario usuario) {
+    boolean seraInadimplente = automaticCreditRisk.calcularRiscoCredito(usuario);
 
-        String linha = String.format("'%s',%d,'%s','%s',%d,%d,'%s','%s',%d,%.2f,%.2f,%.2f,%.2f,%.2f,%d,%.2f,%d,%.2f,%d",
-                usuarioAtributos.getRangeIdade(),
-                usuarioAtributos.getNumeroDependentes(),
-                usuarioAtributos.getEstadoCivil(),
-                usuarioAtributos.getEscolaridade(),
-                usuarioAtributos.getTempoEnderecoAnos(),
-                usuarioAtributos.getNivelInadimplenciaEstado(),
-                usuarioAtributos.getTipoContratoResidencia(),
-                usuarioAtributos.getTipoEmprego(),
-                usuarioAtributos.getTempoEmpregoAtual(),
-                usuarioAtributos.getSalarioLiquidoMensal(),
-                usuarioAtributos.getMontanteInvestimentos(),
-                usuarioAtributos.getMontanteBens(),
-                usuarioAtributos.getSaldo(),
-                usuarioAtributos.getRestanteMensal(),
-                usuarioAtributos.isEstaInadimplente() ? 1 : 0,
-                usuarioAtributos.getValorParcelaAtiva(),
-                usuarioAtributos.getMesesAtrasado(),
-                usuarioAtributos.getValorCreditoRestanteTotal(),
-                seraInadimplente ? 1 : 0);
-        writer.println(linha);
+    try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(caminhoArff, true)))) {
+      writeDataLine(writer, usuario, seraInadimplente);
+      System.out.println("✓ Usuário " + usuario.getCpf() + " adicionado ao arquivo");
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
 
-            System.out.println("✅ Arquivo ARFF gerado com sucesso: " + caminhoArff);
+  // Method to write a single data line
+  private static void writeDataLine(PrintWriter writer, Usuario usuario, boolean seraInadimplente) {
+    String linha = String.format("'%s',%d,'%s','%s',%d,%d,'%s','%s',%d,%.2f,%.2f,%.2f,%.2f,%.2f,%d,%.2f,%d,%.2f,%d",
+            usuario.getRangeIdade(),
+            usuario.getNumeroDependentes(),
+            usuario.getEstadoCivil(),
+            usuario.getEscolaridade(),
+            usuario.getTempoEnderecoAnos(),
+            usuario.getNivelInadimplenciaEstado(),
+            usuario.getTipoContratoResidencia(),
+            usuario.getTipoEmprego(),
+            usuario.getTempoEmpregoAtual(),
+            usuario.getSalarioLiquidoMensal(),
+            usuario.getMontanteInvestimentos(),
+            usuario.getMontanteBens(),
+            usuario.getSaldo(),
+            usuario.getRestanteMensal(),
+            usuario.isEstaInadimplente() ? 1 : 0,
+            usuario.getValorParcelaAtiva(),
+            usuario.getMesesAtrasado(),
+            usuario.getValorCreditoRestanteTotal(),
+            seraInadimplente ? 1 : 0);
+    writer.println(linha);
+  }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+  // Method to process all users
+  public static void exportAllUsersToArff(String caminhoArff) {
+    // First initialize the file with attributes
+    initializeArffFile(caminhoArff);
+
+    // Then process each user
+    String[] usuariosCpfs = Read.listarCpfs();
+    for (String usuarioCPF : usuariosCpfs) {
+      Usuario usuario = UsuarioScoreController.definirUsuario(usuarioCPF);
+      appendUserToArff(caminhoArff, usuario);
     }
 
-    public static void main(String[] args) {
-//        exportarParaArff("Modulo1_Projeto/src/main/sources/usuario.arff");
-    }
+    System.out.println("✅ Todos os " + usuariosCpfs.length + " usuários foram exportados para: " + caminhoArff);
+  }
+
+  public static void main(String[] args) {
+    exportAllUsersToArff("usuarios.arff");
+  }
 }
