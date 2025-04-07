@@ -4,7 +4,7 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.io.BufferedWriter;
 import java.io.File;
-
+import java.util.Locale;
 import com.safescore.controller.UsuarioScoreController;
 import com.safescore.dao.CrudMethods.Read;
 import com.safescore.model.Usuario;
@@ -68,7 +68,7 @@ public class ArffExporter {
   }
 
   private static void writeDataLine(PrintWriter writer, Usuario usuario, boolean seraInadimplente) {
-    String linha = String.format("'%s',%d,'%s','%s',%d,%d,'%s','%s',%d,%.2f,%.2f,%.2f,%.2f,%.2f,%d,%.2f,%d,%.2f,%d",
+    String linha = String.format(Locale.US, "'%s',%d,'%s','%s',%d,%d,'%s','%s',%d,%.2f,%.2f,%.2f,%.2f,%.2f,%d,%.2f,%d,%.2f,%d",
             usuario.getRangeIdade(),
             usuario.getNumeroDependentes(),
             usuario.getEstadoCivil(),
@@ -102,7 +102,6 @@ public class ArffExporter {
   }
 
   public static void main(String[] args) {
-    //Crie seu proprio arquivo, na hora de juntarmos nn teremos conflito 😎👍
     exportAllUsersToArff("Modulo1_Projeto/src/main/sources/usuarios_rodrigo3.arff");
   }
 }
