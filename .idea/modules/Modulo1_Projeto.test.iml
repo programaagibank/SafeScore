@@ -9,6 +9,7 @@
     <orderEntry type="module" module-name="Modulo1_Projeto.main" />
     <orderEntry type="library" name="Gradle: net.datafaker:datafaker:2.0.0" level="project" />
     <orderEntry type="library" name="Gradle: nz.ac.waikato.cms.weka:weka-stable:3.8.6" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.code.gson:gson:2.10.1" level="project" />
     <orderEntry type="library" name="Gradle: org.openjfx:javafx-fxml:win:21.0.1" level="project" />
     <orderEntry type="library" name="Gradle: org.openjfx:javafx-controls:21.0.1" level="project" />
     <orderEntry type="library" name="Gradle: org.openjfx:javafx-controls:win:21.0.1" level="project" />
