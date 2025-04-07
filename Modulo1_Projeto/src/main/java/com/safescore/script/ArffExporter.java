@@ -4,6 +4,7 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.util.Locale; // <-- IMPORTANTE
 
 import com.safescore.controller.UsuarioScoreController;
 import com.safescore.dao.CrudMethods.Read;
@@ -68,7 +69,7 @@ public class ArffExporter {
   }
 
   private static void writeDataLine(PrintWriter writer, Usuario usuario, boolean seraInadimplente) {
-    String linha = String.format("'%s',%d,'%s','%s',%d,%d,'%s','%s',%d,%.2f,%.2f,%.2f,%.2f,%.2f,%d,%.2f,%d,%.2f,%d",
+    String linha = String.format(Locale.US, "'%s',%d,'%s','%s',%d,%d,'%s','%s',%d,%.2f,%.2f,%.2f,%.2f,%.2f,%d,%.2f,%d,%.2f,%d",
             usuario.getRangeIdade(),
             usuario.getNumeroDependentes(),
             usuario.getEstadoCivil(),
