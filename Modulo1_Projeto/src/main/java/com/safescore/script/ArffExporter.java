@@ -103,6 +103,6 @@ public class ArffExporter {
 
   public static void main(String[] args) {
     //Crie seu proprio arquivo, na hora de juntarmos nn teremos conflito 😎👍
-    exportAllUsersToArff("Modulo1_Projeto/src/main/sources/usuarios_rodrigo.arff");
+    exportAllUsersToArff("Modulo1_Projeto/src/main/sources/usuarios_rodrigo3.arff");
   }
 }
