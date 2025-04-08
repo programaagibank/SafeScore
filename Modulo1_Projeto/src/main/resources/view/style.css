@@ -1,7 +1,7 @@
 /* Estilo geral para o VBox (container principal) */
 .root {
     -fx-background-color: #F5F7FA; /* Fundo claro, similar ao da imagem */
-    -fx-padding: 20px;
+    -fx-padding: 0px;
     -fx-alignment: center;
 }
 
@@ -43,21 +43,23 @@
 
 /* Estilo do botão "Pesquisar" */
 .button {
-    -fx-background-color: #3B82F6; /* Azul vibrante para o botão */
-    -fx-text-fill: #FFFFFF; /* Texto branco */
+    -fx-background-color: #3B82F6;
+    -fx-text-fill: #FFFFFF;
     -fx-font-size: 16px;
     -fx-font-weight: bold;
-    -fx-padding: 10px 20px;
-    -fx-background-radius: 5px;
+    -fx-padding: 10px 30px; /* mais lateral para ficar mais largo */
+    -fx-background-radius: 30px; /* quanto maior, mais arredondado */
     -fx-cursor: hand;
 }
 
 /* Efeito de hover no botão */
 .button:hover {
-    -fx-background-color: #2563EB; /* Azul mais escuro no hover */
+    -fx-background-color: #2563EB;
+    -fx-background-radius: 30px;
 }
 
-/* Efeito de clique no botão */
+/* Efeito clique no botão */
 .button:pressed {
-    -fx-background-color: #1E40AF; /* Azul ainda mais escuro ao clicar */
+    -fx-background-color: #1E40AF;
+    -fx-background-radius: 30px;
 }

@@ -1,25 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox spacing="15" alignment="CENTER" xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.safescore.controller.MainController"
-      stylesheets="@style.css">
+<VBox alignment="CENTER" spacing="15.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.safescore.controller.MainController">
+    <HBox alignment="CENTER">
+        <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@../img/logo-safescore.png" />
+            <HBox.margin>
+               <Insets top="10.0" />
+            </HBox.margin>
+            </ImageView>
+        </children>
+      <opaqueInsets>
+         <Insets />
+      </opaqueInsets>
+    </HBox>
+   <VBox alignment="CENTER" prefHeight="180.0" prefWidth="100.0" spacing="15.0">
+      <children>
+      
+          <!-- Campo para o CPF -->
+          <Label styleClass="label" text="Digite o CPF:" />
+          <TextField fx:id="cpfField" alignment="CENTER" promptText="000.000.000-00" styleClass="text-field" />
+      
+          <!-- Botão de pesquisa -->
+          <Button onAction="#onPesquisarClicked" styleClass="button" text="PESQUISAR" textAlignment="CENTER" />
+      </children>
+      <padding>
+         <Insets left="20.0" right="20.0" />
+      </padding>
+   </VBox>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
 
-    <!-- Título "SafeScore" -->
-    <Label text="SafeScore" styleClass="label-title" />
-
-    <!-- Campo para o CPF -->
-    <Label text="Digite o CPF:" styleClass="label" />
-    <TextField fx:id="cpfField" promptText="000.000.000-00" styleClass="text-field" />
-
-    <!-- Botão de pesquisa -->
-    <Button text="Pesquisar" onAction="#onPesquisarClicked" styleClass="button" />
-
-    <!-- Exibição do score -->
-    <Label text="Score do cliente:" styleClass="label" />
-    <TextField fx:id="scoreField" editable="false" styleClass="text-field" />
+    <!-- Exibição do score
+    <Label styleClass="label" text="Score do cliente:" />
+    <TextField fx:id="scoreField" editable="false" styleClass="text-field" />-->
 
 </VBox>
