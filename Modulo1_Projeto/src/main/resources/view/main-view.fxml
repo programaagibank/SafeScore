@@ -5,7 +5,7 @@
 
 <VBox spacing="15" alignment="CENTER" xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.safescore.view.MainController"
+      fx:controller="com.safescore.controller.MainController"
       stylesheets="@style.css">
 
     <!-- Título "SafeScore" -->

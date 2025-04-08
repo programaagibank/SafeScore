@@ -1,6 +1,6 @@
-package com.safescore.view;
+package com.safescore.controller;
 
-import com.safescore.controller.WekaController;
+import com.safescore.model.Usuario;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import weka.core.Instance;
@@ -15,10 +15,13 @@ public class MainController {
 
     private WekaController wekaController = new WekaController();
 
+
+
     @FXML
     public void initialize() {
         try {
-            wekaController.treinarModelo("src/main/sources/usuario_categorizado.arff");
+            wekaController.treinarModelo("Modulo1_Projeto/src/main/sources/usuarios_angelo.arff");
+            wekaController.avaliarModelo();
         } catch (Exception e) {
             scoreField.setText("Erro ao treinar modelo.");
             e.printStackTrace();
@@ -34,8 +37,9 @@ public class MainController {
         }
 
         try {
-            Instance usuario = wekaController.extrairAtributosDeUsuario(cpf);
-            double score = wekaController.preverScore(usuario);
+            Usuario usuarioScore = UsuarioScoreController.definirUsuario(cpf);
+            Instance usuarioScoreInstancia = wekaController.converterUsuarioParaInstance(usuarioScore, wekaController.getTrainingData());
+            double score = wekaController.preverScore(usuarioScoreInstancia);
             scoreField.setText(String.format("%.0f (Score previsto)", score));
         } catch (Exception e) {
             scoreField.setText("Erro na previsão.");

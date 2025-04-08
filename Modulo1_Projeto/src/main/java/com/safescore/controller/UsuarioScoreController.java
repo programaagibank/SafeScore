@@ -8,15 +8,6 @@ import java.util.Arrays;
 
 public class UsuarioScoreController {
 
-  public static String entradaCPF(){
-    //Iniciar JAVAFX Scene
-    String cpf = ""; //input_do_funcionario_agi
-    //verificar cpf no banco
-    UsuarioScoreDAO.usuarioExiste(cpf);//Retorna um boolean
-    //Cadastro Permitido
-    return cpf;
-  }
-
   public static Usuario definirUsuario(String cpf) {
     try {
       Object[] informacoesPessoais = UsuarioScoreDAO.informacoesPessoais(cpf);
