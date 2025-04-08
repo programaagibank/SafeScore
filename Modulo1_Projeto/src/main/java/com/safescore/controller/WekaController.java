@@ -8,6 +8,7 @@ import weka.core.*;
 import weka.core.converters.ConverterUtils.DataSource;
 import weka.classifiers.Evaluation;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Random;
@@ -17,10 +18,7 @@ public class WekaController {
   private Instances trainingData;
 
   // Inicializa e treina o modelo
-  public void treinarModelo(String caminhoRelativo) throws Exception {
-    // caminho absoluto do arquivo durante o desenvolvimento
-    String caminho = "src/main/sources/" + caminhoRelativo;
-    System.out.println("🔄 Carregando ARFF: " + caminho);
+  public void treinarModelo(String caminho) throws Exception {
 
     DataSource source = new DataSource(caminho);
     trainingData = source.getDataSet();

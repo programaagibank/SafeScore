@@ -10,7 +10,7 @@ public class Main {
     try {
       WekaController analisador = new WekaController();
 
-      analisador.treinarModelo("usuarios_angelo.arff");
+      analisador.treinarModelo("Modulo1_Projeto/src/main/sources/usuarios_angelo.arff");
 
       analisador.avaliarModelo();
 
