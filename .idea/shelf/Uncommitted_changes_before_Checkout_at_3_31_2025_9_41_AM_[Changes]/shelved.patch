@@ -1,0 +1,15 @@
+Index: Modulo1_Projeto/src/main/java/com/safescore/script/automaticCreditRisk.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Modulo1_Projeto/src/main/java/com/safescore/script/automaticCreditRisk.java b/Modulo1_Projeto/src/main/java/com/safescore/script/automaticCreditRisk.java
+new file mode 100644
+--- /dev/null	(date 1743424861809)
++++ b/Modulo1_Projeto/src/main/java/com/safescore/script/automaticCreditRisk.java	(date 1743424861809)
+@@ -0,0 +1,5 @@
++package com.safescore.script;
++
++public class automaticCreditRisk {
++
++}

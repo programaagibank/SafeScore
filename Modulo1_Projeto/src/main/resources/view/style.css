@@ -1,0 +1,63 @@
+/* Estilo geral para o VBox (container principal) */
+.root {
+    -fx-background-color: #F5F7FA; /* Fundo claro, similar ao da imagem */
+    -fx-padding: 20px;
+    -fx-alignment: center;
+}
+
+/* Estilo do título "SafeScore" */
+.label-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1E3A8A; /* Azul escuro para o título */
+    -fx-padding: 10px 0;
+}
+
+/* Estilo para os outros labels (como "Digite o CPF" e "Score do cliente") */
+.label {
+    -fx-font-size: 16px;
+    -fx-text-fill: #4B5EAA; /* Azul médio para contraste */
+    -fx-padding: 5px 0;
+}
+
+/* Estilo do campo de texto (CPF e Score) */
+.text-field {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #D1D5DB; /* Cinza claro para borda */
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 10px;
+    -fx-font-size: 14px;
+    -fx-text-fill: #1E3A8A; /* Azul escuro para o texto */
+    -fx-prompt-text-fill: #9CA3AF; /* Cinza para o placeholder */
+}
+
+/* Estilo específico para o campo de score (não editável) */
+#scoreField {
+    -fx-background-color: #E0F2FE; /* Fundo azul claro para destacar o score */
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1E3A8A; /* Azul escuro para o texto */
+    -fx-alignment: center;
+}
+
+/* Estilo do botão "Pesquisar" */
+.button {
+    -fx-background-color: #3B82F6; /* Azul vibrante para o botão */
+    -fx-text-fill: #FFFFFF; /* Texto branco */
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+}
+
+/* Efeito de hover no botão */
+.button:hover {
+    -fx-background-color: #2563EB; /* Azul mais escuro no hover */
+}
+
+/* Efeito de clique no botão */
+.button:pressed {
+    -fx-background-color: #1E40AF; /* Azul ainda mais escuro ao clicar */
+}

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="15" alignment="CENTER" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.safescore.view.MainController"
+      stylesheets="@style.css">
+
+    <!-- Título "SafeScore" -->
+    <Label text="SafeScore" styleClass="label-title" />
+
+    <!-- Campo para o CPF -->
+    <Label text="Digite o CPF:" styleClass="label" />
+    <TextField fx:id="cpfField" promptText="000.000.000-00" styleClass="text-field" />
+
+    <!-- Botão de pesquisa -->
+    <Button text="Pesquisar" onAction="#onPesquisarClicked" styleClass="button" />
+
+    <!-- Exibição do score -->
+    <Label text="Score do cliente:" styleClass="label" />
+    <TextField fx:id="scoreField" editable="false" styleClass="text-field" />
+
+</VBox>
