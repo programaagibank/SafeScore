@@ -1,13 +1,13 @@
 @relation risco_credito
 
-@attribute rangeIdade string
+@attribute rangeIdade {'até 25', '26 a 40', '41 a 60', 'acima de 60'}
 @attribute numeroDependentes numeric
-@attribute estadoCivil string
-@attribute escolaridade string
+ @attribute estadoCivil {'Solteiro', 'Casado', 'Viuvo', 'Divorciado'}
+@attribute escolaridade {'Ensino Médio Incompleto', 'Sem Escolaridade', 'Ensino Fundamental Completo', 'Ensino Fundamental Incompleto', 'Ensino Médio Completo', 'Superior Completo', 'Técnico', 'Superior Incompleto', 'Pós-graduação', 'Mestrado', 'Doutorado', 'Pós-doutorado'}
 @attribute tempoEnderecoAnos numeric
 @attribute nivelInadimplenciaEstado numeric
-@attribute tipoContratoResidencia string
-@attribute tipoEmprego string
+@attribute tipoContratoResidencia {'Locatario', 'Proprietario', 'Ocupante sem custo'}
+@attribute tipoEmprego {'Estagio', 'CLT', 'Autonomo', 'PJ'}
 @attribute tempoEmpregoAtual numeric
 @attribute salarioLiquidoMensal numeric
 @attribute montanteInvestimentos numeric
@@ -18,8 +18,709 @@
 @attribute valorParcelaAtiva numeric
 @attribute mesesAtrasado numeric
 @attribute valorCreditoRestanteTotal numeric
-@attribute seraInadimplente {0,1}
+@attribute score numeric
 
-@data
-'acima de 60',0,'Viuvo','Mestrado',27,51,'Proprietario','CLT',25,2462.00,0.00,99655.00,43992.00,-35964.00,0,0.00,0,0.00,0
-'41 a 60',4,'Solteiro','Sem Escolaridade',41,43,'Locatario','CLT',23,8063.00,273860.00,461464.00,424182.00,0.00,0,0.00,0,0.00,0
+@data'acima de 60',1,'Solteiro','Sem Escolaridade',59,43,'Locatario','CLT',0,1518.00,0.00,49610.00,20424.00,0.00,0,0.00,0,0.00,601
+'acima de 60',0,'Viuvo','Ensino Fundamental Incompleto',30,51,'Proprietario','Autonomo',59,2656.00,0.00,88232.00,18254.00,974.00,0,0.00,0,0.00,653
+'41 a 60',4,'Solteiro','Sem Escolaridade',27,41,'Locatario','CLT',15,1518.00,0.00,33837.00,21775.00,-43642.00,0,0.00,0,0.00,650
+'acima de 60',1,'Solteiro','Sem Escolaridade',72,43,'Proprietario','PJ',55,2527.00,77319.00,497434.00,175673.00,64376.00,1,1904.05,8,53248.57,615
+'acima de 60',1,'Solteiro','Sem Escolaridade',32,49,'Locatario','CLT',79,1518.00,0.00,36359.00,17972.00,2899.00,1,9924.46,14,395797.41,550
+'41 a 60',4,'Solteiro','Sem Escolaridade',9,49,'Locatario','CLT',32,9291.00,113380.00,115411.00,39835.00,-453058.00,0,0.00,0,0.00,772
+'41 a 60',2,'Solteiro','Sem Escolaridade',41,43,'Locatario','CLT',26,2856.00,0.00,71873.00,52278.00,17927.00,0,1546.09,0,55651.16,681
+'41 a 60',1,'Solteiro','Ensino Médio Completo',7,59,'Proprietario','CLT',11,1518.00,0.00,60430.00,25991.00,6640.00,1,3446.48,2,54473.33,664
+'acima de 60',0,'Viuvo','Superior Incompleto',92,44,'Locatario','Autonomo',54,2877.00,0.00,48008.00,40058.00,0.00,1,292.93,14,11159.57,575
+'26 a 40',3,'Solteiro','Sem Escolaridade',24,50,'Locatario','CLT',8,2389.00,0.00,72668.00,46115.00,6823.00,1,529.49,14,10735.68,684
+'acima de 60',1,'Solteiro','Sem Escolaridade',34,41,'Locatario','CLT',29,1518.00,0.00,94380.00,24112.00,-13393.00,0,0.00,0,0.00,574
+'26 a 40',2,'Solteiro','Sem Escolaridade',23,61,'Locatario','CLT',12,1518.00,0.00,93989.00,73224.00,7939.00,0,0.00,0,0.00,675
+'acima de 60',3,'Viuvo','Superior Completo',67,59,'Locatario','CLT',19,2415.00,0.00,85419.00,61883.00,0.00,1,974.48,42,46829.90,322
+'41 a 60',0,'Solteiro','Sem Escolaridade',58,46,'Locatario','CLT',40,2790.00,0.00,18476.00,3350.00,2052.00,1,9117.71,40,112603.44,382
+'41 a 60',1,'Solteiro','Superior Incompleto',44,61,'Proprietario','Autonomo',34,1826.00,0.00,30330.00,7528.00,865.00,0,0.00,0,0.00,546
+'41 a 60',1,'Casado','Ensino Médio Incompleto',58,56,'Locatario','Autonomo',20,1518.00,0.00,26932.00,12256.00,-39036.00,0,0.00,0,0.00,394
+'41 a 60',1,'Solteiro','Sem Escolaridade',30,43,'Locatario','CLT',37,11332.00,503628.00,293290.00,58565.00,0.00,0,6969.08,0,680818.18,556
+'41 a 60',0,'Solteiro','Ensino Médio Completo',12,43,'Locatario','PJ',0,1795.00,0.00,73955.00,2656.00,-24350.00,0,0.00,0,0.00,511
+'acima de 60',0,'Solteiro','Sem Escolaridade',87,44,'Locatario','CLT',27,3365.00,0.00,64229.00,54210.00,21049.00,1,16810.01,12,403042.85,566
+'até 25',0,'Casado','Pós-graduação',19,44,'Proprietario','CLT',1,1518.00,0.00,32622.00,7500.00,-15671.00,1,917.51,43,66911.38,406
+'acima de 60',1,'Solteiro','Sem Escolaridade',68,44,'Locatario','CLT',75,1518.00,0.00,83743.00,81129.00,-48329.00,0,32445.55,0,69645.65,436
+'41 a 60',4,'Solteiro','Sem Escolaridade',5,44,'Locatario','CLT',1,2186.00,38782.00,588901.00,61111.00,699.00,1,199.15,95,11706.76,348
+'acima de 60',1,'Solteiro','Sem Escolaridade',62,47,'Locatario','CLT',48,1824.00,0.00,41461.00,37977.00,0.00,0,0.00,0,0.00,501
+'acima de 60',0,'Casado','Doutorado',92,42,'Proprietario','CLT',23,1518.00,0.00,75132.00,27270.00,-10890.00,0,0.00,0,0.00,773
+'acima de 60',0,'Solteiro','Sem Escolaridade',54,43,'Locatario','CLT',27,3201.00,0.00,41774.00,18334.00,0.00,0,964.31,0,27389.66,510
+'26 a 40',3,'Solteiro','Sem Escolaridade',27,46,'Locatario','CLT',6,2051.00,0.00,55784.00,5479.00,-40975.00,1,17885.76,70,85000.50,371
+'41 a 60',4,'Viuvo','Mestrado',24,54,'Locatario','CLT',31,2478.00,0.00,76701.00,10224.00,0.00,0,0.00,0,0.00,557
+'acima de 60',1,'Solteiro','Sem Escolaridade',31,36,'Locatario','CLT',11,2284.00,0.00,29710.00,28603.00,0.00,1,821.66,36,9176.35,372
+'26 a 40',2,'Solteiro','Ensino Médio Completo',26,44,'Proprietario','PJ',9,2014.00,0.00,95565.00,51447.00,-2026.00,0,10315.01,0,746584.85,529
+'até 25',1,'Solteiro','Sem Escolaridade',10,43,'Locatario','CLT',1,13728.00,262127.00,732675.00,60197.00,0.00,0,0.00,0,0.00,634
+'acima de 60',1,'Solteiro','Sem Escolaridade',43,59,'Proprietario','CLT',58,1647.00,0.00,31040.00,27269.00,12092.00,0,0.00,0,0.00,613
+'41 a 60',0,'Solteiro','Sem Escolaridade',41,47,'Locatario','CLT',29,2386.00,0.00,49194.00,47573.00,6498.00,1,1937.31,63,69670.00,382
+'acima de 60',0,'Solteiro','Sem Escolaridade',75,61,'Locatario','CLT',12,2181.00,0.00,60247.00,30219.00,1340.00,0,0.00,0,0.00,595
+'acima de 60',2,'Solteiro','Sem Escolaridade',41,61,'Locatario','CLT',44,3405.00,60304.00,760996.00,511231.00,0.00,0,0.00,0,0.00,664
+'41 a 60',3,'Solteiro','Sem Escolaridade',39,59,'Locatario','CLT',26,1518.00,0.00,83507.00,18207.00,3484.00,0,96.56,0,7000.00,588
+'acima de 60',1,'Solteiro','Sem Escolaridade',95,49,'Locatario','CLT',74,1733.00,0.00,94917.00,19300.00,5831.00,0,0.00,0,0.00,659
+'acima de 60',2,'Solteiro','Sem Escolaridade',82,50,'Locatario','CLT',60,1518.00,0.00,81838.00,64009.00,16805.00,0,0.00,0,0.00,659
+'acima de 60',1,'Casado','Ensino Fundamental Completo',46,36,'Proprietario','PJ',47,15069.00,303987.00,523669.00,430682.00,-575706.00,0,1667.14,0,49900.00,719
+'26 a 40',3,'Viuvo','Ensino Fundamental Completo',29,59,'Proprietario','Autonomo',8,1620.00,0.00,38128.00,16722.00,-12060.00,0,0.00,0,0.00,464
+'acima de 60',0,'Solteiro','Sem Escolaridade',60,50,'Locatario','CLT',28,1518.00,0.00,15391.00,2585.00,0.00,1,8119.51,29,180760.67,304
+'acima de 60',0,'Casado','Superior Incompleto',62,41,'Proprietario','CLT',0,1934.00,0.00,64903.00,35206.00,-22597.00,0,0.00,0,0.00,712
+'26 a 40',0,'Solteiro','Sem Escolaridade',38,36,'Locatario','CLT',20,1613.00,0.00,58624.00,54388.00,0.00,1,6278.02,35,344269.46,519
+'acima de 60',4,'Viuvo','Ensino Médio Completo',79,59,'Proprietario','Autonomo',20,2329.00,0.00,50265.00,44843.00,0.00,0,0.00,0,0.00,504
+'41 a 60',0,'Viuvo','Sem Escolaridade',14,41,'Locatario','CLT',25,1518.00,0.00,23652.00,18370.00,5232.00,0,0.00,0,0.00,571
+'até 25',3,'Solteiro','Doutorado',17,43,'Proprietario','Autonomo',0,16179.00,155479.00,346624.00,99495.00,-528790.00,1,2711.42,36,98120.44,558
+'41 a 60',2,'Solteiro','Sem Escolaridade',60,41,'Locatario','CLT',41,2378.00,0.00,126319.00,58203.00,14116.00,1,196.43,21,6480.44,537
+'acima de 60',1,'Solteiro','Sem Escolaridade',8,62,'Locatario','CLT',45,8354.00,73566.00,495564.00,5897.00,-70604.00,1,4179.31,34,108977.55,436
+'acima de 60',2,'Solteiro','Sem Escolaridade',36,54,'Locatario','CLT',14,2273.00,0.00,40743.00,40018.00,4998.00,0,0.00,0,0.00,556
+'acima de 60',3,'Viuvo','Técnico',75,54,'Proprietario','PJ',34,2477.00,0.00,86857.00,19308.00,-45347.00,0,0.00,0,0.00,566
+'26 a 40',2,'Solteiro','Sem Escolaridade',5,37,'Locatario','CLT',19,1518.00,0.00,49767.00,40232.00,-17213.00,0,0.00,0,0.00,621
+'acima de 60',4,'Casado','Superior Incompleto',26,49,'Locatario','Autonomo',35,1912.00,0.00,99431.00,44962.00,7519.00,0,4372.22,0,86800.00,547
+'acima de 60',2,'Solteiro','Sem Escolaridade',32,43,'Locatario','CLT',20,1628.00,0.00,27556.00,26401.00,5492.00,0,0.00,0,0.00,591
+'41 a 60',1,'Solteiro','Sem Escolaridade',23,49,'Locatario','CLT',1,1704.00,0.00,48319.00,32775.00,0.00,0,4608.71,0,122537.76,252
+'até 25',1,'Solteiro','Pós-graduação',22,61,'Proprietario','Autonomo',3,12671.00,326205.00,366668.00,308012.00,0.00,0,0.00,0,0.00,752
+'26 a 40',3,'Viuvo','Ensino Fundamental Incompleto',35,42,'Proprietario','CLT',16,2669.00,440016.00,481969.00,288714.00,69333.00,1,6495.55,77,566848.26,517
+'41 a 60',0,'Solteiro','Sem Escolaridade',10,59,'Locatario','CLT',7,2136.00,0.00,47532.00,28303.00,0.00,1,7579.39,48,74692.15,251
+'acima de 60',1,'Solteiro','Sem Escolaridade',44,50,'Locatario','CLT',59,2875.00,0.00,126018.00,37331.00,9436.00,1,3623.10,24,66955.95,418
+'acima de 60',4,'Solteiro','Mestrado',49,61,'Proprietario','Autonomo',69,1892.00,0.00,26529.00,4327.00,0.00,0,0.00,0,0.00,549
+'41 a 60',2,'Solteiro','Sem Escolaridade',22,43,'Locatario','CLT',20,2940.00,0.00,83639.00,79942.00,2597.00,1,294.41,9,4387.50,537
+'26 a 40',1,'Solteiro','Sem Escolaridade',24,51,'Locatario','CLT',10,13735.00,15332.00,869219.00,502077.00,202042.00,0,0.00,0,0.00,783
+'41 a 60',1,'Casado','Doutorado',4,54,'Locatario','CLT',8,5992.00,184732.00,311137.00,270774.00,0.00,0,2885.74,0,104000.00,627
+'acima de 60',3,'Solteiro','Sem Escolaridade',62,54,'Locatario','CLT',41,2142.00,0.00,117884.00,69706.00,0.00,0,568.03,0,44000.00,469
+'até 25',3,'Casado','Técnico',16,56,'Proprietario','CLT',6,1518.00,0.00,17394.00,14558.00,-7750.00,0,136.49,0,11392.13,567
+'acima de 60',0,'Solteiro','Sem Escolaridade',73,62,'Locatario','CLT',55,2590.00,0.00,26300.00,18766.00,7732.00,0,0.00,0,0.00,611
+'acima de 60',1,'Solteiro','Sem Escolaridade',1,49,'Locatario','CLT',40,1518.00,0.00,85981.00,71714.00,-27598.00,0,0.00,0,0.00,516
+'acima de 60',4,'Solteiro','Sem Escolaridade',74,50,'Locatario','CLT',16,1518.00,0.00,41744.00,9735.00,0.00,0,0.00,0,0.00,485
+'41 a 60',3,'Solteiro','Sem Escolaridade',42,44,'Locatario','CLT',24,1518.00,0.00,80652.00,51213.00,0.00,0,1898.86,0,35257.81,400
+'26 a 40',1,'Solteiro','Sem Escolaridade',5,44,'Locatario','CLT',15,2168.00,0.00,84340.00,22702.00,0.00,0,0.00,0,0.00,628
+'41 a 60',1,'Solteiro','Sem Escolaridade',50,61,'Locatario','CLT',32,2944.00,0.00,103421.00,75266.00,-17425.00,0,2987.91,0,172920.00,381
+'acima de 60',0,'Solteiro','Sem Escolaridade',59,54,'Locatario','CLT',23,2707.00,0.00,42945.00,27316.00,0.00,0,0.00,0,0.00,526
+'acima de 60',4,'Viuvo','Superior Completo',34,46,'Proprietario','CLT',43,8453.00,284177.00,212163.00,198080.00,18513.00,0,714.07,0,14500.00,812
+'41 a 60',2,'Viuvo','Superior Completo',45,49,'Proprietario','PJ',23,5479.00,13069.00,1039947.00,391885.00,120259.00,0,0.00,0,0.00,795
+'41 a 60',0,'Solteiro','Mestrado',47,41,'Locatario','Autonomo',29,1518.00,0.00,99827.00,80489.00,-7473.00,1,18925.34,4,439144.59,398
+'acima de 60',3,'Viuvo','Sem Escolaridade',48,44,'Locatario','CLT',59,1518.00,0.00,68473.00,10909.00,3068.00,0,0.00,0,0.00,592
+'acima de 60',0,'Viuvo','Superior Completo',83,41,'Locatario','PJ',65,1836.00,0.00,103715.00,42999.00,0.00,1,14248.45,61,856137.06,354
+'acima de 60',4,'Solteiro','Sem Escolaridade',44,42,'Locatario','CLT',51,1518.00,0.00,96981.00,53951.00,5784.00,1,375.89,9,7616.15,541
+'41 a 60',2,'Solteiro','Sem Escolaridade',14,43,'Locatario','CLT',20,1518.00,0.00,93761.00,71281.00,50075.00,0,0.00,0,0.00,639
+'41 a 60',4,'Solteiro','Sem Escolaridade',52,51,'Locatario','CLT',25,1518.00,0.00,115099.00,34021.00,-29154.00,1,8807.16,54,105218.92,248
+'26 a 40',0,'Casado','Doutorado',32,46,'Locatario','Autonomo',4,1518.00,0.00,86416.00,68066.00,-21992.00,1,6107.62,34,103750.34,479
+'41 a 60',2,'Solteiro','Sem Escolaridade',39,56,'Locatario','CLT',26,1518.00,0.00,98306.00,65069.00,3181.00,0,0.00,0,0.00,604
+'acima de 60',0,'Solteiro','Sem Escolaridade',64,54,'Locatario','CLT',37,2237.00,0.00,86144.00,44017.00,0.00,1,896.18,15,11013.69,354
+'41 a 60',1,'Casado','Doutorado',49,46,'Locatario','Autonomo',26,1518.00,0.00,58342.00,49948.00,0.00,0,0.00,0,0.00,589
+'41 a 60',3,'Solteiro','Sem Escolaridade',47,47,'Locatario','CLT',15,1518.00,0.00,67105.00,21034.00,-23500.00,0,0.00,0,0.00,538
+'acima de 60',1,'Viuvo','Superior Incompleto',85,46,'Proprietario','Autonomo',37,1518.00,0.00,54854.00,11808.00,0.00,0,2769.06,0,90943.07,477
+'acima de 60',0,'Solteiro','Sem Escolaridade',89,44,'Locatario','CLT',76,1518.00,0.00,32474.00,14275.00,0.00,0,0.00,0,0.00,559
+'41 a 60',1,'Solteiro','Sem Escolaridade',43,50,'Locatario','CLT',31,2223.00,0.00,114718.00,63591.00,-17140.00,1,1889.71,69,16720.59,299
+'41 a 60',3,'Solteiro','Sem Escolaridade',19,49,'Locatario','CLT',10,2663.00,0.00,83222.00,37766.00,0.00,0,0.00,0,0.00,538
+'26 a 40',1,'Solteiro','Sem Escolaridade',21,61,'Locatario','CLT',11,2695.00,0.00,107530.00,55758.00,6762.00,0,0.00,0,0.00,675
+'41 a 60',2,'Solteiro','Sem Escolaridade',33,41,'Locatario','CLT',35,2757.00,0.00,51298.00,15514.00,-1756.00,1,16928.22,18,290979.89,299
+'acima de 60',2,'Solteiro','Sem Escolaridade',62,49,'Locatario','CLT',48,2427.00,141154.00,458485.00,303089.00,-245893.00,0,1172.58,0,72540.00,489
+'41 a 60',1,'Casado','Técnico',35,54,'Proprietario','Autonomo',40,1518.00,0.00,61295.00,59636.00,1455.00,0,1744.33,0,72300.00,484
+'26 a 40',4,'Solteiro','Sem Escolaridade',30,49,'Locatario','CLT',12,2286.00,0.00,162496.00,86252.00,921.00,0,0.00,0,0.00,613
+'acima de 60',2,'Casado','Superior Incompleto',92,48,'Proprietario','Autonomo',37,2632.00,0.00,95694.00,79481.00,0.00,0,0.00,0,0.00,665
+'acima de 60',2,'Casado','Superior Completo',26,43,'Proprietario','Autonomo',67,1837.00,0.00,76146.00,40644.00,-19457.00,1,400.23,16,7855.19,563
+'41 a 60',2,'Solteiro','Sem Escolaridade',58,51,'Locatario','CLT',32,2212.00,0.00,88933.00,66693.00,-18811.00,1,4473.63,7,23311.16,264
+'acima de 60',1,'Solteiro','Sem Escolaridade',0,41,'Locatario','CLT',52,3003.00,0.00,69632.00,60144.00,5789.00,0,19480.60,0,645527.01,558
+'41 a 60',2,'Solteiro','Ensino Médio Incompleto',40,41,'Proprietario','CLT',28,3210.00,586654.00,503114.00,351000.00,0.00,1,2570.77,6,69537.04,536
+'acima de 60',2,'Solteiro','Sem Escolaridade',52,51,'Locatario','CLT',6,2804.00,0.00,82413.00,20580.00,1529.00,1,112.23,86,4232.83,522
+'até 25',1,'Solteiro','Superior Incompleto',1,43,'Locatario','PJ',0,1740.00,545949.00,480056.00,471015.00,38164.00,0,0.00,0,0.00,613
+'acima de 60',3,'Solteiro','Superior Completo',93,43,'Locatario','PJ',79,2712.00,0.00,80157.00,36301.00,19448.00,1,26641.73,80,710206.25,436
+'26 a 40',4,'Solteiro','Superior Incompleto',30,41,'Locatario','PJ',15,2125.00,0.00,90648.00,52092.00,5208.00,0,0.00,0,0.00,724
+'41 a 60',4,'Casado','Mestrado',55,56,'Locatario','Autonomo',37,1798.00,0.00,42945.00,35069.00,0.00,0,0.00,0,0.00,467
+'41 a 60',0,'Solteiro','Sem Escolaridade',38,56,'Locatario','CLT',9,2648.00,0.00,53474.00,4691.00,367.00,0,2046.57,0,87031.11,445
+'26 a 40',4,'Solteiro','Sem Escolaridade',26,42,'Locatario','CLT',7,1518.00,0.00,44316.00,19260.00,0.00,0,0.00,0,0.00,544
+'acima de 60',3,'Solteiro','Sem Escolaridade',35,43,'Locatario','CLT',47,1518.00,0.00,58736.00,16003.00,-38150.00,1,4151.16,46,98776.30,303
+'até 25',2,'Solteiro','Pós-graduação',15,54,'Proprietario','CLT',6,2215.00,0.00,26717.00,7723.00,0.00,1,864.48,17,13133.23,393
+'acima de 60',3,'Solteiro','Sem Escolaridade',86,44,'Locatario','CLT',67,1518.00,0.00,66174.00,17216.00,-2755.00,0,0.00,0,0.00,558
+'41 a 60',1,'Solteiro','Sem Escolaridade',54,49,'Locatario','CLT',40,3104.00,0.00,11774.00,7640.00,0.00,1,7658.74,11,24230.64,313
+'acima de 60',0,'Solteiro','Sem Escolaridade',38,43,'Locatario','CLT',65,7932.00,179091.00,96733.00,51366.00,0.00,1,2146.03,53,57201.04,607
+'acima de 60',1,'Solteiro','Sem Escolaridade',97,43,'Locatario','CLT',67,1518.00,0.00,87053.00,74993.00,0.00,0,71.26,0,3633.33,574
+'26 a 40',1,'Solteiro','Sem Escolaridade',0,43,'Locatario','CLT',15,2711.00,0.00,85071.00,40790.00,-45454.00,0,0.00,0,0.00,573
+'acima de 60',0,'Solteiro','Sem Escolaridade',27,44,'Locatario','CLT',7,9895.00,343634.00,439949.00,108491.00,0.00,1,271.12,0,13215.35,700
+'até 25',1,'Solteiro','Sem Escolaridade',24,50,'Locatario','CLT',6,1967.00,0.00,30600.00,21301.00,0.00,0,0.00,0,0.00,501
+'acima de 60',2,'Solteiro','Sem Escolaridade',68,62,'Locatario','CLT',21,3215.00,0.00,67109.00,59047.00,3277.00,1,2038.55,55,110918.89,474
+'acima de 60',3,'Solteiro','Sem Escolaridade',52,56,'Locatario','CLT',18,1518.00,0.00,29004.00,20258.00,0.00,0,0.00,0,0.00,450
+'26 a 40',3,'Solteiro','Sem Escolaridade',31,51,'Locatario','CLT',0,2068.00,0.00,45104.00,8567.00,1821.00,0,0.00,0,0.00,529
+'acima de 60',4,'Viuvo','Sem Escolaridade',8,47,'Locatario','PJ',4,1518.00,0.00,59079.00,55452.00,0.00,1,670.11,33,37363.55,143
+'acima de 60',4,'Casado','Superior Incompleto',88,48,'Proprietario','CLT',70,18531.00,2307.00,418358.00,392901.00,0.00,0,0.00,0,0.00,785
+'26 a 40',4,'Solteiro','Sem Escolaridade',26,62,'Locatario','CLT',8,4350.00,524983.00,1045807.00,362817.00,107727.00,0,0.00,0,0.00,768
+'26 a 40',0,'Casado','Pós-graduação',29,36,'Proprietario','CLT',0,1518.00,0.00,63343.00,37501.00,204.00,1,1052.46,75,38042.57,608
+'41 a 60',1,'Casado','Sem Escolaridade',27,49,'Proprietario','PJ',27,1878.00,0.00,114417.00,47029.00,29082.00,0,0.00,0,0.00,626
+'26 a 40',1,'Viuvo','Técnico',23,44,'Locatario','Autonomo',15,1518.00,0.00,65114.00,18586.00,-90604.00,1,358.13,43,5610.68,501
+'26 a 40',4,'Casado','Sem Escolaridade',33,49,'Locatario','CLT',3,1518.00,0.00,53651.00,34603.00,0.00,1,255.53,25,11959.42,457
+'acima de 60',4,'Solteiro','Sem Escolaridade',77,43,'Locatario','CLT',55,6070.00,300993.00,297757.00,213254.00,13028.00,0,22490.77,0,76200.00,642
+'26 a 40',1,'Solteiro','Sem Escolaridade',24,46,'Locatario','CLT',7,3016.00,0.00,40822.00,1978.00,0.00,1,24781.20,41,33077.96,316
+'acima de 60',1,'Solteiro','Sem Escolaridade',59,41,'Locatario','CLT',8,15109.00,257728.00,701784.00,175329.00,0.00,0,0.00,0,0.00,699
+'acima de 60',0,'Solteiro','Sem Escolaridade',25,48,'Locatario','CLT',53,1518.00,0.00,158710.00,66444.00,-66187.00,0,0.00,0,0.00,628
+'41 a 60',4,'Solteiro','Sem Escolaridade',20,54,'Locatario','CLT',25,1951.00,0.00,28508.00,3876.00,-37522.00,1,4151.68,63,243989.33,161
+'41 a 60',1,'Casado','Ensino Fundamental Incompleto',41,42,'Locatario','Autonomo',13,2952.00,0.00,60151.00,54221.00,0.00,0,0.00,0,0.00,482
+'41 a 60',0,'Viuvo','Ensino Fundamental Incompleto',20,49,'Locatario','CLT',37,1518.00,0.00,37604.00,26177.00,-45005.00,0,0.00,0,0.00,481
+'acima de 60',3,'Solteiro','Sem Escolaridade',26,41,'Locatario','CLT',54,1518.00,0.00,12209.00,5697.00,-61926.00,0,0.00,0,0.00,485
+'26 a 40',0,'Solteiro','Sem Escolaridade',33,49,'Locatario','CLT',19,5268.00,27178.00,266977.00,140446.00,-22727.00,0,346.98,0,14031.13,747
+'41 a 60',3,'Solteiro','Sem Escolaridade',41,44,'Locatario','CLT',23,7490.00,305487.00,292942.00,215445.00,-106016.00,0,0.00,0,0.00,663
+'acima de 60',1,'Viuvo','Ensino Médio Incompleto',58,41,'Proprietario','CLT',62,1518.00,0.00,62343.00,54961.00,5854.00,1,41242.23,77,572821.85,446
+'até 25',0,'Viuvo','Técnico',25,56,'Proprietario','PJ',7,2561.00,0.00,99546.00,57230.00,10144.00,0,0.00,0,0.00,715
+'41 a 60',3,'Solteiro','Ensino Médio Incompleto',0,54,'Locatario','CLT',33,3284.00,0.00,29842.00,5295.00,1813.00,0,0.00,0,0.00,571
+'acima de 60',3,'Solteiro','Sem Escolaridade',99,41,'Locatario','CLT',29,2930.00,0.00,25652.00,16954.00,5795.00,0,0.00,0,0.00,575
+'41 a 60',0,'Solteiro','Sem Escolaridade',25,49,'Locatario','CLT',35,2275.00,0.00,108078.00,44642.00,6591.00,0,0.00,0,0.00,688
+'41 a 60',0,'Solteiro','Sem Escolaridade',45,56,'Locatario','CLT',34,1518.00,0.00,105757.00,54765.00,0.00,0,0.00,0,0.00,575
+'41 a 60',3,'Solteiro','Sem Escolaridade',21,48,'Locatario','CLT',22,1578.00,0.00,98928.00,40479.00,0.00,0,0.00,0,0.00,538
+'acima de 60',4,'Solteiro','Ensino Médio Completo',44,42,'Locatario','CLT',5,2664.00,0.00,46665.00,29741.00,9880.00,0,0.00,0,0.00,623
+'26 a 40',0,'Solteiro','Sem Escolaridade',26,49,'Locatario','CLT',6,1518.00,0.00,110940.00,69386.00,652.00,0,39917.38,0,1027560.00,556
+'acima de 60',1,'Casado','Doutorado',12,43,'Locatario','PJ',66,1518.00,0.00,42792.00,33784.00,-137.00,0,0.00,0,0.00,536
+'acima de 60',4,'Solteiro','Sem Escolaridade',33,59,'Locatario','CLT',54,3251.00,0.00,32277.00,17287.00,0.00,0,0.00,0,0.00,536
+'até 25',3,'Casado','Superior Completo',19,42,'Proprietario','CLT',2,4415.00,134660.00,271930.00,124535.00,-377191.00,1,812.13,3,16910.95,694
+'41 a 60',1,'Solteiro','Técnico',51,62,'Proprietario','Autonomo',35,2728.00,0.00,85106.00,35598.00,15039.00,0,0.00,0,0.00,695
+'até 25',4,'Solteiro','Sem Escolaridade',21,49,'Locatario','CLT',3,2840.00,0.00,22602.00,3184.00,0.00,1,252.18,34,7325.00,371
+'41 a 60',0,'Solteiro','Pós-graduação',12,49,'Locatario','Autonomo',30,10782.00,217255.00,209195.00,121240.00,0.00,0,0.00,0,0.00,757
+'26 a 40',0,'Casado','Mestrado',26,44,'Locatario','PJ',20,2533.00,0.00,53264.00,28675.00,0.00,1,70143.90,76,632158.54,479
+'acima de 60',4,'Casado','Ensino Médio Incompleto',95,50,'Proprietario','PJ',77,1518.00,0.00,32595.00,17457.00,0.00,0,88.46,0,1154.62,495
+'41 a 60',0,'Solteiro','Sem Escolaridade',18,43,'Locatario','CLT',2,1870.00,0.00,101177.00,52447.00,-24767.00,1,2635.52,34,113486.74,366
+'acima de 60',0,'Solteiro','Doutorado',88,43,'Proprietario','CLT',49,1518.00,107859.00,463851.00,134929.00,0.00,0,0.00,0,0.00,810
+'26 a 40',3,'Solteiro','Sem Escolaridade',33,44,'Locatario','CLT',15,1518.00,0.00,80655.00,47216.00,6782.00,0,0.00,0,0.00,693
+'26 a 40',4,'Solteiro','Sem Escolaridade',25,42,'Locatario','CLT',10,3418.00,0.00,48386.00,24776.00,0.00,0,0.00,0,0.00,625
+'acima de 60',3,'Solteiro','Sem Escolaridade',83,49,'Locatario','CLT',33,2581.00,0.00,24995.00,22060.00,5240.00,0,0.00,0,0.00,575
+'acima de 60',0,'Viuvo','Superior Incompleto',87,44,'Locatario','Autonomo',62,2756.00,0.00,96689.00,4790.00,-95015.00,0,0.00,0,0.00,609
+'acima de 60',1,'Solteiro','Sem Escolaridade',59,43,'Locatario','CLT',10,3082.00,0.00,39104.00,22249.00,0.00,0,0.00,0,0.00,588
+'41 a 60',0,'Solteiro','Sem Escolaridade',51,43,'Locatario','CLT',31,6531.00,133787.00,247055.00,70389.00,7106.00,1,913.27,5,27995.93,666
+'acima de 60',0,'Solteiro','Sem Escolaridade',55,44,'Locatario','CLT',57,1518.00,0.00,56773.00,8687.00,-19473.00,0,0.00,0,0.00,628
+'26 a 40',0,'Solteiro','Sem Escolaridade',34,43,'Locatario','CLT',14,1518.00,0.00,8990.00,4075.00,-7762.00,0,0.00,0,0.00,614
+'41 a 60',1,'Solteiro','Sem Escolaridade',33,43,'Locatario','CLT',8,2835.00,0.00,97624.00,6265.00,-32506.00,0,2238.09,0,161885.71,416
+'acima de 60',3,'Solteiro','Ensino Fundamental Incompleto',51,48,'Locatario','CLT',43,1936.00,62076.00,409471.00,157037.00,3537.00,0,9725.47,0,930551.35,560
+'acima de 60',2,'Solteiro','Sem Escolaridade',84,43,'Locatario','CLT',68,1518.00,0.00,61660.00,49011.00,747.00,0,0.00,0,0.00,574
+'26 a 40',2,'Solteiro','Ensino Fundamental Completo',29,47,'Proprietario','PJ',9,2495.00,0.00,12047.00,7207.00,191.00,1,4589.68,18,64092.86,313
+'acima de 60',1,'Solteiro','Sem Escolaridade',98,48,'Locatario','CLT',31,10896.00,34965.00,321773.00,12746.00,0.00,0,0.00,0,0.00,699
+'41 a 60',4,'Solteiro','Sem Escolaridade',40,47,'Locatario','CLT',0,2479.00,0.00,66547.00,25734.00,0.00,1,11312.36,44,69652.31,197
+'26 a 40',2,'Solteiro','Sem Escolaridade',27,41,'Locatario','CLT',11,2753.00,0.00,58299.00,40975.00,0.00,0,0.00,0,0.00,628
+'acima de 60',1,'Solteiro','Ensino Médio Incompleto',58,54,'Locatario','Autonomo',44,2372.00,0.00,87315.00,43226.00,0.00,0,86954.35,0,362905.98,345
+'26 a 40',1,'Solteiro','Sem Escolaridade',28,44,'Locatario','CLT',10,2703.00,0.00,66555.00,1977.00,287.00,0,0.00,0,0.00,559
+'acima de 60',1,'Solteiro','Sem Escolaridade',50,47,'Locatario','CLT',44,3039.00,0.00,76337.00,71698.00,0.00,1,11146.16,96,660205.33,415
+'acima de 60',3,'Solteiro','Sem Escolaridade',50,54,'Locatario','CLT',26,2478.00,0.00,121553.00,54997.00,22473.00,0,0.00,0,0.00,608
+'41 a 60',3,'Solteiro','Sem Escolaridade',47,51,'Locatario','CLT',16,2504.00,0.00,98986.00,42929.00,0.00,0,0.00,0,0.00,503
+'acima de 60',1,'Solteiro','Sem Escolaridade',19,43,'Locatario','CLT',3,1574.00,0.00,49401.00,35537.00,0.00,1,2614.16,2,35341.26,233
+'acima de 60',4,'Solteiro','Sem Escolaridade',91,56,'Locatario','CLT',32,15254.00,110947.00,258089.00,28215.00,0.00,0,0.00,0,0.00,698
+'41 a 60',4,'Solteiro','Sem Escolaridade',52,48,'Locatario','CLT',21,2899.00,0.00,35884.00,15537.00,-12323.00,0,100.98,0,7840.00,465
+'acima de 60',1,'Solteiro','Sem Escolaridade',23,49,'Locatario','CLT',8,1518.00,0.00,103911.00,26797.00,0.00,0,0.00,0,0.00,628
+'26 a 40',3,'Viuvo','Pós-graduação',38,59,'Locatario','CLT',20,3047.00,0.00,167266.00,79448.00,37096.00,0,1369.27,0,55000.00,667
+'41 a 60',1,'Solteiro','Doutorado',19,42,'Locatario','Autonomo',40,1769.00,0.00,26599.00,22706.00,0.00,0,423.93,0,10400.00,459
+'acima de 60',2,'Solteiro','Sem Escolaridade',52,50,'Locatario','CLT',81,1518.00,0.00,92943.00,11282.00,708.00,1,1784.19,90,28186.03,386
+'acima de 60',2,'Solteiro','Sem Escolaridade',91,41,'Locatario','CLT',73,2195.00,0.00,75208.00,40923.00,1565.00,0,0.00,0,0.00,708
+'26 a 40',2,'Solteiro','Sem Escolaridade',30,43,'Locatario','CLT',12,2312.00,0.00,83861.00,72506.00,0.00,0,0.00,0,0.00,628
+'acima de 60',3,'Viuvo','Superior Incompleto',85,44,'Proprietario','PJ',43,3083.00,0.00,56980.00,42109.00,1891.00,0,782.29,0,57681.63,757
+'até 25',3,'Solteiro','Sem Escolaridade',21,44,'Locatario','CLT',4,1755.00,0.00,151675.00,68466.00,7880.00,0,0.00,0,0.00,643
+'acima de 60',4,'Viuvo','Ensino Médio Incompleto',94,49,'Locatario','CLT',43,14350.00,191949.00,207002.00,79616.00,0.00,0,0.00,0,0.00,708
+'41 a 60',0,'Viuvo','Ensino Fundamental Incompleto',20,49,'Locatario','CLT',37,1518.00,0.00,37604.00,26177.00,-45005.00,0,0.00,0,0.00,481
+'acima de 60',2,'Solteiro','Sem Escolaridade',79,49,'Locatario','CLT',66,1518.00,0.00,72251.00,21327.00,0.00,0,0.00,0,0.00,628
+'41 a 60',2,'Casado','Sem Escolaridade',57,59,'Locatario','CLT',7,1639.00,0.00,43299.00,14252.00,329.00,1,45163.65,89,1412936.23,178
+'acima de 60',1,'Casado','Superior Completo',45,46,'Locatario','PJ',76,7470.00,374108.00,481370.00,64316.00,0.00,0,0.00,0,0.00,777
+'até 25',1,'Solteiro','Ensino Médio Incompleto',20,62,'Proprietario','Autonomo',0,1518.00,0.00,22166.00,2262.00,555.00,1,21102.10,43,767434.34,121
+'41 a 60',2,'Solteiro','Sem Escolaridade',0,41,'Locatario','CLT',28,2788.00,0.00,108404.00,41514.00,0.00,0,0.00,0,0.00,496
+'até 25',0,'Solteiro','Sem Escolaridade',10,50,'Locatario','CLT',1,3327.00,0.00,71753.00,8034.00,-39016.00,1,11486.61,57,539016.40,400
+'acima de 60',1,'Solteiro','Sem Escolaridade',19,42,'Locatario','CLT',21,2779.00,0.00,143081.00,67230.00,26020.00,0,399.16,0,16449.03,660
+'26 a 40',1,'Solteiro','Sem Escolaridade',27,61,'Locatario','CLT',9,1518.00,0.00,37135.00,5440.00,118.00,1,555.65,63,25555.99,271
+'41 a 60',4,'Viuvo','Ensino Fundamental Incompleto',50,61,'Locatario','PJ',35,1693.00,0.00,85588.00,73716.00,0.00,0,0.00,0,0.00,368
+'acima de 60',1,'Viuvo','Ensino Fundamental Incompleto',87,42,'Proprietario','CLT',36,1518.00,0.00,29645.00,18922.00,-60601.00,1,2048.72,38,111476.96,305
+'até 25',3,'Solteiro','Sem Escolaridade',22,41,'Locatario','CLT',4,1608.00,0.00,40900.00,40656.00,87.00,0,1291.74,0,63813.33,361
+'acima de 60',4,'Viuvo','Superior Completo',16,50,'Locatario','Autonomo',63,8320.00,220339.00,841848.00,446845.00,0.00,1,485.30,18,25846.12,617
+'41 a 60',0,'Viuvo','Ensino Médio Completo',20,42,'Locatario','PJ',8,1518.00,0.00,14054.00,1756.00,-48758.00,1,168.80,39,8565.91,264
+'até 25',1,'Solteiro','Sem Escolaridade',20,37,'Locatario','CLT',2,13541.00,181684.00,24760.00,18378.00,0.00,0,0.00,0,0.00,714
+'acima de 60',3,'Solteiro','Mestrado',77,43,'Proprietario','Autonomo',69,1518.00,0.00,49190.00,41505.00,14798.00,1,3774.31,41,72115.87,504
+'26 a 40',1,'Viuvo','Doutorado',33,41,'Locatario','Autonomo',14,1518.00,0.00,117264.00,71135.00,-14267.00,1,7281.06,0,123103.04,516
+'acima de 60',2,'Casado','Superior Completo',68,51,'Locatario','PJ',30,2867.00,0.00,31227.00,31002.00,0.00,1,2132.31,47,26275.03,325
+'até 25',2,'Solteiro','Mestrado',16,41,'Proprietario','CLT',5,1518.00,0.00,73420.00,61082.00,-9345.00,0,0.00,0,0.00,776
+'acima de 60',3,'Viuvo','Ensino Médio Completo',96,49,'Proprietario','CLT',34,1518.00,0.00,24567.00,20526.00,0.00,0,0.00,0,0.00,631
+'acima de 60',2,'Solteiro','Técnico',57,41,'Proprietario','PJ',9,5990.00,70071.00,430313.00,14292.00,-212282.00,0,0.00,0,0.00,842
+'41 a 60',0,'Solteiro','Sem Escolaridade',54,49,'Locatario','CLT',5,3354.00,395244.00,273723.00,85524.00,-304661.00,0,0.00,0,0.00,750
+'acima de 60',4,'Solteiro','Sem Escolaridade',72,43,'Locatario','CLT',7,1518.00,0.00,79090.00,36043.00,0.00,0,1116.56,0,52194.85,502
+'26 a 40',0,'Solteiro','Ensino Médio Incompleto',19,37,'Locatario','CLT',3,1518.00,0.00,74537.00,47275.00,0.00,0,0.00,0,0.00,753
+'41 a 60',0,'Solteiro','Sem Escolaridade',10,43,'Locatario','CLT',41,1518.00,0.00,33348.00,27050.00,-37498.00,1,404.33,23,6803.92,431
+'acima de 60',4,'Viuvo','Mestrado',88,42,'Locatario','CLT',37,3173.00,0.00,9864.00,1553.00,-8217.00,0,0.00,0,0.00,626
+'26 a 40',2,'Solteiro','Sem Escolaridade',4,44,'Locatario','CLT',19,2363.00,0.00,43275.00,22488.00,0.00,0,939.03,0,92000.00,476
+'acima de 60',1,'Casado','Doutorado',54,61,'Proprietario','CLT',9,2814.00,565.00,822314.00,521009.00,-324377.00,0,0.00,0,0.00,790
+'acima de 60',0,'Casado','Ensino Médio Completo',7,54,'Locatario','PJ',54,2950.00,0.00,98404.00,27512.00,2053.00,0,0.00,0,0.00,731
+'26 a 40',4,'Viuvo','Superior Completo',19,43,'Proprietario','CLT',21,1583.00,0.00,79569.00,43599.00,0.00,0,0.00,0,0.00,734
+'41 a 60',1,'Solteiro','Mestrado',33,37,'Proprietario','Autonomo',35,1518.00,0.00,57318.00,474.00,-3324.00,1,12777.36,68,503904.86,457
+'41 a 60',2,'Casado','Doutorado',23,36,'Proprietario','Autonomo',12,2367.00,0.00,13261.00,979.00,157.00,0,18050.00,0,108100.00,453
+'41 a 60',2,'Solteiro','Sem Escolaridade',57,42,'Locatario','CLT',30,1696.00,0.00,38868.00,21.00,0.00,0,6007.02,0,217322.79,325
+'acima de 60',1,'Solteiro','Sem Escolaridade',59,47,'Locatario','CLT',44,2362.00,0.00,84372.00,61366.00,-5461.00,1,1336.92,45,19561.19,431
+'acima de 60',0,'Casado','Pós-graduação',90,37,'Locatario','Autonomo',30,3463.00,0.00,29360.00,627.00,0.00,1,744.05,71,15967.60,588
+'26 a 40',0,'Casado','Sem Escolaridade',29,46,'Proprietario','CLT',11,2662.00,0.00,62787.00,52649.00,-23013.00,0,0.00,0,0.00,753
+'acima de 60',1,'Solteiro','Sem Escolaridade',77,46,'Locatario','CLT',17,4867.00,141468.00,577733.00,172224.00,-451682.00,0,2659.83,0,103500.00,691
+'acima de 60',0,'Casado','Ensino Fundamental Incompleto',96,54,'Proprietario','Autonomo',33,2042.00,49348.00,780538.00,357234.00,-303032.00,0,2984.73,0,113791.30,589
+'acima de 60',0,'Solteiro','Superior Completo',63,50,'Locatario','PJ',55,1897.00,0.00,81589.00,32273.00,-20243.00,0,587.65,0,22525.00,606
+'acima de 60',4,'Solteiro','Sem Escolaridade',90,49,'Locatario','CLT',73,1636.00,0.00,37976.00,25079.00,7591.00,0,0.00,0,0.00,649
+'acima de 60',1,'Solteiro','Sem Escolaridade',71,44,'Locatario','CLT',28,3153.00,0.00,48763.00,16195.00,-50967.00,0,0.00,0,0.00,677
+'41 a 60',3,'Viuvo','Técnico',36,37,'Proprietario','Autonomo',23,3439.00,254520.00,383265.00,82805.00,-30316.00,0,0.00,0,0.00,805
+'acima de 60',1,'Solteiro','Sem Escolaridade',37,48,'Locatario','CLT',27,3433.00,0.00,72957.00,29920.00,945.00,1,176275.83,74,1667203.37,527
+'acima de 60',0,'Viuvo','Ensino Fundamental Completo',71,59,'Proprietario','Autonomo',51,2246.00,0.00,52060.00,19664.00,0.00,0,0.00,0,0.00,607
+'41 a 60',1,'Solteiro','Sem Escolaridade',50,48,'Locatario','CLT',25,1781.00,0.00,81841.00,15155.00,0.00,0,0.00,0,0.00,599
+'até 25',0,'Solteiro','Sem Escolaridade',23,43,'Locatario','CLT',4,2147.00,0.00,46802.00,35385.00,0.00,1,8861.24,52,421422.75,304
+'acima de 60',4,'Solteiro','Sem Escolaridade',53,41,'Locatario','CLT',65,3294.00,0.00,80176.00,77397.00,6831.00,1,1882.48,28,100188.73,618
+'acima de 60',3,'Solteiro','Sem Escolaridade',47,42,'Locatario','CLT',47,1750.00,0.00,58916.00,950.00,0.00,1,12981.15,54,741200.00,309
+'41 a 60',1,'Solteiro','Sem Escolaridade',48,36,'Locatario','CLT',2,2189.00,0.00,62119.00,51187.00,0.00,0,0.00,0,0.00,680
+'acima de 60',4,'Solteiro','Sem Escolaridade',65,42,'Locatario','CLT',45,1518.00,0.00,89338.00,38750.00,-4939.00,0,0.00,0,0.00,633
+'acima de 60',3,'Viuvo','Doutorado',31,51,'Proprietario','CLT',58,1518.00,0.00,101661.00,80336.00,0.00,0,0.00,0,0.00,742
+'acima de 60',1,'Solteiro','Sem Escolaridade',52,46,'Locatario','CLT',27,2175.00,0.00,36477.00,22081.00,0.00,0,0.00,0,0.00,579
+'41 a 60',3,'Viuvo','Ensino Fundamental Completo',41,54,'Locatario','CLT',22,1937.00,0.00,39296.00,30471.00,-20135.00,1,2455.65,58,22329.09,200
+'acima de 60',0,'Casado','Sem Escolaridade',48,49,'Proprietario','PJ',15,1518.00,371680.00,113260.00,52599.00,0.00,0,0.00,0,0.00,732
+'26 a 40',1,'Solteiro','Sem Escolaridade',26,49,'Locatario','CLT',8,14897.00,524634.00,266331.00,48785.00,0.00,0,0.00,0,0.00,774
+'acima de 60',2,'Solteiro','Sem Escolaridade',65,41,'Locatario','CLT',50,2834.00,0.00,81215.00,78380.00,5349.00,0,0.00,0,0.00,753
+'acima de 60',1,'Viuvo','Pós-graduação',82,44,'Locatario','CLT',25,1518.00,0.00,65404.00,12722.00,0.00,0,0.00,0,0.00,713
+'26 a 40',2,'Solteiro','Superior Completo',25,44,'Locatario','CLT',8,1784.00,0.00,67835.00,53582.00,0.00,1,23164.34,39,440107.07,541
+'41 a 60',1,'Viuvo','Técnico',25,44,'Locatario','CLT',38,3209.00,246156.00,356835.00,351558.00,8607.00,0,0.00,0,0.00,861
+'41 a 60',1,'Viuvo','Ensino Médio Completo',53,56,'Proprietario','Autonomo',2,2222.00,0.00,63451.00,3682.00,0.00,0,0.00,0,0.00,542
+'acima de 60',2,'Casado','Pós-graduação',78,41,'Proprietario','PJ',25,1518.00,0.00,41791.00,30776.00,-35717.00,1,253.45,80,5752.08,591
+'41 a 60',1,'Casado','Ensino Fundamental Completo',40,61,'Proprietario','CLT',15,1522.00,0.00,77179.00,37434.00,0.00,1,1058.63,56,13864.21,381
+'acima de 60',0,'Casado','Pós-graduação',63,61,'Proprietario','Autonomo',48,3009.00,0.00,36162.00,14224.00,-14297.00,0,0.00,0,0.00,751
+'acima de 60',1,'Casado','Superior Completo',58,37,'Proprietario','Autonomo',56,2540.00,0.00,3801.00,2808.00,0.00,0,0.00,0,0.00,726
+'até 25',0,'Solteiro','Sem Escolaridade',21,42,'Locatario','CLT',0,1708.00,0.00,15746.00,37.00,0.00,0,0.00,0,0.00,446
+'26 a 40',1,'Viuvo','Pós-graduação',26,41,'Locatario','PJ',8,5852.00,212161.00,767245.00,611524.00,0.00,0,0.00,0,0.00,779
+'acima de 60',4,'Viuvo','Ensino Médio Incompleto',89,44,'Locatario','CLT',66,3200.00,0.00,123925.00,39578.00,-26626.00,0,105.32,0,1942.17,701
+'acima de 60',0,'Casado','Doutorado',68,61,'Proprietario','Autonomo',18,11564.00,96495.00,529110.00,506249.00,0.00,0,0.00,0,0.00,860
+'até 25',4,'Solteiro','Sem Escolaridade',17,36,'Locatario','CLT',1,9599.00,257214.00,497455.00,148946.00,0.00,1,19008.51,26,993417.14,526
+'26 a 40',0,'Casado','Pós-graduação',29,36,'Proprietario','CLT',0,1518.00,0.00,63343.00,37501.00,204.00,1,1052.46,75,38042.57,608
+'acima de 60',4,'Solteiro','Ensino Médio Incompleto',85,54,'Locatario','Autonomo',37,9407.00,201300.00,146346.00,140588.00,3506.00,0,0.00,0,0.00,788
+'26 a 40',4,'Viuvo','Superior Incompleto',11,51,'Proprietario','CLT',5,1680.00,0.00,89920.00,24681.00,0.00,0,0.00,0,0.00,704
+'41 a 60',4,'Solteiro','Sem Escolaridade',49,41,'Locatario','CLT',23,7767.00,325296.00,815692.00,557260.00,47987.00,0,1959.26,0,79736.26,750
+'acima de 60',2,'Solteiro','Sem Escolaridade',64,59,'Locatario','CLT',13,2210.00,0.00,40093.00,24067.00,0.00,1,1586.85,24,33200.00,291
+'41 a 60',3,'Solteiro','Sem Escolaridade',44,41,'Locatario','CLT',26,16447.00,17024.00,968862.00,665856.00,-198745.00,0,0.00,0,0.00,722
+'acima de 60',1,'Viuvo','Ensino Médio Incompleto',12,41,'Proprietario','CLT',62,5946.00,19001.00,453595.00,258494.00,-241705.00,0,39.21,0,1415.29,816
+'41 a 60',2,'Solteiro','Técnico',43,41,'Locatario','Autonomo',25,2201.00,0.00,82782.00,16990.00,0.00,0,0.00,0,0.00,632
+'acima de 60',4,'Solteiro','Sem Escolaridade',77,59,'Locatario','CLT',13,1518.00,0.00,61071.00,13393.00,0.00,0,0.00,0,0.00,600
+'acima de 60',1,'Viuvo','Ensino Fundamental Incompleto',87,42,'Proprietario','CLT',36,1518.00,0.00,29645.00,18922.00,-60601.00,1,2048.72,38,111476.96,373
+'41 a 60',4,'Solteiro','Superior Incompleto',32,44,'Proprietario','Autonomo',28,2675.00,0.00,72486.00,47175.00,25288.00,0,0.00,0,0.00,730
+'até 25',4,'Solteiro','Sem Escolaridade',25,50,'Locatario','CLT',7,1518.00,0.00,19129.00,15555.00,-41250.00,0,0.00,0,0.00,536
+'26 a 40',4,'Solteiro','Sem Escolaridade',38,50,'Locatario','CLT',20,3050.00,0.00,6962.00,1093.00,-44054.00,1,360.79,6,9369.13,468
+'até 25',4,'Casado','Doutorado',24,47,'Proprietario','PJ',6,1518.00,0.00,62366.00,52001.00,-12027.00,0,0.00,0,0.00,712
+'41 a 60',2,'Solteiro','Sem Escolaridade',56,41,'Locatario','CLT',32,1703.00,0.00,11301.00,7848.00,475.00,0,0.00,0,0.00,503
+'26 a 40',4,'Casado','Técnico',35,54,'Proprietario','CLT',15,9390.00,84316.00,616514.00,419095.00,48825.00,0,0.00,0,0.00,939
+'26 a 40',2,'Solteiro','Sem Escolaridade',39,44,'Locatario','CLT',22,8283.00,680802.00,572602.00,368153.00,0.00,0,713.80,0,58350.00,745
+'até 25',0,'Solteiro','Ensino Médio Completo',23,41,'Proprietario','Autonomo',6,9470.00,96426.00,297992.00,138741.00,0.00,0,0.00,0,0.00,826
+'41 a 60',3,'Solteiro','Sem Escolaridade',57,46,'Locatario','CLT',16,1544.00,0.00,57403.00,21635.00,0.00,0,16683.54,0,234000.00,422
+'41 a 60',0,'Solteiro','Sem Escolaridade',7,44,'Locatario','CLT',24,1878.00,0.00,95747.00,47343.00,690.00,0,0.00,0,0.00,625
+'26 a 40',3,'Solteiro','Doutorado',26,42,'Locatario','CLT',8,1564.00,0.00,102253.00,63669.00,2847.00,0,216.58,0,12553.17,784
+'26 a 40',2,'Solteiro','Sem Escolaridade',7,43,'Locatario','CLT',18,5546.00,164399.00,227761.00,2183.00,0.00,0,52066.31,0,85571.43,666
+'41 a 60',3,'Viuvo','Pós-graduação',55,41,'Locatario','Autonomo',12,1518.00,0.00,36409.00,32621.00,-12879.00,0,0.00,0,0.00,464
+'26 a 40',4,'Solteiro','Sem Escolaridade',29,47,'Locatario','CLT',11,3466.00,97893.00,407408.00,400004.00,-318036.00,1,3189.98,40,106408.10,585
+'26 a 40',3,'Solteiro','Sem Escolaridade',24,54,'Locatario','CLT',11,2904.00,0.00,46198.00,16813.00,0.00,1,7762.01,90,179264.38,276
+'acima de 60',1,'Solteiro','Sem Escolaridade',1,49,'Locatario','CLT',40,1518.00,0.00,85981.00,71714.00,-27598.00,0,0.00,0,0.00,640
+'acima de 60',2,'Casado','Ensino Fundamental Incompleto',74,43,'Proprietario','Autonomo',36,1518.00,0.00,114354.00,37461.00,10557.00,0,0.00,0,0.00,715
+'até 25',4,'Solteiro','Sem Escolaridade',19,51,'Locatario','CLT',1,1742.00,0.00,25091.00,3342.00,0.00,0,0.00,0,0.00,434
+'41 a 60',3,'Solteiro','Sem Escolaridade',5,41,'Locatario','CLT',25,2671.00,66575.00,188417.00,102217.00,30104.00,0,0.00,0,0.00,710
+'41 a 60',3,'Solteiro','Sem Escolaridade',46,61,'Proprietario','CLT',4,1518.00,0.00,95688.00,70546.00,0.00,0,0.00,0,0.00,626
+'acima de 60',4,'Solteiro','Sem Escolaridade',86,51,'Locatario','CLT',73,1518.00,0.00,52849.00,40819.00,0.00,0,930.76,0,63659.09,470
+'41 a 60',0,'Solteiro','Sem Escolaridade',17,54,'Locatario','CLT',33,2718.00,19524.00,349862.00,98760.00,8498.00,0,0.00,0,0.00,728
+'acima de 60',1,'Solteiro','Sem Escolaridade',41,41,'Locatario','CLT',27,1953.00,216125.00,473381.00,268570.00,-155747.00,1,927.80,31,10595.94,487
+'41 a 60',0,'Solteiro','Sem Escolaridade',33,49,'Locatario','CLT',15,2806.00,0.00,36705.00,24452.00,1876.00,0,0.00,0,0.00,640
+'41 a 60',4,'Solteiro','Sem Escolaridade',21,48,'Locatario','CLT',12,2206.00,0.00,82693.00,37809.00,8339.00,0,0.00,0,0.00,645
+'26 a 40',3,'Solteiro','Sem Escolaridade',5,42,'Locatario','CLT',21,2360.00,0.00,20645.00,13807.00,-3724.00,0,0.00,0,0.00,587
+'acima de 60',2,'Solteiro','Sem Escolaridade',86,51,'Locatario','CLT',69,5739.00,392717.00,147504.00,99661.00,-447452.00,0,4510.25,0,76910.00,642
+'acima de 60',1,'Solteiro','Sem Escolaridade',68,37,'Locatario','CLT',37,1518.00,0.00,91234.00,37899.00,5925.00,1,1046.27,9,35283.46,590
+'41 a 60',2,'Solteiro','Superior Incompleto',47,59,'Proprietario','Autonomo',29,3131.00,0.00,53224.00,46807.00,0.00,0,140.51,0,8257.65,714
+'até 25',1,'Solteiro','Sem Escolaridade',20,61,'Locatario','CLT',2,3100.00,0.00,112544.00,71157.00,21372.00,1,242.49,32,10365.89,625
+'até 25',4,'Solteiro','Sem Escolaridade',5,54,'Locatario','CLT',2,1518.00,0.00,105166.00,25353.00,0.00,0,0.00,0,0.00,545
+'acima de 60',0,'Solteiro','Técnico',37,41,'Locatario','PJ',61,1518.00,0.00,50637.00,8015.00,-34957.00,1,15757.26,39,227625.59,510
+'26 a 40',0,'Solteiro','Sem Escolaridade',36,51,'Locatario','CLT',18,2339.00,0.00,82310.00,36061.00,-74621.00,0,0.00,0,0.00,649
+'acima de 60',1,'Solteiro','Técnico',70,49,'Proprietario','CLT',52,2034.00,0.00,25345.00,13981.00,-26613.00,1,1636.77,55,132434.38,535
+'acima de 60',4,'Solteiro','Sem Escolaridade',82,43,'Locatario','CLT',59,6597.00,412001.00,307515.00,115435.00,0.00,1,880.35,4,73875.29,637
+'acima de 60',3,'Casado','Ensino Fundamental Completo',63,42,'Locatario','Autonomo',10,2581.00,0.00,50020.00,42198.00,-48352.00,1,14085.39,72,138090.00,378
+'acima de 60',1,'Solteiro','Sem Escolaridade',66,47,'Locatario','CLT',48,1696.00,0.00,93337.00,3621.00,-72462.00,0,557.69,0,11174.29,517
+'acima de 60',2,'Solteiro','Sem Escolaridade',71,44,'Locatario','CLT',70,1518.00,0.00,99812.00,61638.00,0.00,1,5687.50,27,196625.00,470
+'41 a 60',0,'Solteiro','Sem Escolaridade',42,61,'Locatario','CLT',15,1942.00,0.00,74252.00,51459.00,-32412.00,0,0.00,0,0.00,600
+'26 a 40',4,'Solteiro','Doutorado',26,47,'Proprietario','Autonomo',4,2979.00,354991.00,119163.00,111744.00,0.00,1,3463.36,29,157262.97,593
+'acima de 60',2,'Viuvo','Ensino Médio Incompleto',10,54,'Locatario','Autonomo',75,2371.00,0.00,51451.00,24451.00,0.00,0,0.00,0,0.00,511
+'acima de 60',4,'Solteiro','Sem Escolaridade',70,49,'Locatario','CLT',21,3447.00,0.00,90712.00,87823.00,1901.00,0,1952.92,0,97202.64,709
+'acima de 60',0,'Solteiro','Sem Escolaridade',76,44,'Locatario','CLT',58,8890.00,51232.00,321020.00,163754.00,0.00,1,16478.64,17,343478.71,613
+'acima de 60',4,'Solteiro','Pós-graduação',69,54,'Proprietario','Autonomo',46,1776.00,0.00,67138.00,49864.00,-36620.00,1,14166.67,38,96733.33,493
+'41 a 60',2,'Solteiro','Sem Escolaridade',56,42,'Locatario','CLT',37,2013.00,0.00,68237.00,54621.00,0.00,0,0.00,0,0.00,601
+'26 a 40',4,'Viuvo','Ensino Médio Completo',30,61,'Proprietario','PJ',8,2114.00,0.00,79037.00,65860.00,-6431.00,0,0.00,0,0.00,647
+'acima de 60',3,'Casado','Ensino Médio Completo',89,49,'Proprietario','PJ',24,2231.00,0.00,30019.00,28828.00,0.00,0,0.00,0,0.00,612
+'41 a 60',3,'Solteiro','Superior Incompleto',50,62,'Proprietario','Autonomo',31,1744.00,0.00,73972.00,62965.00,3835.00,1,2185.88,44,41626.48,527
+'41 a 60',4,'Solteiro','Sem Escolaridade',38,36,'Locatario','CLT',18,11685.00,137466.00,499042.00,475152.00,0.00,0,0.00,0,0.00,764
+'26 a 40',0,'Solteiro','Mestrado',20,51,'Proprietario','CLT',12,3668.00,66150.00,403817.00,376846.00,0.00,0,0.00,0,0.00,895
+'26 a 40',2,'Solteiro','Técnico',28,48,'Proprietario','Autonomo',2,2352.00,0.00,34180.00,9421.00,-16653.00,0,0.00,0,0.00,667
+'41 a 60',3,'Solteiro','Sem Escolaridade',55,44,'Locatario','CLT',24,1834.00,0.00,112518.00,60248.00,-12703.00,0,0.00,0,0.00,607
+'41 a 60',0,'Solteiro','Sem Escolaridade',37,46,'Locatario','CLT',9,2844.00,0.00,92443.00,55562.00,0.00,0,0.00,0,0.00,633
+'41 a 60',2,'Solteiro','Sem Escolaridade',60,49,'Locatario','CLT',42,1761.00,0.00,121307.00,72815.00,-24173.00,1,286.81,0,1128.79,624
+'acima de 60',1,'Viuvo','Ensino Médio Completo',49,51,'Locatario','Autonomo',22,1518.00,0.00,51401.00,17540.00,0.00,0,0.00,0,0.00,553
+'26 a 40',4,'Solteiro','Sem Escolaridade',32,44,'Locatario','CLT',14,1935.00,245098.00,232286.00,98222.00,0.00,1,11153.95,78,560988.03,504
+'acima de 60',3,'Solteiro','Superior Incompleto',9,59,'Locatario','Autonomo',21,2406.00,0.00,50801.00,5365.00,-78983.00,1,744.55,27,35970.91,393
+'acima de 60',0,'Solteiro','Sem Escolaridade',18,36,'Locatario','CLT',50,9717.00,166329.00,292653.00,258635.00,9426.00,1,3252.68,21,79439.47,755
+'41 a 60',3,'Solteiro','Sem Escolaridade',14,50,'Locatario','CLT',19,2434.00,0.00,43365.00,32245.00,0.00,0,4302.55,0,86243.33,341
+'até 25',4,'Solteiro','Sem Escolaridade',21,48,'Locatario','CLT',3,2354.00,244922.00,646209.00,514196.00,-42534.00,1,436.55,38,10721.02,525
+'26 a 40',2,'Casado','Ensino Fundamental Completo',33,36,'Proprietario','PJ',18,17466.00,32508.00,153291.00,19424.00,0.00,0,0.00,0,0.00,826
+'até 25',4,'Solteiro','Sem Escolaridade',20,44,'Locatario','CLT',4,1518.00,0.00,49660.00,9834.00,4182.00,1,2932.93,73,136313.43,387
+'acima de 60',3,'Solteiro','Pós-graduação',58,49,'Locatario','Autonomo',79,1537.00,0.00,65724.00,43150.00,0.00,0,0.00,0,0.00,664
+'acima de 60',3,'Solteiro','Sem Escolaridade',64,44,'Locatario','CLT',46,1518.00,0.00,25875.00,24619.00,0.00,0,0.00,0,0.00,587
+'até 25',3,'Solteiro','Ensino Fundamental Completo',23,44,'Proprietario','PJ',1,1518.00,0.00,83000.00,76637.00,0.00,0,0.00,0,0.00,543
+'41 a 60',1,'Viuvo','Ensino Médio Completo',17,44,'Locatario','CLT',3,1518.00,0.00,26724.00,19926.00,0.00,0,0.00,0,0.00,547
+'41 a 60',1,'Solteiro','Sem Escolaridade',54,36,'Locatario','CLT',21,2402.00,0.00,65006.00,46082.00,33921.00,0,0.00,0,0.00,718
+'41 a 60',3,'Solteiro','Sem Escolaridade',56,61,'Locatario','CLT',38,1518.00,0.00,57674.00,44469.00,9622.00,0,6078.46,0,35594.98,508
+'41 a 60',2,'Solteiro','Sem Escolaridade',28,36,'Locatario','CLT',18,15841.00,10932.00,644115.00,633197.00,0.00,0,343.86,0,18221.05,735
+'41 a 60',2,'Solteiro','Ensino Médio Completo',26,47,'Locatario','CLT',39,2817.00,0.00,80166.00,75444.00,-4132.00,0,0.00,0,0.00,687
+'41 a 60',4,'Solteiro','Sem Escolaridade',7,50,'Locatario','CLT',0,7267.00,24394.00,274958.00,73970.00,-12327.00,0,0.00,0,0.00,645
+'acima de 60',3,'Casado','Pós-graduação',67,48,'Proprietario','CLT',64,1518.00,0.00,106717.00,47255.00,25481.00,0,412.43,0,9970.59,852
+'26 a 40',2,'Solteiro','Ensino Médio Completo',30,46,'Locatario','Autonomo',3,2935.00,0.00,121255.00,79391.00,0.00,0,210.05,0,17230.00,611
+'41 a 60',4,'Solteiro','Sem Escolaridade',7,46,'Locatario','CLT',30,2177.00,0.00,62732.00,9831.00,-26587.00,0,0.00,0,0.00,582
+'41 a 60',3,'Viuvo','Sem Escolaridade',8,42,'Locatario','PJ',0,2943.00,0.00,59091.00,23140.00,-51193.00,0,0.00,0,0.00,347
+'41 a 60',1,'Solteiro','Superior Completo',46,43,'Locatario','PJ',7,1518.00,0.00,79844.00,30811.00,5502.00,1,110.76,65,2215.21,617
+'26 a 40',2,'Solteiro','Sem Escolaridade',29,56,'Locatario','CLT',11,1518.00,0.00,38233.00,16007.00,3982.00,0,466.37,0,11925.48,501
+'acima de 60',3,'Solteiro','Sem Escolaridade',83,49,'Locatario','CLT',33,2581.00,0.00,24995.00,22060.00,5240.00,0,0.00,0,0.00,665
+'acima de 60',4,'Solteiro','Sem Escolaridade',70,56,'Locatario','CLT',31,1518.00,0.00,8786.00,6622.00,0.00,0,1511.27,0,32747.62,393
+'até 25',4,'Solteiro','Sem Escolaridade',0,42,'Locatario','CLT',3,2620.00,0.00,74718.00,34853.00,3782.00,1,1367.34,50,22438.26,401
+'26 a 40',1,'Casado','Doutorado',17,61,'Proprietario','PJ',4,3387.00,0.00,61453.00,1234.00,0.00,1,50821.96,69,563171.54,488
+'até 25',0,'Solteiro','Ensino Fundamental Completo',5,50,'Locatario','PJ',5,1518.00,0.00,102387.00,52643.00,0.00,0,0.00,0,0.00,629
+'41 a 60',2,'Solteiro','Sem Escolaridade',50,43,'Locatario','CLT',4,2743.00,4013.00,313503.00,69198.00,-146925.00,0,0.00,0,0.00,601
+'até 25',2,'Solteiro','Sem Escolaridade',20,41,'Locatario','CLT',1,2023.00,47333.00,444469.00,442052.00,0.00,1,2782.10,39,38289.59,390
+'acima de 60',0,'Solteiro','Sem Escolaridade',10,41,'Locatario','CLT',49,1671.00,0.00,131661.00,84572.00,12682.00,0,1157.27,0,3896.81,711
+'acima de 60',4,'Solteiro','Sem Escolaridade',44,42,'Locatario','CLT',51,1518.00,0.00,96981.00,53951.00,5784.00,1,375.89,9,7616.15,660
+'acima de 60',0,'Solteiro','Sem Escolaridade',82,41,'Locatario','CLT',28,2943.00,0.00,56812.00,22401.00,-5375.00,0,0.00,0,0.00,679
+'41 a 60',2,'Casado','Ensino Fundamental Incompleto',18,49,'Locatario','Autonomo',32,1893.00,0.00,14408.00,292.00,0.00,0,93.35,0,7420.00,390
+'41 a 60',2,'Solteiro','Sem Escolaridade',49,41,'Locatario','CLT',24,2871.00,90601.00,161205.00,86698.00,0.00,1,919.74,35,62265.71,405
+'até 25',2,'Solteiro','Ensino Fundamental Completo',1,61,'Locatario','CLT',2,2215.00,0.00,26159.00,8729.00,1612.00,0,661.84,0,43927.64,519
+'acima de 60',3,'Viuvo','Ensino Fundamental Incompleto',35,59,'Proprietario','CLT',43,1518.00,0.00,106219.00,67743.00,24438.00,1,24026.41,15,406617.44,479
+'até 25',3,'Casado','Técnico',20,36,'Locatario','Autonomo',2,5815.00,430428.00,593796.00,353017.00,81150.00,0,0.00,0,0.00,893
+'acima de 60',3,'Solteiro','Ensino Fundamental Completo',87,61,'Proprietario','CLT',69,2158.00,0.00,73867.00,36054.00,4135.00,0,0.00,0,0.00,752
+'41 a 60',3,'Solteiro','Sem Escolaridade',10,59,'Locatario','CLT',41,2123.00,0.00,104857.00,19593.00,0.00,0,1606.72,0,20615.79,424
+'acima de 60',0,'Solteiro','Sem Escolaridade',44,56,'Locatario','CLT',55,1518.00,0.00,17702.00,6041.00,0.00,1,121551.28,6,729982.14,342
+'acima de 60',3,'Viuvo','Ensino Fundamental Incompleto',55,43,'Proprietario','Autonomo',40,1676.00,0.00,49965.00,13836.00,0.00,0,0.00,0,0.00,523
+'26 a 40',1,'Solteiro','Sem Escolaridade',38,41,'Locatario','CLT',17,3457.00,0.00,24150.00,11221.00,5890.00,0,0.00,0,0.00,740
+'26 a 40',4,'Solteiro','Sem Escolaridade',36,44,'Locatario','CLT',21,2893.00,0.00,56473.00,54716.00,7563.00,1,1785.94,60,28667.74,539
+'41 a 60',2,'Solteiro','Sem Escolaridade',54,36,'Locatario','CLT',35,1650.00,0.00,32009.00,27602.00,1979.00,1,7645.26,30,45210.90,412
+'41 a 60',4,'Solteiro','Sem Escolaridade',55,49,'Locatario','CLT',35,14237.00,135473.00,149268.00,126128.00,0.00,0,7820.33,0,515000.00,609
+'41 a 60',0,'Viuvo','Doutorado',39,49,'Locatario','PJ',21,4134.00,325614.00,290305.00,193150.00,40065.00,0,0.00,0,0.00,814
+'26 a 40',0,'Viuvo','Sem Escolaridade',27,44,'Locatario','CLT',9,1862.00,0.00,83859.00,35939.00,-27945.00,0,0.00,0,0.00,645
+'acima de 60',0,'Solteiro','Sem Escolaridade',29,37,'Locatario','CLT',57,6664.00,6958.00,691221.00,607361.00,53839.00,1,4170.72,70,91655.25,703
+'acima de 60',1,'Solteiro','Sem Escolaridade',70,37,'Locatario','CLT',39,1518.00,0.00,85477.00,75409.00,-16780.00,0,0.00,0,0.00,743
+'acima de 60',0,'Solteiro','Sem Escolaridade',63,44,'Locatario','CLT',13,1518.00,0.00,40105.00,23657.00,-2127.00,0,0.00,0,0.00,614
+'acima de 60',0,'Solteiro','Doutorado',48,61,'Proprietario','PJ',24,1518.00,0.00,81468.00,30893.00,12065.00,0,325.26,0,8910.00,806
+'acima de 60',3,'Solteiro','Sem Escolaridade',75,44,'Locatario','CLT',59,2278.00,0.00,31568.00,944.00,-22386.00,1,220.79,67,16375.43,317
+'acima de 60',2,'Solteiro','Sem Escolaridade',64,37,'Locatario','CLT',46,1917.00,0.00,135054.00,69990.00,34302.00,0,1380.47,0,85948.06,706
+'41 a 60',4,'Solteiro','Superior Completo',17,41,'Proprietario','CLT',7,9889.00,518837.00,449470.00,348364.00,0.00,0,0.00,0,0.00,850
+'26 a 40',3,'Solteiro','Sem Escolaridade',11,49,'Locatario','CLT',17,16927.00,212464.00,631750.00,103028.00,-183207.00,0,47136.36,0,113000.00,676
+'26 a 40',1,'Casado','Ensino Fundamental Completo',5,61,'Locatario','PJ',15,13798.00,126500.00,406482.00,163802.00,5667.00,0,4674.55,0,53588.88,678
+'acima de 60',1,'Solteiro','Sem Escolaridade',35,43,'Locatario','CLT',44,6244.00,163920.00,260088.00,211541.00,0.00,1,1241.17,22,65411.86,670
+'41 a 60',1,'Casado','Ensino Fundamental Incompleto',27,43,'Locatario','PJ',31,2901.00,0.00,41563.00,10654.00,0.00,0,0.00,0,0.00,427
+'acima de 60',3,'Solteiro','Sem Escolaridade',78,41,'Locatario','CLT',11,2260.00,0.00,87668.00,74531.00,0.00,0,0.00,0,0.00,675
+'26 a 40',2,'Viuvo','Doutorado',23,41,'Locatario','PJ',17,1518.00,0.00,35253.00,2697.00,-26587.00,0,52291.67,0,840000.00,410
+'41 a 60',4,'Casado','Mestrado',51,49,'Locatario','Autonomo',33,8231.00,165524.00,380833.00,76400.00,12719.00,1,1465.29,70,76708.69,698
+'acima de 60',4,'Viuvo','Ensino Fundamental Completo',81,54,'Proprietario','Autonomo',22,3188.00,0.00,56067.00,5819.00,-14667.00,0,0.00,0,0.00,640
+'acima de 60',4,'Solteiro','Sem Escolaridade',90,51,'Locatario','CLT',76,1582.00,0.00,101157.00,75291.00,20361.00,0,0.00,0,0.00,718
+'acima de 60',1,'Solteiro','Sem Escolaridade',38,51,'Locatario','CLT',59,2403.00,0.00,64843.00,41696.00,0.00,1,1969.87,37,88879.76,374
+'acima de 60',1,'Solteiro','Sem Escolaridade',59,36,'Locatario','CLT',8,2921.00,0.00,90198.00,49623.00,0.00,0,183.70,0,4640.00,718
+'acima de 60',1,'Solteiro','Sem Escolaridade',24,36,'Locatario','CLT',18,2389.00,188486.00,943307.00,654450.00,55670.00,1,25999.45,10,814030.77,640
+'acima de 60',0,'Solteiro','Sem Escolaridade',80,61,'Locatario','CLT',57,1518.00,0.00,52139.00,34065.00,0.00,0,0.00,0,0.00,662
+'26 a 40',2,'Solteiro','Sem Escolaridade',16,41,'Locatario','CLT',13,3143.00,0.00,31155.00,2683.00,-34916.00,1,13639.70,37,709938.50,419
+'acima de 60',1,'Solteiro','Sem Escolaridade',87,61,'Locatario','CLT',19,11460.00,336030.00,247657.00,225485.00,129934.00,1,229.63,6,13203.92,713
+'41 a 60',4,'Viuvo','Técnico',44,48,'Proprietario','Autonomo',2,2839.00,0.00,62793.00,34749.00,0.00,1,100288.87,79,698419.48,345
+'26 a 40',0,'Solteiro','Sem Escolaridade',35,44,'Locatario','CLT',18,1518.00,0.00,33895.00,5665.00,0.00,0,0.00,0,0.00,631
+'acima de 60',2,'Solteiro','Sem Escolaridade',70,47,'Locatario','CLT',55,2903.00,0.00,106874.00,63638.00,0.00,1,33142.18,27,1280736.84,431
+'acima de 60',0,'Solteiro','Ensino Médio Incompleto',40,49,'Proprietario','PJ',41,3062.00,0.00,83621.00,29784.00,0.00,0,0.00,0,0.00,767
+'41 a 60',0,'Solteiro','Sem Escolaridade',33,62,'Locatario','CLT',40,2442.00,0.00,28547.00,21893.00,0.00,0,0.00,0,0.00,506
+'acima de 60',0,'Solteiro','Sem Escolaridade',87,51,'Locatario','CLT',69,3093.00,0.00,91076.00,82265.00,20187.00,0,0.00,0,0.00,821
+'acima de 60',1,'Solteiro','Sem Escolaridade',77,51,'Locatario','CLT',33,3102.00,0.00,54451.00,36506.00,0.00,0,0.00,0,0.00,693
+'acima de 60',3,'Casado','Ensino Médio Completo',68,44,'Proprietario','PJ',51,2090.00,0.00,60758.00,9854.00,0.00,0,0.00,0,0.00,697
+'41 a 60',4,'Solteiro','Sem Escolaridade',57,43,'Locatario','CLT',39,2121.00,0.00,141394.00,84885.00,13292.00,1,334.31,25,15419.57,514
+'acima de 60',0,'Solteiro','Sem Escolaridade',88,49,'Locatario','CLT',33,10933.00,2594.00,315501.00,265358.00,49443.00,0,89.89,0,7430.91,850
+'41 a 60',2,'Solteiro','Sem Escolaridade',56,49,'Locatario','CLT',27,3728.00,156469.00,637958.00,57478.00,0.00,0,0.00,0,0.00,726
+'26 a 40',4,'Solteiro','Sem Escolaridade',29,49,'Locatario','CLT',18,1518.00,0.00,72675.00,46922.00,14523.00,0,0.00,0,0.00,724
+'acima de 60',0,'Solteiro','Sem Escolaridade',75,54,'Locatario','CLT',57,1873.00,0.00,55621.00,24781.00,-21782.00,0,0.00,0,0.00,649
+'26 a 40',3,'Solteiro','Sem Escolaridade',31,43,'Locatario','CLT',13,2632.00,0.00,71124.00,32762.00,15086.00,1,3806.60,28,65698.85,514
+'26 a 40',4,'Solteiro','Superior Incompleto',32,59,'Locatario','Autonomo',14,1518.00,0.00,23165.00,15471.00,30.00,1,918.30,16,28111.43,310
+'acima de 60',3,'Solteiro','Sem Escolaridade',24,42,'Locatario','CLT',25,1518.00,0.00,28036.00,13743.00,-25431.00,1,8667.52,47,802408.50,356
+'acima de 60',3,'Solteiro','Sem Escolaridade',89,36,'Locatario','CLT',77,1704.00,0.00,98368.00,63024.00,0.00,0,0.00,0,0.00,716
+'26 a 40',3,'Solteiro','Ensino Médio Incompleto',0,49,'Proprietario','PJ',11,16520.00,539775.00,88644.00,43615.00,0.00,1,11370.60,28,853597.48,514
+'acima de 60',1,'Viuvo','Pós-graduação',38,44,'Locatario','Autonomo',54,1518.00,0.00,76656.00,65058.00,0.00,0,22485.71,0,734311.59,516
+'acima de 60',4,'Solteiro','Sem Escolaridade',30,54,'Locatario','CLT',7,1518.00,0.00,119729.00,63648.00,-38867.00,0,0.00,0,0.00,644
+'26 a 40',0,'Solteiro','Sem Escolaridade',37,54,'Locatario','CLT',9,1518.00,0.00,157341.00,85964.00,-899.00,1,1983.92,17,102410.03,446
+'41 a 60',2,'Casado','Ensino Fundamental Completo',43,42,'Locatario','Autonomo',31,2652.00,162267.00,405990.00,617.00,16.00,1,8938.64,29,11280.58,291
+'41 a 60',4,'Casado','Técnico',57,47,'Locatario','Autonomo',39,1518.00,0.00,68264.00,43193.00,2632.00,1,332.35,49,11815.79,523
+'26 a 40',4,'Solteiro','Sem Escolaridade',38,47,'Locatario','CLT',19,1518.00,0.00,80997.00,33892.00,-22424.00,0,0.00,0,0.00,650
+'41 a 60',4,'Solteiro','Ensino Médio Completo',40,43,'Locatario','PJ',15,14930.00,56312.00,211379.00,10776.00,6274.00,1,24016.30,26,976793.06,538
+'41 a 60',1,'Solteiro','Doutorado',32,54,'Proprietario','CLT',21,1979.00,0.00,84986.00,65440.00,1298.00,1,2310.93,13,75442.56,529
+'acima de 60',2,'Solteiro','Ensino Fundamental Incompleto',0,48,'Proprietario','CLT',58,1518.00,0.00,44520.00,42551.00,31515.00,1,5367.96,15,74229.96,422
+'acima de 60',2,'Viuvo','Pós-graduação',32,51,'Proprietario','CLT',27,1518.00,0.00,44389.00,38498.00,-43171.00,0,0.00,0,0.00,672
+'41 a 60',3,'Viuvo','Pós-graduação',20,42,'Locatario','PJ',16,2332.00,0.00,38493.00,20467.00,-9974.00,0,0.00,0,0.00,464
+'acima de 60',0,'Solteiro','Sem Escolaridade',45,59,'Locatario','CLT',68,1896.00,0.00,89366.00,85151.00,10781.00,0,0.00,0,0.00,757
+'41 a 60',2,'Solteiro','Sem Escolaridade',22,44,'Locatario','CLT',37,1951.00,0.00,47917.00,477.00,0.00,0,0.00,0,0.00,426
+'acima de 60',1,'Solteiro','Sem Escolaridade',63,56,'Locatario','CLT',26,1518.00,0.00,19170.00,9413.00,0.00,0,1379.13,0,40900.00,445
+'acima de 60',3,'Solteiro','Ensino Fundamental Incompleto',64,36,'Proprietario','PJ',41,4779.00,180450.00,605593.00,424220.00,0.00,0,0.00,0,0.00,814
+'26 a 40',1,'Viuvo','Mestrado',30,36,'Locatario','Autonomo',12,1518.00,0.00,72221.00,25848.00,-59273.00,0,0.00,0,0.00,707
+'41 a 60',1,'Solteiro','Ensino Médio Incompleto',38,48,'Locatario','CLT',0,1518.00,0.00,41448.00,16693.00,1458.00,1,9576.77,26,88693.99,169
+'acima de 60',4,'Casado','Superior Incompleto',64,43,'Locatario','CLT',28,8951.00,317175.00,524097.00,285782.00,84148.00,0,3173.28,0,121206.41,809
+'acima de 60',3,'Solteiro','Sem Escolaridade',78,43,'Locatario','CLT',40,2607.00,0.00,96257.00,78698.00,25552.00,0,0.00,0,0.00,738
+'acima de 60',3,'Solteiro','Sem Escolaridade',25,41,'Locatario','CLT',27,2110.00,0.00,2910.00,185.00,-26857.00,0,0.00,0,0.00,520
+'acima de 60',0,'Casado','Superior Incompleto',6,56,'Proprietario','Autonomo',17,6341.00,550436.00,653385.00,398165.00,280755.00,0,0.00,0,0.00,918
+'acima de 60',0,'Solteiro','Sem Escolaridade',70,47,'Locatario','CLT',52,1518.00,0.00,55791.00,8063.00,-33287.00,1,2347.26,28,65875.00,481
+'acima de 60',2,'Solteiro','Sem Escolaridade',17,61,'Locatario','CLT',59,1518.00,0.00,86232.00,5269.00,0.00,0,0.00,0,0.00,615
+'acima de 60',3,'Solteiro','Sem Escolaridade',43,43,'Locatario','CLT',22,1518.00,0.00,97364.00,60248.00,20583.00,0,0.00,0,0.00,749
+'41 a 60',1,'Viuvo','Ensino Fundamental Completo',50,49,'Proprietario','PJ',21,1694.00,0.00,153282.00,84670.00,-5552.00,1,7688.59,30,96393.14,288
+'41 a 60',1,'Solteiro','Técnico',5,48,'Proprietario','CLT',23,2526.00,300526.00,599474.00,59812.00,-358455.00,0,0.00,0,0.00,805
+'acima de 60',4,'Viuvo','Ensino Médio Completo',40,62,'Locatario','PJ',48,1934.00,0.00,29853.00,29290.00,0.00,0,0.00,0,0.00,461
+'acima de 60',1,'Solteiro','Sem Escolaridade',92,48,'Locatario','CLT',70,13137.00,17028.00,477531.00,225789.00,-114690.00,0,599.09,0,22210.53,757
+'41 a 60',1,'Solteiro','Sem Escolaridade',42,43,'Locatario','CLT',26,2446.00,0.00,91880.00,59140.00,0.00,1,1368.46,14,92926.47,346
+'41 a 60',2,'Solteiro','Sem Escolaridade',53,61,'Locatario','CLT',31,1770.00,0.00,34721.00,27403.00,2056.00,0,0.00,0,0.00,581
+'até 25',2,'Solteiro','Sem Escolaridade',25,46,'Locatario','CLT',7,1518.00,0.00,60303.00,8689.00,-60552.00,0,0.00,0,0.00,596
+'41 a 60',4,'Solteiro','Sem Escolaridade',40,56,'Locatario','CLT',23,5299.00,117062.00,362212.00,83928.00,1909.00,1,2223.24,14,91026.92,561
+'acima de 60',3,'Viuvo','Doutorado',35,41,'Locatario','PJ',0,18371.00,57147.00,126365.00,20573.00,0.00,0,0.00,0,0.00,674
+'acima de 60',2,'Solteiro','Sem Escolaridade',52,42,'Locatario','CLT',48,2523.00,181905.00,469526.00,237899.00,0.00,0,0.00,0,0.00,729
+'26 a 40',0,'Solteiro','Sem Escolaridade',25,50,'Locatario','CLT',10,3096.00,368936.00,823394.00,506372.00,38147.00,0,5616.81,0,121394.13,778
+'26 a 40',0,'Solteiro','Ensino Médio Incompleto',29,46,'Locatario','Autonomo',10,1795.00,0.00,29866.00,521.00,0.00,0,0.00,0,0.00,521
+'41 a 60',0,'Viuvo','Técnico',45,36,'Proprietario','CLT',27,2164.00,0.00,48700.00,46907.00,399.00,0,2643.72,0,100000.00,580
+'acima de 60',0,'Viuvo','Ensino Fundamental Incompleto',48,46,'Proprietario','CLT',16,4617.00,586734.00,46150.00,41640.00,0.00,1,795.52,62,4846.31,658
+'acima de 60',3,'Casado','Ensino Médio Completo',79,43,'Locatario','Autonomo',19,1518.00,0.00,63852.00,44661.00,0.00,0,3210.79,0,210407.94,487
+'acima de 60',2,'Solteiro','Técnico',65,42,'Locatario','CLT',6,2291.00,0.00,58151.00,38611.00,-6968.00,0,1096.58,0,47300.00,642
+'41 a 60',1,'Solteiro','Sem Escolaridade',8,59,'Locatario','CLT',4,1544.00,0.00,120550.00,76609.00,502.00,0,0.00,0,0.00,566
+'acima de 60',2,'Solteiro','Sem Escolaridade',24,54,'Locatario','CLT',55,2022.00,0.00,72332.00,61152.00,0.00,1,10460.35,91,110111.08,439
+'acima de 60',2,'Solteiro','Sem Escolaridade',76,42,'Locatario','CLT',54,4186.00,25369.00,990721.00,365258.00,127299.00,0,0.00,0,0.00,860
+'acima de 60',2,'Solteiro','Sem Escolaridade',83,41,'Locatario','CLT',42,10948.00,279430.00,662086.00,303356.00,0.00,0,2127.04,0,64300.00,757
+'41 a 60',3,'Solteiro','Sem Escolaridade',44,49,'Locatario','CLT',26,8024.00,86668.00,149159.00,64477.00,2217.00,0,1161.81,0,85249.44,740
+'41 a 60',0,'Solteiro','Ensino Fundamental Incompleto',12,44,'Proprietario','Autonomo',14,1518.00,14005.00,408899.00,296079.00,1912.00,0,0.00,0,0.00,747
+'26 a 40',3,'Solteiro','Sem Escolaridade',38,59,'Locatario','CLT',21,1518.00,0.00,113229.00,87103.00,-40000.00,0,0.00,0,0.00,625
+'26 a 40',3,'Solteiro','Sem Escolaridade',27,43,'Proprietario','PJ',11,1674.00,0.00,114582.00,29901.00,10239.00,0,0.00,0,0.00,712
+'até 25',0,'Solteiro','Sem Escolaridade',25,43,'Locatario','CLT',1,3099.00,0.00,114581.00,87899.00,0.00,1,2044.95,9,112579.79,425
+'26 a 40',0,'Solteiro','Sem Escolaridade',18,44,'Locatario','CLT',5,3305.00,0.00,47315.00,35828.00,0.00,0,0.00,0,0.00,702
+'até 25',0,'Solteiro','Sem Escolaridade',1,41,'Locatario','CLT',4,1585.00,0.00,14463.00,11948.00,3071.00,0,13.05,0,67.53,590
+'acima de 60',4,'Solteiro','Sem Escolaridade',73,43,'Locatario','CLT',21,1986.00,0.00,71877.00,1547.00,-22398.00,0,0.00,0,0.00,587
+'26 a 40',4,'Solteiro','Sem Escolaridade',37,41,'Locatario','CLT',19,1532.00,0.00,76545.00,1751.00,0.00,0,0.00,0,0.00,564
+'acima de 60',0,'Casado','Ensino Médio Completo',64,49,'Proprietario','Autonomo',17,2511.00,0.00,25695.00,21499.00,6800.00,1,1053.61,60,53363.03,539
+'acima de 60',0,'Solteiro','Sem Escolaridade',12,41,'Locatario','CLT',72,8584.00,90415.00,377343.00,317055.00,0.00,0,0.00,0,0.00,814
+'acima de 60',2,'Solteiro','Sem Escolaridade',74,49,'Locatario','CLT',22,2443.00,0.00,22534.00,11403.00,0.00,0,0.00,0,0.00,602
+'acima de 60',4,'Solteiro','Sem Escolaridade',59,37,'Locatario','CLT',41,2556.00,0.00,73457.00,22257.00,483.00,1,307.50,33,1740.00,595
+'41 a 60',3,'Viuvo','Superior Completo',48,43,'Proprietario','Autonomo',25,1518.00,0.00,21016.00,20730.00,0.00,1,16387.68,84,270166.67,314
+'26 a 40',1,'Solteiro','Sem Escolaridade',26,61,'Locatario','CLT',8,9776.00,211922.00,129838.00,112797.00,-357998.00,0,0.00,0,0.00,758
+'41 a 60',1,'Solteiro','Sem Escolaridade',56,44,'Locatario','CLT',26,1868.00,0.00,68306.00,17234.00,2905.00,0,387.41,0,23440.00,630
+'26 a 40',2,'Solteiro','Sem Escolaridade',29,36,'Locatario','CLT',13,1518.00,0.00,98258.00,20181.00,851.00,0,0.00,0,0.00,706
+'acima de 60',4,'Viuvo','Ensino Fundamental Incompleto',64,37,'Locatario','PJ',46,2487.00,0.00,56252.00,30799.00,0.00,0,0.00,0,0.00,595
+'acima de 60',4,'Solteiro','Sem Escolaridade',92,41,'Locatario','CLT',69,2235.00,0.00,89683.00,22443.00,0.00,1,15057.67,13,296496.81,391
+'41 a 60',3,'Casado','Sem Escolaridade',41,43,'Locatario','CLT',4,1518.00,0.00,18744.00,509.00,0.00,1,9347.21,5,235300.00,194
+'acima de 60',4,'Solteiro','Técnico',1,42,'Proprietario','Autonomo',46,1518.00,0.00,65675.00,49562.00,-12385.00,1,2.84,86,149.61,562
+'acima de 60',3,'Casado','Pós-graduação',69,44,'Proprietario','Autonomo',29,1518.00,0.00,82661.00,71933.00,0.00,0,1060.05,0,84600.00,641
+'41 a 60',4,'Casado','Ensino Médio Completo',45,50,'Locatario','CLT',27,1822.00,0.00,92293.00,10838.00,0.00,0,0.00,0,0.00,626
+'até 25',3,'Solteiro','Sem Escolaridade',19,51,'Locatario','CLT',1,9267.00,2498.00,921161.00,270073.00,0.00,1,3691.58,23,69878.38,377
+'acima de 60',0,'Solteiro','Sem Escolaridade',33,62,'Locatario','CLT',50,1518.00,0.00,78523.00,55927.00,44092.00,0,0.00,0,0.00,749
+'acima de 60',4,'Solteiro','Superior Completo',81,46,'Locatario','CLT',28,9899.00,111776.00,574836.00,536795.00,0.00,0,0.00,0,0.00,812
+'acima de 60',3,'Solteiro','Sem Escolaridade',9,44,'Locatario','CLT',13,9242.00,263067.00,672097.00,468505.00,391861.00,0,0.00,0,0.00,845
+'acima de 60',3,'Solteiro','Sem Escolaridade',0,44,'Locatario','CLT',7,6808.00,99456.00,185045.00,173651.00,0.00,0,0.00,0,0.00,740
+'acima de 60',3,'Casado','Superior Incompleto',66,62,'Locatario','PJ',48,1518.00,0.00,17568.00,1710.00,0.00,0,0.00,0,0.00,492
+'acima de 60',1,'Solteiro','Sem Escolaridade',92,51,'Locatario','CLT',35,2169.00,0.00,56906.00,40873.00,-21320.00,1,102.71,91,3210.46,540
+'41 a 60',1,'Solteiro','Sem Escolaridade',38,36,'Locatario','PJ',8,2733.00,0.00,129401.00,59131.00,-17749.00,1,73.27,14,2938.82,486
+'41 a 60',4,'Solteiro','Sem Escolaridade',50,43,'Locatario','CLT',16,14194.00,333862.00,577154.00,217895.00,0.00,0,10237.50,0,731900.00,609
+'acima de 60',1,'Solteiro','Sem Escolaridade',91,44,'Locatario','CLT',24,1518.00,0.00,149224.00,74477.00,12464.00,1,13890.24,31,459770.77,525
+'acima de 60',2,'Solteiro','Sem Escolaridade',66,54,'Locatario','CLT',55,2971.00,0.00,43806.00,4177.00,344.00,1,1653.61,55,18364.00,340
+'até 25',4,'Solteiro','Sem Escolaridade',3,47,'Locatario','CLT',0,2859.00,0.00,91714.00,44735.00,0.00,0,0.00,0,0.00,507
+'acima de 60',0,'Viuvo','Ensino Fundamental Incompleto',64,44,'Proprietario','Autonomo',33,1518.00,0.00,81374.00,72275.00,5011.00,0,2202.50,0,120210.00,618
+'41 a 60',0,'Viuvo','Superior Completo',58,41,'Proprietario','Autonomo',15,15133.00,433240.00,291979.00,204889.00,0.00,0,0.00,0,0.00,787
+'acima de 60',2,'Solteiro','Sem Escolaridade',72,59,'Locatario','CLT',19,2499.00,28231.00,467159.00,361754.00,0.00,0,0.00,0,0.00,698
+'acima de 60',2,'Solteiro','Sem Escolaridade',65,54,'Locatario','CLT',20,2207.00,0.00,40920.00,12352.00,0.00,0,0.00,0,0.00,546
+'acima de 60',1,'Viuvo','Ensino Médio Completo',63,44,'Locatario','CLT',44,1518.00,0.00,103525.00,64586.00,-31490.00,1,5329.42,35,62601.43,475
+'26 a 40',2,'Casado','Ensino Médio Completo',28,56,'Proprietario','PJ',8,5583.00,284749.00,487748.00,400976.00,0.00,0,2330.36,0,116008.93,693
+'41 a 60',0,'Casado','Mestrado',54,41,'Locatario','PJ',36,14451.00,87348.00,553697.00,277800.00,91287.00,0,0.00,0,0.00,856
+'41 a 60',1,'Solteiro','Superior Incompleto',53,44,'Locatario','Autonomo',0,3423.00,0.00,94397.00,45696.00,26347.00,1,15259.61,50,974730.77,469
+'acima de 60',1,'Solteiro','Ensino Fundamental Incompleto',65,48,'Proprietario','PJ',7,1518.00,0.00,79092.00,18520.00,-3082.00,0,0.00,0,0.00,653
+'até 25',4,'Casado','Ensino Médio Incompleto',23,56,'Proprietario','CLT',5,2209.00,0.00,102462.00,41202.00,15132.00,0,3852.56,0,42384.62,583
+'41 a 60',1,'Solteiro','Sem Escolaridade',46,44,'Locatario','CLT',20,2944.00,70102.00,125927.00,14240.00,3570.00,0,0.00,0,0.00,714
+'41 a 60',4,'Solteiro','Sem Escolaridade',37,44,'Locatario','CLT',25,1788.00,0.00,50232.00,47713.00,23915.00,0,0.00,0,0.00,645
+'26 a 40',0,'Solteiro','Sem Escolaridade',20,49,'Locatario','CLT',11,4054.00,354039.00,337522.00,222894.00,-240737.00,0,0.00,0,0.00,819
+'41 a 60',1,'Solteiro','Sem Escolaridade',32,44,'Locatario','CLT',22,1518.00,0.00,86705.00,43027.00,0.00,0,1211.11,0,2422.22,495
+'até 25',1,'Solteiro','Sem Escolaridade',20,37,'Locatario','CLT',2,13541.00,181684.00,24760.00,18378.00,0.00,0,0.00,0,0.00,727
+'41 a 60',3,'Solteiro','Sem Escolaridade',59,46,'Locatario','CLT',2,1667.00,0.00,52807.00,43400.00,21706.00,0,0.00,0,0.00,645
+'acima de 60',2,'Viuvo','Ensino Fundamental Completo',92,41,'Locatario','CLT',74,1518.00,0.00,106129.00,71762.00,0.00,0,4635.15,0,129100.00,540
+'41 a 60',2,'Solteiro','Sem Escolaridade',60,41,'Locatario','CLT',41,2378.00,0.00,126319.00,58203.00,14116.00,1,196.43,21,6480.44,584
+'41 a 60',1,'Solteiro','Pós-graduação',10,44,'Locatario','CLT',41,1518.00,0.00,12298.00,1640.00,0.00,1,1242.42,3,29528.46,324
+'acima de 60',2,'Solteiro','Sem Escolaridade',66,44,'Locatario','CLT',40,1518.00,0.00,100256.00,65880.00,11092.00,0,220.23,0,13066.67,705
+'41 a 60',4,'Casado','Ensino Fundamental Incompleto',6,37,'Proprietario','Autonomo',23,2602.00,0.00,90497.00,28399.00,0.00,0,270.35,0,16590.00,579
+'acima de 60',2,'Solteiro','Sem Escolaridade',76,43,'Locatario','CLT',24,2174.00,0.00,49160.00,38449.00,0.00,1,25112.15,4,296198.73,324
+'41 a 60',1,'Solteiro','Sem Escolaridade',29,62,'Locatario','CLT',30,3129.00,0.00,71011.00,14279.00,-58917.00,0,0.00,0,0.00,642
+'26 a 40',4,'Solteiro','Sem Escolaridade',39,54,'Locatario','CLT',17,1910.00,0.00,3263.00,979.00,0.00,1,11572.35,41,197468.75,190
+'acima de 60',2,'Solteiro','Mestrado',60,44,'Locatario','CLT',18,1518.00,0.00,72191.00,31396.00,0.00,1,108.08,49,4861.25,667
+'acima de 60',0,'Solteiro','Sem Escolaridade',26,44,'Locatario','CLT',41,1518.00,0.00,121035.00,65291.00,0.00,1,192042.18,12,1384065.77,476
+'26 a 40',1,'Viuvo','Técnico',23,56,'Proprietario','PJ',6,11203.00,301684.00,509614.00,142756.00,18163.00,0,374.03,0,9100.00,815
+'acima de 60',1,'Solteiro','Sem Escolaridade',27,44,'Locatario','CLT',50,1701.00,0.00,73776.00,42608.00,0.00,1,22.20,18,199.02,546
+'41 a 60',4,'Viuvo','Superior Incompleto',17,43,'Locatario','Autonomo',31,5567.00,36817.00,680499.00,601856.00,0.00,1,28350.30,80,852775.56,494
+'acima de 60',1,'Solteiro','Sem Escolaridade',95,49,'Locatario','CLT',74,1733.00,0.00,94917.00,19300.00,5831.00,0,0.00,0,0.00,728
+'até 25',3,'Solteiro','Sem Escolaridade',16,43,'Locatario','CLT',0,2516.00,0.00,56680.00,36233.00,752.00,0,0.00,0,0.00,536
+'acima de 60',4,'Solteiro','Sem Escolaridade',50,42,'Locatario','CLT',54,3325.00,0.00,63106.00,9519.00,-20498.00,0,0.00,0,0.00,710
+'41 a 60',0,'Viuvo','Sem Escolaridade',29,44,'Proprietario','CLT',25,7428.00,141983.00,903456.00,447135.00,6255.00,0,0.00,0,0.00,827
+'41 a 60',2,'Solteiro','Sem Escolaridade',44,41,'Locatario','CLT',4,2772.00,0.00,148573.00,86479.00,2276.00,0,0.00,0,0.00,686
+'acima de 60',3,'Viuvo','Técnico',76,48,'Proprietario','PJ',29,2823.00,0.00,102222.00,8821.00,0.00,0,0.00,0,0.00,686
+'26 a 40',0,'Solteiro','Sem Escolaridade',32,50,'Locatario','CLT',14,1518.00,0.00,30602.00,8563.00,103.00,1,303.19,95,14665.26,458
+'acima de 60',4,'Viuvo','Doutorado',67,41,'Proprietario','Autonomo',29,3088.00,426097.00,158201.00,110527.00,14178.00,0,0.00,0,0.00,886
+'acima de 60',1,'Casado','Sem Escolaridade',51,37,'Proprietario','PJ',63,1518.00,0.00,50791.00,33148.00,9091.00,1,5282.22,63,142791.11,554
+'41 a 60',4,'Solteiro','Sem Escolaridade',51,49,'Locatario','CLT',10,2345.00,0.00,76740.00,57763.00,2880.00,1,3490.30,85,14102.08,465
+'até 25',3,'Solteiro','Doutorado',17,43,'Proprietario','Autonomo',0,16179.00,155479.00,346624.00,99495.00,-528790.00,1,2711.42,36,98120.44,605
+'acima de 60',4,'Solteiro','Sem Escolaridade',68,43,'Locatario','CLT',26,9511.00,194589.00,197668.00,139438.00,0.00,0,0.00,0,0.00,784
+'acima de 60',4,'Solteiro','Sem Escolaridade',58,61,'Locatario','CLT',44,1933.00,0.00,68040.00,19360.00,0.00,0,12720.30,0,76227.88,470
+'41 a 60',0,'Solteiro','Sem Escolaridade',0,62,'Locatario','CLT',23,1962.00,0.00,101708.00,61614.00,14836.00,0,0.00,0,0.00,645
+'26 a 40',4,'Viuvo','Ensino Médio Incompleto',35,43,'Locatario','PJ',15,1518.00,0.00,75114.00,38831.00,0.00,0,213.90,0,4922.97,531
+'acima de 60',0,'Viuvo','Superior Incompleto',21,43,'Locatario','PJ',63,1518.00,0.00,88276.00,7555.00,-18156.00,1,4224.28,2,100501.24,456
+'26 a 40',1,'Solteiro','Sem Escolaridade',23,41,'Locatario','CLT',8,1685.00,0.00,63356.00,15664.00,0.00,0,2381.35,0,18135.96,517
+'26 a 40',3,'Solteiro','Sem Escolaridade',36,41,'Locatario','CLT',17,1821.00,0.00,80722.00,11320.00,894.00,1,287975.85,39,603925.17,430
+'26 a 40',4,'Solteiro','Sem Escolaridade',11,41,'Locatario','CLT',13,2373.00,0.00,18589.00,13014.00,2708.00,1,6945.33,47,171134.85,407
+'acima de 60',2,'Solteiro','Sem Escolaridade',5,51,'Locatario','CLT',53,1518.00,0.00,43107.00,26060.00,0.00,0,0.00,0,0.00,571
+'26 a 40',1,'Solteiro','Sem Escolaridade',39,43,'Locatario','CLT',21,1518.00,0.00,77530.00,39548.00,8542.00,0,160.90,0,1343.97,728
+'acima de 60',0,'Viuvo','Ensino Médio Incompleto',60,46,'Locatario','Autonomo',58,1687.00,0.00,70217.00,59623.00,0.00,0,457.19,0,40400.00,579
+'41 a 60',0,'Solteiro','Sem Escolaridade',52,47,'Locatario','CLT',36,12410.00,292631.00,253237.00,49489.00,24844.00,0,0.00,0,0.00,795
+'41 a 60',2,'Viuvo','Doutorado',37,50,'Proprietario','PJ',23,15266.00,149326.00,691030.00,137439.00,-409303.00,0,42759.68,0,1640715.83,665
+'acima de 60',4,'Solteiro','Ensino Médio Incompleto',30,36,'Locatario','PJ',35,14829.00,28267.00,914921.00,370419.00,-8372.00,0,7816.93,0,78299.14,675
+'41 a 60',4,'Solteiro','Sem Escolaridade',52,44,'Locatario','CLT',32,1518.00,0.00,27043.00,24278.00,0.00,0,4385.71,0,12771.43,385
+'26 a 40',2,'Casado','Ensino Fundamental Completo',23,49,'Proprietario','Autonomo',19,1518.00,0.00,70771.00,63211.00,3086.00,1,1082.84,35,82428.00,534
+'acima de 60',4,'Solteiro','Sem Escolaridade',6,47,'Locatario','CLT',3,8831.00,131088.00,375624.00,226762.00,0.00,0,8397.06,0,55122.90,676
+'acima de 60',0,'Solteiro','Sem Escolaridade',78,46,'Locatario','CLT',15,9923.00,493681.00,192691.00,139375.00,-422409.00,0,0.00,0,0.00,814
+'até 25',4,'Viuvo','Ensino Médio Incompleto',0,36,'Proprietario','Autonomo',3,1518.00,0.00,150223.00,90779.00,-27078.00,1,4407.02,12,54337.73,354
+'41 a 60',0,'Casado','Técnico',37,37,'Proprietario','PJ',25,1518.00,0.00,27423.00,5712.00,0.00,1,2593.35,18,107101.38,458
+'acima de 60',0,'Casado','Pós-graduação',56,59,'Proprietario','Autonomo',62,13698.00,162505.00,91910.00,16115.00,0.00,1,2164.81,48,35451.32,723
+'acima de 60',2,'Solteiro','Mestrado',54,44,'Locatario','Autonomo',41,2709.00,0.00,40221.00,10274.00,841.00,1,338.79,18,17856.42,445
+'26 a 40',2,'Solteiro','Sem Escolaridade',33,62,'Locatario','CLT',13,3195.00,0.00,53686.00,8020.00,-28633.00,0,0.00,0,0.00,706
+'26 a 40',1,'Solteiro','Sem Escolaridade',35,62,'Locatario','CLT',17,12699.00,89003.00,276133.00,148755.00,70156.00,0,0.00,0,0.00,828
+'41 a 60',1,'Casado','Ensino Fundamental Incompleto',41,42,'Locatario','Autonomo',13,2952.00,0.00,60151.00,54221.00,0.00,0,0.00,0,0.00,558
+'26 a 40',4,'Solteiro','Sem Escolaridade',0,48,'Locatario','CLT',1,1734.00,0.00,99143.00,63615.00,0.00,0,7107.14,0,92700.00,385
+'acima de 60',3,'Viuvo','Superior Incompleto',85,44,'Proprietario','PJ',43,3083.00,0.00,56980.00,42109.00,1891.00,0,782.29,0,57681.63,786
+'41 a 60',4,'Solteiro','Sem Escolaridade',41,43,'Locatario','CLT',24,1518.00,0.00,68796.00,33831.00,-25875.00,1,15269.06,59,182100.00,305
+'acima de 60',1,'Viuvo','Ensino Fundamental Completo',30,54,'Proprietario','CLT',17,6601.00,286373.00,677197.00,146754.00,0.00,0,0.00,0,0.00,793
+'acima de 60',4,'Solteiro','Sem Escolaridade',43,50,'Locatario','CLT',27,3064.00,0.00,37421.00,23325.00,0.00,0,177.90,0,13000.00,594
+'26 a 40',2,'Solteiro','Sem Escolaridade',1,36,'Locatario','CLT',18,2814.00,0.00,94777.00,31973.00,3502.00,0,0.00,0,0.00,745
+'acima de 60',0,'Casado','Pós-graduação',57,48,'Locatario','Autonomo',59,2011.00,0.00,138052.00,60403.00,-48299.00,0,0.00,0,0.00,732
+'26 a 40',1,'Solteiro','Sem Escolaridade',24,43,'Locatario','CLT',2,2064.00,0.00,55091.00,20385.00,0.00,1,40993.11,76,897371.52,445
+'acima de 60',2,'Solteiro','Sem Escolaridade',28,44,'Locatario','CLT',17,3436.00,0.00,105907.00,52371.00,-22091.00,0,0.00,0,0.00,750
+'acima de 60',3,'Solteiro','Superior Incompleto',88,54,'Proprietario','CLT',36,2081.00,428662.00,674509.00,558925.00,0.00,1,1690.71,37,67451.65,631
+'41 a 60',2,'Solteiro','Sem Escolaridade',26,41,'Locatario','CLT',31,3164.00,0.00,49868.00,33327.00,9841.00,0,0.00,0,0.00,675
+'acima de 60',1,'Solteiro','Sem Escolaridade',84,61,'Locatario','CLT',70,1518.00,0.00,80135.00,77684.00,-19741.00,0,0.00,0,0.00,659
+'acima de 60',3,'Solteiro','Sem Escolaridade',87,43,'Locatario','CLT',64,1806.00,0.00,108942.00,91956.00,0.00,1,9.91,18,207.46,556
+'acima de 60',2,'Solteiro','Sem Escolaridade',65,44,'Locatario','CLT',18,1518.00,0.00,37011.00,8537.00,804.00,1,1717.56,82,90183.33,371
+'acima de 60',1,'Casado','Doutorado',78,49,'Locatario','PJ',59,1518.00,0.00,57402.00,50856.00,0.00,1,18162.66,41,176923.04,463
+'acima de 60',2,'Viuvo','Ensino Fundamental Completo',68,41,'Locatario','CLT',50,1518.00,0.00,11216.00,2674.00,0.00,0,5133.42,0,93447.80,442
+'acima de 60',1,'Viuvo','Ensino Fundamental Completo',16,48,'Locatario','Autonomo',45,1518.00,0.00,17846.00,4082.00,-19125.00,0,0.00,0,0.00,469
+'acima de 60',3,'Casado','Ensino Fundamental Incompleto',28,51,'Proprietario','Autonomo',9,1518.00,0.00,60264.00,58528.00,-32124.00,0,0.00,0,0.00,634
+'acima de 60',1,'Solteiro','Sem Escolaridade',38,36,'Locatario','CLT',62,2817.00,0.00,42021.00,8812.00,-74747.00,0,25592.86,0,131323.59,510
+'acima de 60',2,'Casado','Técnico',42,61,'Locatario','PJ',52,2486.00,0.00,24067.00,3649.00,-40721.00,0,0.00,0,0.00,604
+'41 a 60',1,'Solteiro','Sem Escolaridade',12,41,'Locatario','CLT',16,3444.00,231011.00,246223.00,91886.00,0.00,1,3960.30,18,20577.26,498
+'26 a 40',4,'Viuvo','Pós-graduação',4,42,'Proprietario','Autonomo',18,1696.00,0.00,77790.00,48688.00,-39092.00,0,0.00,0,0.00,686
+'41 a 60',4,'Solteiro','Sem Escolaridade',60,48,'Locatario','CLT',14,13790.00,211453.00,343418.00,83288.00,-686.00,0,0.00,0,0.00,710
+'acima de 60',2,'Solteiro','Sem Escolaridade',93,42,'Locatario','CLT',53,1518.00,0.00,117765.00,40604.00,0.00,0,0.00,0,0.00,665
+'acima de 60',2,'Solteiro','Sem Escolaridade',88,41,'Locatario','CLT',42,2538.00,0.00,129263.00,51915.00,0.00,0,0.00,0,0.00,673
+'acima de 60',4,'Solteiro','Técnico',70,54,'Proprietario','Autonomo',53,1922.00,0.00,96402.00,74583.00,2720.00,1,6936.20,54,189850.00,599
+'26 a 40',0,'Solteiro','Sem Escolaridade',13,54,'Locatario','CLT',11,1842.00,0.00,120980.00,62272.00,-3429.00,1,72.00,70,289.60,578
+'41 a 60',4,'Viuvo','Mestrado',55,37,'Proprietario','PJ',13,1518.00,0.00,36616.00,25398.00,-28244.00,0,3829.56,0,80088.21,490
+'acima de 60',4,'Solteiro','Sem Escolaridade',57,49,'Locatario','CLT',53,2435.00,0.00,58001.00,7475.00,-30824.00,0,0.00,0,0.00,633
+'26 a 40',2,'Viuvo','Ensino Fundamental Incompleto',33,48,'Locatario','CLT',18,3174.00,162022.00,550750.00,310762.00,0.00,0,1129.64,0,99563.21,643
+'acima de 60',2,'Solteiro','Sem Escolaridade',58,44,'Locatario','CLT',66,2017.00,0.00,63841.00,26328.00,13934.00,0,263.33,0,8200.00,728
+'41 a 60',0,'Solteiro','Sem Escolaridade',43,41,'Locatario','CLT',38,1978.00,0.00,29228.00,17090.00,-14397.00,0,0.00,0,0.00,562
+'até 25',1,'Viuvo','Mestrado',21,41,'Locatario','CLT',6,1957.00,0.00,16386.00,1180.00,-39646.00,0,245.18,0,21200.00,440
+'acima de 60',3,'Solteiro','Sem Escolaridade',2,46,'Locatario','CLT',20,1518.00,232791.00,706765.00,78551.00,0.00,0,365.35,0,15800.00,669
+'acima de 60',0,'Solteiro','Sem Escolaridade',67,48,'Locatario','CLT',50,1942.00,0.00,50977.00,34111.00,0.00,1,6724.86,27,59603.42,451
+'acima de 60',0,'Solteiro','Sem Escolaridade',3,43,'Locatario','CLT',54,2731.00,0.00,29664.00,8859.00,4412.00,0,0.00,0,0.00,705
+'41 a 60',2,'Casado','Ensino Médio Completo',51,54,'Proprietario','Autonomo',37,2463.00,0.00,44464.00,15911.00,0.00,0,0.00,0,0.00,523
+'acima de 60',4,'Solteiro','Sem Escolaridade',67,43,'Locatario','CLT',6,1563.00,431377.00,498917.00,451253.00,0.00,0,0.00,0,0.00,714
+'41 a 60',4,'Solteiro','Sem Escolaridade',4,59,'Locatario','CLT',27,2982.00,235440.00,796776.00,542786.00,0.00,0,6307.86,0,175520.23,464
+'41 a 60',0,'Solteiro','Sem Escolaridade',16,54,'Locatario','CLT',2,2090.00,0.00,71497.00,28759.00,9988.00,0,116741.32,0,702538.03,554
+'até 25',0,'Viuvo','Ensino Fundamental Completo',21,51,'Proprietario','Autonomo',4,1865.00,0.00,47671.00,23101.00,6314.00,0,0.00,0,0.00,569
+'26 a 40',3,'Solteiro','Sem Escolaridade',26,54,'Locatario','CLT',7,1518.00,0.00,34807.00,11381.00,4983.00,0,12336.17,0,235360.00,514
+'acima de 60',1,'Solteiro','Ensino Fundamental Incompleto',65,48,'Proprietario','PJ',7,1518.00,0.00,79092.00,18520.00,-3082.00,0,0.00,0,0.00,635
+'acima de 60',1,'Casado','Ensino Fundamental Incompleto',43,43,'Locatario','PJ',15,2554.00,0.00,105814.00,41203.00,-1062.00,0,1600.38,0,77500.00,477
+'26 a 40',4,'Solteiro','Doutorado',26,47,'Proprietario','Autonomo',4,2979.00,354991.00,119163.00,111744.00,0.00,1,3463.36,29,157262.97,568
+'41 a 60',1,'Solteiro','Sem Escolaridade',10,41,'Locatario','CLT',39,2132.00,0.00,118043.00,50796.00,10958.00,0,0.00,0,0.00,702
+'26 a 40',4,'Casado','Ensino Médio Completo',26,44,'Proprietario','Autonomo',20,3469.00,0.00,103134.00,79685.00,6778.00,0,0.00,0,0.00,858
+'41 a 60',1,'Casado','Sem Escolaridade',19,59,'Locatario','Autonomo',27,13042.00,205224.00,1068513.00,527922.00,-31533.00,0,0.00,0,0.00,696
+'acima de 60',2,'Casado','Sem Escolaridade',50,54,'Proprietario','Autonomo',20,2582.00,0.00,75665.00,34630.00,6032.00,0,313.57,0,13964.29,637
+'41 a 60',1,'Solteiro','Sem Escolaridade',43,43,'Locatario','CLT',25,1538.00,0.00,7957.00,2069.00,927.00,1,28336.35,22,1053269.88,290
+'acima de 60',2,'Casado','Mestrado',9,62,'Locatario','PJ',38,1518.00,0.00,72487.00,12684.00,0.00,0,0.00,0,0.00,649
+'acima de 60',0,'Solteiro','Sem Escolaridade',53,44,'Locatario','CLT',48,15461.00,160659.00,578680.00,251931.00,0.00,0,0.00,0,0.00,819
+'41 a 60',1,'Solteiro','Sem Escolaridade',42,37,'Locatario','CLT',24,2598.00,0.00,43599.00,43292.00,-39469.00,0,0.00,0,0.00,569
+'acima de 60',1,'Solteiro','Sem Escolaridade',46,49,'Locatario','CLT',44,2246.00,0.00,154006.00,61559.00,-10186.00,0,0.00,0,0.00,690
+'acima de 60',1,'Solteiro','Sem Escolaridade',55,54,'Locatario','CLT',27,14238.00,116778.00,250348.00,145631.00,25347.00,0,1653.20,0,79086.21,786
+'acima de 60',1,'Solteiro','Doutorado',74,61,'Locatario','Autonomo',50,2733.00,0.00,44926.00,44397.00,-9610.00,1,1997.26,21,100689.11,373
+'acima de 60',2,'Solteiro','Sem Escolaridade',88,42,'Locatario','CLT',70,1549.00,0.00,46004.00,34812.00,0.00,1,9124.97,61,563310.59,324
+'acima de 60',0,'Solteiro','Sem Escolaridade',62,41,'Locatario','CLT',6,10545.00,509405.00,314361.00,261177.00,36416.00,1,2500.37,34,4221.48,806
+'41 a 60',4,'Solteiro','Sem Escolaridade',28,56,'Locatario','CLT',27,2034.00,0.00,42190.00,281.00,158.00,0,4141.03,0,224100.00,222
+'acima de 60',2,'Solteiro','Sem Escolaridade',51,41,'Locatario','CLT',41,1970.00,0.00,67815.00,55165.00,18584.00,1,496.37,47,6565.22,675
+'acima de 60',3,'Solteiro','Sem Escolaridade',55,54,'Locatario','CLT',47,7107.00,288560.00,144322.00,14528.00,0.00,0,0.00,0,0.00,718
+'41 a 60',3,'Solteiro','Sem Escolaridade',57,62,'Locatario','CLT',42,1619.00,0.00,68816.00,64458.00,7644.00,0,0.00,0,0.00,652
+'26 a 40',0,'Solteiro','Sem Escolaridade',10,36,'Locatario','CLT',7,2312.00,0.00,87368.00,38224.00,0.00,0,0.00,0,0.00,733
+'41 a 60',0,'Solteiro','Sem Escolaridade',45,43,'Locatario','CLT',37,12359.00,40722.00,444427.00,305575.00,-343699.00,0,0.00,0,0.00,759
+'41 a 60',2,'Viuvo','Sem Escolaridade',44,51,'Proprietario','PJ',1,1908.00,133705.00,649158.00,302368.00,0.00,1,904.40,49,44626.54,201
+'41 a 60',3,'Solteiro','Sem Escolaridade',46,41,'Locatario','CLT',28,10175.00,690206.00,419734.00,397248.00,-115421.00,1,1165.08,81,2216.29,634
+'acima de 60',3,'Solteiro','Sem Escolaridade',87,41,'Locatario','CLT',33,1518.00,0.00,85324.00,7206.00,-46045.00,1,10711.00,18,140616.57,391
+'26 a 40',1,'Viuvo','Ensino Fundamental Incompleto',38,43,'Proprietario','PJ',20,2544.00,0.00,34410.00,15774.00,0.00,0,0.00,0,0.00,538
+'41 a 60',1,'Casado','Superior Incompleto',53,41,'Locatario','Autonomo',14,1712.00,0.00,36220.00,6081.00,1906.00,1,2032.43,39,47271.60,373
+'41 a 60',3,'Solteiro','Sem Escolaridade',4,43,'Locatario','CLT',29,1518.00,0.00,41570.00,37837.00,8602.00,0,0.00,0,0.00,598
+'41 a 60',0,'Solteiro','Sem Escolaridade',57,56,'Locatario','CLT',7,1717.00,0.00,15460.00,3669.00,-32937.00,0,1583.65,0,20023.53,368
+'41 a 60',1,'Solteiro','Sem Escolaridade',15,48,'Locatario','CLT',31,12515.00,227747.00,642213.00,197115.00,0.00,1,9302.40,29,77077.66,529
+'acima de 60',3,'Solteiro','Sem Escolaridade',29,43,'Locatario','CLT',32,1518.00,0.00,83935.00,8071.00,1283.00,0,0.00,0,0.00,633
+'acima de 60',1,'Solteiro','Técnico',26,61,'Proprietario','CLT',7,1518.00,0.00,81415.00,24182.00,7887.00,1,352.04,82,7835.02,761
+'26 a 40',0,'Casado','Doutorado',31,36,'Locatario','CLT',18,10238.00,213090.00,308602.00,227245.00,-93926.00,0,0.00,0,0.00,830
+'26 a 40',1,'Solteiro','Sem Escolaridade',2,41,'Locatario','CLT',16,1868.00,0.00,95855.00,17931.00,0.00,1,3727.89,6,227469.39,406
+'acima de 60',3,'Solteiro','Sem Escolaridade',43,47,'Locatario','CLT',56,1518.00,0.00,23445.00,3045.00,-13513.00,1,1618.48,81,96801.91,356
+'acima de 60',4,'Viuvo','Superior Incompleto',60,51,'Proprietario','PJ',43,1785.00,153212.00,366674.00,346586.00,-274003.00,0,0.00,0,0.00,707
+'26 a 40',0,'Solteiro','Sem Escolaridade',29,41,'Locatario','CLT',10,2129.00,0.00,61062.00,55702.00,0.00,0,0.00,0,0.00,716
+'acima de 60',0,'Casado','Superior Incompleto',5,61,'Locatario','PJ',49,9375.00,316041.00,184395.00,182562.00,0.00,0,0.00,0,0.00,815
+'26 a 40',3,'Solteiro','Sem Escolaridade',39,49,'Locatario','CLT',20,2212.00,0.00,70018.00,41024.00,1999.00,0,4471.58,0,280488.57,610
+'acima de 60',2,'Solteiro','Sem Escolaridade',15,43,'Locatario','CLT',1,1518.00,0.00,38633.00,27912.00,0.00,1,9883.86,6,508994.15,238
+'acima de 60',2,'Viuvo','Mestrado',92,41,'Proprietario','PJ',77,3929.00,278923.00,609357.00,280863.00,0.00,0,0.00,0,0.00,835
+'acima de 60',0,'Solteiro','Sem Escolaridade',67,44,'Locatario','CLT',67,13706.00,118282.00,454663.00,157385.00,0.00,0,9889.30,0,412370.27,706
+'26 a 40',1,'Solteiro','Técnico',32,37,'Locatario','PJ',6,1518.00,0.00,94089.00,42257.00,8798.00,0,998.41,0,76650.00,712
+'41 a 60',1,'Solteiro','Sem Escolaridade',49,37,'Locatario','CLT',39,1518.00,0.00,28836.00,3049.00,1985.00,1,1463.17,22,17643.51,412
+'acima de 60',3,'Solteiro','Sem Escolaridade',94,41,'Locatario','CLT',80,2533.00,0.00,5504.00,3028.00,0.00,0,0.00,0,0.00,587
+'acima de 60',0,'Solteiro','Sem Escolaridade',45,50,'Locatario','CLT',30,1518.00,0.00,48282.00,27209.00,0.00,0,0.00,0,0.00,614
+'26 a 40',3,'Casado','Ensino Médio Completo',16,44,'Proprietario','Autonomo',0,3269.00,0.00,125285.00,74321.00,23118.00,1,88929.93,52,357030.57,600
+'acima de 60',3,'Solteiro','Ensino Médio Incompleto',42,59,'Locatario','PJ',31,2247.00,0.00,13063.00,2197.00,0.00,0,0.00,0,0.00,481
+'26 a 40',4,'Solteiro','Sem Escolaridade',26,41,'Locatario','CLT',2,1518.00,0.00,62501.00,14050.00,1192.00,0,0.00,0,0.00,650
+'41 a 60',2,'Solteiro','Sem Escolaridade',38,44,'Locatario','CLT',23,17694.00,168233.00,709163.00,643706.00,0.00,0,0.00,0,0.00,726
+'41 a 60',0,'Viuvo','Sem Escolaridade',25,49,'Locatario','PJ',24,1586.00,0.00,76842.00,48774.00,7937.00,0,0.00,0,0.00,593
+'41 a 60',1,'Viuvo','Superior Completo',11,61,'Locatario','PJ',28,1518.00,0.00,37628.00,28707.00,0.00,1,34338.44,3,1312382.46,164
+'41 a 60',2,'Viuvo','Doutorado',48,41,'Locatario','Autonomo',25,1518.00,0.00,36698.00,36522.00,296.00,0,0.00,0,0.00,515
+'acima de 60',3,'Solteiro','Superior Completo',40,54,'Proprietario','CLT',51,2522.00,0.00,28312.00,16032.00,0.00,1,3386.59,10,109258.17,461
+'26 a 40',3,'Solteiro','Pós-graduação',31,43,'Proprietario','PJ',14,2615.00,0.00,29820.00,7794.00,0.00,0,0.00,0,0.00,669
+'41 a 60',4,'Viuvo','Ensino Médio Incompleto',0,50,'Locatario','CLT',23,1518.00,0.00,108512.00,58575.00,0.00,0,0.00,0,0.00,494
+'acima de 60',1,'Casado','Ensino Médio Completo',56,51,'Proprietario','CLT',29,5780.00,116418.00,403522.00,295841.00,128942.00,0,0.00,0,0.00,800
+'acima de 60',0,'Solteiro','Sem Escolaridade',4,41,'Locatario','CLT',28,1518.00,0.00,94793.00,68016.00,12076.00,0,0.00,0,0.00,779
+'acima de 60',0,'Solteiro','Mestrado',69,50,'Proprietario','Autonomo',51,1518.00,0.00,60959.00,4006.00,0.00,0,0.00,0,0.00,765
+'acima de 60',2,'Casado','Mestrado',71,47,'Locatario','PJ',65,1518.00,0.00,42741.00,19820.00,0.00,1,359.70,23,7305.37,502
+'acima de 60',3,'Solteiro','Sem Escolaridade',91,43,'Locatario','CLT',37,2626.00,0.00,109349.00,49397.00,-43449.00,0,0.00,0,0.00,650
+'acima de 60',2,'Casado','Ensino Fundamental Incompleto',92,41,'Locatario','PJ',71,2154.00,0.00,67567.00,20963.00,5801.00,0,0.00,0,0.00,664
+'41 a 60',2,'Solteiro','Pós-graduação',7,43,'Locatario','CLT',24,2094.00,0.00,59883.00,38942.00,0.00,0,0.00,0,0.00,695
+'acima de 60',1,'Casado','Sem Escolaridade',72,61,'Locatario','CLT',54,15389.00,63344.00,643675.00,314401.00,169826.00,1,298.36,40,14961.25,699
+'26 a 40',4,'Solteiro','Sem Escolaridade',31,44,'Locatario','PJ',14,7223.00,129430.00,552081.00,172925.00,-212670.00,0,7983.07,0,111826.07,614
+'acima de 60',2,'Solteiro','Sem Escolaridade',27,44,'Locatario','CLT',31,3110.00,328481.00,116695.00,93375.00,0.00,0,0.00,0,0.00,790
+'26 a 40',2,'Solteiro','Superior Completo',11,36,'Locatario','Autonomo',1,2773.00,198210.00,557357.00,103675.00,-21361.00,0,0.00,0,0.00,754
+'26 a 40',4,'Solteiro','Sem Escolaridade',2,49,'Locatario','CLT',22,2582.00,0.00,40479.00,33159.00,9538.00,0,0.00,0,0.00,649
+'acima de 60',0,'Solteiro','Sem Escolaridade',46,49,'Locatario','CLT',57,1714.00,0.00,58182.00,21113.00,0.00,0,1055.80,0,91033.33,577
+'acima de 60',1,'Solteiro','Sem Escolaridade',42,48,'Locatario','CLT',44,1636.00,0.00,123617.00,69603.00,-36197.00,0,0.00,0,0.00,673
+'acima de 60',0,'Solteiro','Sem Escolaridade',73,59,'Locatario','CLT',55,2761.00,0.00,47310.00,12373.00,-31114.00,1,39643.83,44,515780.14,381
+'41 a 60',0,'Solteiro','Sem Escolaridade',55,54,'Locatario','CLT',1,1518.00,0.00,26537.00,8342.00,5131.00,0,0.00,0,0.00,524
+'41 a 60',2,'Solteiro','Sem Escolaridade',55,42,'Locatario','CLT',39,4612.00,259036.00,759111.00,185903.00,10253.00,0,0.00,0,0.00,809
+'acima de 60',1,'Casado','Doutorado',65,41,'Locatario','Autonomo',32,1546.00,0.00,49301.00,19313.00,-3689.00,0,0.00,0,0.00,610
+'acima de 60',2,'Viuvo','Pós-graduação',30,44,'Proprietario','Autonomo',60,2557.00,466708.00,239263.00,29649.00,4129.00,0,27235.03,0,807243.82,703
+'acima de 60',1,'Casado','Superior Completo',70,44,'Locatario','Autonomo',53,3025.00,238171.00,892392.00,463862.00,0.00,0,0.00,0,0.00,822
+'até 25',3,'Solteiro','Sem Escolaridade',18,49,'Locatario','CLT',5,2007.00,0.00,38136.00,29404.00,1470.00,0,0.00,0,0.00,536
+'41 a 60',0,'Solteiro','Ensino Médio Completo',44,50,'Locatario','PJ',4,2389.00,0.00,67517.00,18622.00,-76487.00,0,0.00,0,0.00,600
+'acima de 60',2,'Solteiro','Superior Incompleto',68,41,'Proprietario','PJ',21,2323.00,0.00,60991.00,10512.00,0.00,0,546.29,0,17808.71,700
+'acima de 60',0,'Viuvo','Ensino Médio Incompleto',31,44,'Proprietario','Autonomo',9,2334.00,0.00,123416.00,34005.00,0.00,0,0.00,0,0.00,637
+'acima de 60',4,'Solteiro','Ensino Médio Incompleto',85,47,'Proprietario','PJ',21,2114.00,0.00,26359.00,2037.00,0.00,0,0.00,0,0.00,596
+'26 a 40',4,'Casado','Doutorado',32,36,'Locatario','PJ',14,1518.00,0.00,22487.00,18551.00,0.00,0,4737.37,0,38788.08,527
+'acima de 60',3,'Solteiro','Mestrado',99,56,'Locatario','Autonomo',34,1518.00,0.00,76126.00,7921.00,0.00,0,0.00,0,0.00,652
+'acima de 60',0,'Solteiro','Sem Escolaridade',86,43,'Locatario','CLT',65,2489.00,0.00,108930.00,83416.00,24331.00,0,0.00,0,0.00,779
+'26 a 40',4,'Solteiro','Sem Escolaridade',3,54,'Locatario','CLT',12,1518.00,0.00,28922.00,911.00,134.00,0,0.00,0,0.00,489
+'até 25',1,'Solteiro','Sem Escolaridade',22,54,'Locatario','CLT',1,1518.00,0.00,32660.00,10165.00,0.00,0,1166.26,0,55937.88,259
+'41 a 60',4,'Solteiro','Sem Escolaridade',40,41,'Locatario','CLT',9,3584.00,184736.00,197255.00,130439.00,-9319.00,0,0.00,0,0.00,722
+'acima de 60',4,'Solteiro','Sem Escolaridade',48,44,'Locatario','CLT',18,15959.00,84422.00,645126.00,431495.00,0.00,0,69.14,0,2590.00,775
+'41 a 60',4,'Solteiro','Ensino Médio Incompleto',31,41,'Proprietario','CLT',27,1518.00,0.00,80309.00,69488.00,0.00,0,0.00,0,0.00,681
+'26 a 40',0,'Solteiro','Sem Escolaridade',29,43,'Locatario','CLT',7,17103.00,185919.00,752153.00,575899.00,0.00,0,591.06,0,35697.93,772
+'26 a 40',1,'Solteiro','Sem Escolaridade',28,49,'Locatario','CLT',4,2726.00,0.00,77700.00,76570.00,0.00,1,3402.21,36,57064.43,470
+'acima de 60',1,'Viuvo','Ensino Fundamental Incompleto',96,54,'Locatario','CLT',35,2455.00,0.00,26416.00,3053.00,913.00,0,0.00,0,0.00,486
+'41 a 60',0,'Viuvo','Ensino Médio Completo',20,42,'Locatario','PJ',8,1518.00,0.00,14054.00,1756.00,-48758.00,1,168.80,39,8565.91,319
+'26 a 40',0,'Solteiro','Sem Escolaridade',13,37,'Locatario','CLT',21,2132.00,0.00,38424.00,13706.00,4921.00,1,149.63,65,8963.32,657
+'acima de 60',2,'Solteiro','Sem Escolaridade',68,47,'Locatario','CLT',50,3059.00,0.00,99391.00,58900.00,0.00,0,2950.28,0,53153.87,648
+'acima de 60',1,'Solteiro','Sem Escolaridade',74,50,'Locatario','CLT',7,2574.00,0.00,113747.00,79953.00,-1056.00,0,6634.58,0,20790.00,542
+'acima de 60',4,'Solteiro','Sem Escolaridade',73,44,'Locatario','CLT',18,2263.00,0.00,33770.00,623.00,41.00,1,50807.20,2,681699.15,278
+'26 a 40',3,'Solteiro','Sem Escolaridade',19,50,'Locatario','CLT',6,1619.00,0.00,64947.00,40318.00,8414.00,0,0.00,0,0.00,713
+'41 a 60',4,'Solteiro','Mestrado',10,48,'Proprietario','CLT',17,3730.00,281984.00,438371.00,305171.00,0.00,0,0.00,0,0.00,837
+'26 a 40',1,'Solteiro','Sem Escolaridade',30,41,'Locatario','CLT',5,1518.00,0.00,39162.00,25645.00,1143.00,1,3310.72,25,64009.78,324
+'26 a 40',4,'Solteiro','Sem Escolaridade',37,43,'Locatario','CLT',21,1518.00,0.00,43314.00,24821.00,0.00,0,22161.84,0,662737.74,461
+'acima de 60',3,'Solteiro','Ensino Médio Completo',23,43,'Locatario','Autonomo',4,3273.00,0.00,40972.00,24811.00,0.00,1,12806.66,86,908430.76,383
+'41 a 60',0,'Casado','Ensino Fundamental Incompleto',44,49,'Proprietario','PJ',1,2220.00,655547.00,182489.00,88620.00,8706.00,1,5439.56,45,19180.05,480
+'acima de 60',4,'Solteiro','Sem Escolaridade',93,44,'Locatario','CLT',26,14544.00,348408.00,444946.00,123458.00,12959.00,1,280.41,81,7352.48,761
+'26 a 40',4,'Solteiro','Sem Escolaridade',27,62,'Locatario','CLT',9,1926.00,0.00,81445.00,31716.00,13086.00,0,0.00,0,0.00,693
+'acima de 60',1,'Solteiro','Sem Escolaridade',92,54,'Locatario','CLT',74,3085.00,0.00,64267.00,54776.00,3697.00,0,0.00,0,0.00,793
+'acima de 60',0,'Casado','Doutorado',46,54,'Locatario','CLT',46,3137.00,0.00,94290.00,40377.00,0.00,0,20678.09,0,850897.87,711
+'acima de 60',1,'Solteiro','Sem Escolaridade',63,41,'Locatario','CLT',35,1518.00,0.00,112848.00,58270.00,0.00,0,0.00,0,0.00,673
+'acima de 60',2,'Solteiro','Pós-graduação',83,43,'Proprietario','Autonomo',38,1808.00,398774.00,574793.00,339894.00,52855.00,0,4283.31,0,77204.68,771
+'41 a 60',3,'Solteiro','Sem Escolaridade',52,41,'Locatario','CLT',35,1518.00,0.00,62967.00,37479.00,0.00,0,0.00,0,0.00,560
+'acima de 60',0,'Solteiro','Sem Escolaridade',12,47,'Locatario','CLT',24,2342.00,0.00,40367.00,32758.00,0.00,0,0.00,0,0.00,631
+'acima de 60',2,'Solteiro','Sem Escolaridade',66,43,'Locatario','CLT',48,2375.00,0.00,76493.00,55034.00,19914.00,0,1973.56,0,26060.43,630
+'acima de 60',4,'Viuvo','Pós-graduação',71,44,'Locatario','CLT',6,1518.00,0.00,80731.00,70223.00,-51859.00,0,1097.75,0,66566.67,604

@@ -10,34 +10,22 @@ public class Main {
     try {
       WekaController analisador = new WekaController();
 
-      //INICIAR JAVAFX STAGE
-      String cpf = UsuarioScoreController.entradaCPF();//Caso Real
+      analisador.treinarModelo("usuarios_angelo.arff");
 
-      String cpfTeste = "006.061.768-37"; // exemplo
+      analisador.avaliarModelo();
+
+//      String cpf = UsuarioScoreController.entradaCPF();//Caso Real
+
+      String cpfTeste = "007.412.024-76";
+//              "030.116.428-26";
 
       Usuario usuarioScore = UsuarioScoreController.definirUsuario(cpfTeste);
 
-      //Transformar o usuario Score em Instancia
-      Instance usuarioScoreInstancia = (Instance) usuarioScore;
+      Instance usuarioScoreInstancia = analisador.converterUsuarioParaInstance(usuarioScore, analisador.getTrainingData());
 
-      //Criar o Score
-      double score = analisador.preverScore(usuarioScoreInstancia);
+      int score = (int) analisador.preverScore(usuarioScoreInstancia);
 
-//      //modelo ja estaria treinado
-//      analisador.treinarModelo("Modulo1_Projeto/src/main/sources/usuario_categorizado.arff");
-//
-//      Instance novoUsuario = analisador.extrairAtributosDeUsuario(cpfTeste);
-//      double score = analisador.preverScore(novoUsuario);
-
-      System.out.printf("Score do cliente (%s): %.2f\n", cpfTeste, score);
-      if (score < 500) {
-        System.out.println("⚠️ Risco de crédito: ALTO");
-      } else {
-        System.out.println("✅ Risco de crédito: BAIXO");
-      }
-
-      WekaController analisador1 = new WekaController();
-      analisador1.avaliarModelo();
+      System.out.printf(String.valueOf(score));
 
     } catch (Exception e) {
       e.printStackTrace();

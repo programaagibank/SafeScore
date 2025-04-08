@@ -45,23 +45,25 @@ public class ArffExporter {
     writer.println("@attribute tempoEmpregoAtual numeric");
     writer.println("@attribute salarioLiquidoMensal numeric");
     writer.println("@attribute montanteInvestimentos numeric");
-    writer.println("@attribute montanteBens numeric");
+    writer.println("@attribute ontanteBens numeric");
     writer.println("@attribute saldo numeric");
     writer.println("@attribute restanteMensal numeric");
     writer.println("@attribute estaInadimplente {0,1}");
     writer.println("@attribute valorParcelaAtiva numeric");
     writer.println("@attribute mesesAtrasado numeric");
     writer.println("@attribute valorCreditoRestanteTotal numeric");
-    writer.println("@attribute seraInadimplente {0,1}");
+//    writer.println("@attribute seraInadimplente {0,1}");
+    writer.println("@attribute score numeric");
     writer.println();
     writer.println("@data");
   }
 
   public static void appendUserToArff(String caminhoArff, Usuario usuario) {
-    boolean seraInadimplente = automaticCreditRisk.calcularRiscoCredito(usuario);
+//    boolean seraInadimplente = automaticCreditRisk.calcularRiscoCredito(usuario);
+    int score = automaticCreditRisk.calcularScoreCredito(usuario);
 
     try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(caminhoArff, true)))) {
-      writeDataLine(writer, usuario, seraInadimplente);
+      writeDataLine(writer, usuario, score);
       System.out.println("✓ Usuário " + usuario.getCpf() + " adicionado ao arquivo");
     } catch (Exception e) {
       e.printStackTrace();
@@ -92,6 +94,30 @@ public class ArffExporter {
     writer.println(linha);
   }
 
+  private static void writeDataLine(PrintWriter writer, Usuario usuario, int score) {
+    String linha = String.format(Locale.US, "'%s',%d,'%s','%s',%d,%d,'%s','%s',%d,%.2f,%.2f,%.2f,%.2f,%.2f,%d,%.2f,%d,%.2f,%d",
+            usuario.getRangeIdade(),
+            usuario.getNumeroDependentes(),
+            usuario.getEstadoCivil(),
+            usuario.getEscolaridade(),
+            usuario.getTempoEnderecoAnos(),
+            usuario.getNivelInadimplenciaEstado(),
+            usuario.getTipoContratoResidencia(),
+            usuario.getTipoEmprego(),
+            usuario.getTempoEmpregoAtual(),
+            usuario.getSalarioLiquidoMensal(),
+            usuario.getMontanteInvestimentos(),
+            usuario.getMontanteBens(),
+            usuario.getSaldo(),
+            usuario.getRestanteMensal(),
+            usuario.isEstaInadimplente() ? 1 : 0,
+            usuario.getValorParcelaAtiva(),
+            usuario.getMesesAtrasado(),
+            usuario.getValorCreditoRestanteTotal(),
+            score);
+    writer.println(linha);
+  }
+
   public static void exportAllUsersToArff(String caminhoArff) {
     initializeArffFile(caminhoArff);
 
@@ -104,6 +130,6 @@ public class ArffExporter {
 
   public static void main(String[] args) {
     //Crie seu proprio arquivo, na hora de juntarmos nn teremos conflito 😎👍
-    exportAllUsersToArff("Modulo1_Projeto/src/main/sources/usuarios_rodrigo5.arff");
+    exportAllUsersToArff("src/main/sources/usuarios_angelo.arff");
   }
 }

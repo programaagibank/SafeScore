@@ -17,16 +17,6 @@ public class UsuarioScoreController {
     return cpf;
   }
 
-  public static boolean  criarRiscoCredito(String cpf) {
-    Usuario usuarioScore = definirUsuario(cpf);
-
-    System.out.println(Arrays.toString(usuarioScore.getAllData()));
-
-    boolean riscoCredito = automaticCreditRisk.calcularRiscoCredito(usuarioScore);
-    System.out.println(riscoCredito);
-   return riscoCredito;
-  }
-
   public static Usuario definirUsuario(String cpf) {
     try {
       Object[] informacoesPessoais = UsuarioScoreDAO.informacoesPessoais(cpf);
