@@ -121,12 +121,21 @@ public class MainController {
     }
 
     private void aplicarEfeitoShake(TextField field) {
+        field.getStyleClass().removeAll("text-field-success");
+        field.getStyleClass().add("text-field-error");
         // Cria o efeito de deslocamento lateral
         javafx.animation.TranslateTransition shake = new javafx.animation.TranslateTransition(Duration.millis(50), field);
         shake.setFromY(0);
         shake.setByY(10);
         shake.setCycleCount(6); // quantas vezes vai para frente e para trás
         shake.setAutoReverse(true);
+        shake.setOnFinished(event -> {
+            // Depois do shake, volta para o estado original (borda normal de erro)
+            field.setTranslateX(0);
+        });
+
+        // Tocar beep (alerta sonoro)
+        java.awt.Toolkit.getDefaultToolkit().beep();
         shake.play();
     }
 }
