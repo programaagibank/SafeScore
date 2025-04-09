@@ -2,6 +2,7 @@ package com.safescore.controller;
 
 import com.safescore.model.Usuario;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import weka.core.Instance;
@@ -19,6 +20,9 @@ public class MainController {
 
     @FXML
     private Label mensagemLabel;
+
+    @FXML
+    private Button pesquisarButton;
 
     private WekaController wekaController = new WekaController();
 
@@ -38,6 +42,7 @@ public class MainController {
             scoreField.setText("Erro ao treinar modelo.");
             e.printStackTrace();
         }
+        pesquisarButton.setDisable(true);
         configurarCpfField(); // <-- chama a função para configurar o campo
     }
 
@@ -105,9 +110,11 @@ public class MainController {
             if (somenteNumeros.length() == 11) {
                 cpfField.getStyleClass().removeAll("text-field-error", "text-field-success");
                 cpfField.getStyleClass().add("text-field-success");
+                pesquisarButton.setDisable(false);
             } else {
                 cpfField.getStyleClass().removeAll("text-field-error", "text-field-success");
                 cpfField.getStyleClass().add("text-field-error");
+                pesquisarButton.setDisable(true);
             }
         });
     }
