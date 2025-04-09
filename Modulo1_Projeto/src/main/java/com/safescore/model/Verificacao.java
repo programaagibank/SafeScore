@@ -1,4 +1,4 @@
-package com.safescore.controller;
+package com.safescore.model;
 
 public class Verificacao {
   private String categoria;

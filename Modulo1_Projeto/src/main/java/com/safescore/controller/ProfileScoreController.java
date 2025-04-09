@@ -1,5 +1,6 @@
 package com.safescore.controller;
 
+import com.safescore.model.Verificacao;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -7,6 +8,8 @@ import javafx.scene.control.TableView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.cell.PropertyValueFactory;
+
+import java.util.Map;
 
 
 public class ProfileScoreController {
@@ -16,6 +19,15 @@ public class ProfileScoreController {
 
   @FXML
   private Label usuarioNome;
+
+  @FXML
+  private Label pontoBom;
+
+  @FXML
+  private Label pontoMedio;
+
+  @FXML
+  private Label pontoRuin;
 
   @FXML
   private TableView<Verificacao> verificacoesTable;
@@ -35,7 +47,7 @@ public class ProfileScoreController {
     colunaResultado.setCellValueFactory(new PropertyValueFactory<>("resultado"));
   }
 
-  public void setUsuarioData(String cpf, double score, Object[] dadosView) {
+  public void setUsuarioData(String cpf, double score, Object[] dadosView, Map<String, String> fatores) {
     String estado = String.valueOf(dadosView[0]);
     String idade = String.valueOf(dadosView[1]);
     String nome = String.valueOf(dadosView[2]);
@@ -54,6 +66,10 @@ public class ProfileScoreController {
 
     usuarioNome.setText(nome); // ou o nome do usuário, se tiver
     usuarioScore.setText(String.format("%d", (int) score));
+
+    pontoBom.setText(fatores.getOrDefault("positivo", "Nenhum fator positivo identificado"));
+    pontoRuin.setText(fatores.getOrDefault("medio", "Nenhum fator médio identificado"));
+    pontoMedio.setText(fatores.getOrDefault("negativo", "Nenhum fator negativo identificado"));
 
     // Altera a cor de fundo do label baseado no score
     String corBackground;
