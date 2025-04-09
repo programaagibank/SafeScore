@@ -13,6 +13,47 @@ import java.util.List;
 
 public class Read {
 
+  public static Object[] listarDadosView(String cpf) {
+    String sql = """
+        SELECT 
+            u.nome, 
+            TIMESTAMPDIFF(YEAR, u.dataNascimento, CURDATE()) AS idade, 
+            e.estado,
+            t.valorEntrada,
+            t.valorSaida
+        FROM usuario u
+        LEFT JOIN contratoResidencial cr ON u.cpf = cr.cpf
+        LEFT JOIN endereco e ON cr.idEndereco = e.idEndereco
+        LEFT JOIN transacao t ON t.cpf = u.cpf
+        WHERE u.cpf = ?
+        ORDER BY t.dataRecorteTransacao DESC
+        LIMIT 1
+    """;
+
+    Object[] dados = new Object[5];
+
+    try (Connection conn = DBconexao.connect();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+      pstmt.setString(1, cpf);
+      ResultSet rs = pstmt.executeQuery();
+
+      if (rs.next()) {
+        dados[0] = rs.getString("estado");
+        dados[1] = rs.getInt("idade");
+        dados[2] = rs.getString("nome");
+        dados[3] = rs.getDouble("valorEntrada");
+        dados[4] = rs.getDouble("valorSaida");
+      }
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return dados;
+  }
+
+
   public static void listarUsuarios() {
     String sql = "SELECT * FROM usuario";
     try (Connection conn = DBconexao.connect();
