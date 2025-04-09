@@ -34,6 +34,7 @@
     <center>
         <VBox alignment="CENTER" spacing="15.0">
             <children>
+                <Region prefHeight="10.0" />
                 <!-- Agora o label fica dentro de um HBox alinhado à esquerda -->
                 <HBox alignment="CENTER_LEFT">
                     <children>
@@ -44,7 +45,7 @@
                 <TextField fx:id="cpfField" alignment="CENTER_LEFT" promptText="000.000.000-00" styleClass="text-field" />
                 <Label fx:id="mensagemLabel" styleClass="mensagem-label" visible="false" text="" />
                 <ProgressIndicator fx:id="loadingIndicator" visible="false" />
-                <Region prefHeight="60.0" />
+                <Region prefHeight="10.0" />
                 <HBox alignment="CENTER" spacing="10.0">
                     <children>
                         <Button fx:id="limparButton" minWidth="150.0" onAction="#onLimparClicked" styleClass="button-clear" text="LIMPAR" textAlignment="CENTER" />
