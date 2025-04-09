@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="756a22da-b579-402a-b1d6-0b7f7d4d5e31" name="Changes" comment="" />
+    <list default="true" id="756a22da-b579-402a-b1d6-0b7f7d4d5e31" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -84,7 +86,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "mateus/primeiratela",
+    "git-widget-placeholder": "rodrigo/loading",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/rodrigo.nogueira/Desktop/SafeScoreV2/SafeScore/Modulo1_Projeto/src/main/resources/images",
     "onboarding.tips.debug.path": "C:/Users/rodrigo.nogueira/Desktop/SafeScoreV2/SafeScore/Modulo1_Projeto/src/main/resources/src/Main.java",

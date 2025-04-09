@@ -108,3 +108,12 @@
     -fx-background-color: #1E40AF;
     -fx-background-radius: 30px;
 }
+
+/* Estilo para o texto de loading */
+.loading-label {
+    -fx-text-fill: #2563EB; /* Azul do botão pesquisar */
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+}
+

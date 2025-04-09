@@ -3,12 +3,10 @@ package com.safescore.controller;
 import com.safescore.dao.CrudMethods.Read;
 import com.safescore.model.Usuario;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import weka.core.Instance;
 import javafx.animation.FadeTransition;
@@ -22,6 +20,9 @@ public class MainController {
 
     @FXML
     private TextField scoreField;
+
+    @FXML
+    private ProgressIndicator loadingIndicator;
 
     @FXML
     private Label mensagemLabel;
@@ -56,47 +57,56 @@ public class MainController {
         mensagemLabel.setVisible(false);
 
         String cpf = cpfField.getText();
-        if (cpf == null || cpf.isEmpty()) {
+        if (cpf == null || cpf.isEmpty() || cpf.replaceAll("[^\\d]", "").length() != 11) {
             aplicarEfeitoShake(cpfField);
             mostrarMensagemAnimada("Digite um CPF válido.");
             return;
         }
 
-        try {
-            Usuario usuarioScore = UsuarioScoreController.definirUsuario(cpf);
-            Object[] dadosView = Read.listarDadosView(cpf);
-            Instance usuarioScoreInstancia = wekaController.converterUsuarioParaInstance(usuarioScore, wekaController.getTrainingData());
-            double score = wekaController.preverScore(usuarioScoreInstancia);
+        loadingIndicator.setVisible(true); // <-- MOSTRAR o loading
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/profile-score.fxml"));
-            Parent root = loader.load();
-            ProfileScoreController controller = loader.getController();
-            controller.setUsuarioData(cpf, score, dadosView);
+        // Executar a busca e carregamento de forma assíncrona para evitar travar a tela
+        new Thread(() -> {
+            try {
+                Usuario usuarioScore = UsuarioScoreController.definirUsuario(cpf);
+                Object[] dadosView = Read.listarDadosView(cpf);
+                Instance usuarioScoreInstancia = wekaController.converterUsuarioParaInstance(usuarioScore, wekaController.getTrainingData());
+                double score = wekaController.preverScore(usuarioScoreInstancia);
 
-            // Get the current stage (window)
-            Stage currentStage = (Stage) cpfField.getScene().getWindow();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/profile-score.fxml"));
+                Parent root = loader.load();
+                ProfileScoreController controller = loader.getController();
+                controller.setUsuarioData(cpf, score, dadosView);
 
-            // Create and show the new stage
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Perfil do Usuário - SafeScore");
-            stage.setWidth(670);
-            stage.setHeight(445);
-            stage.setResizable(false);
-            stage.centerOnScreen();
+                // Executa troca de tela no JavaFX Application Thread
+                javafx.application.Platform.runLater(() -> {
+                    try {
+                        Stage currentStage = (Stage) cpfField.getScene().getWindow();
+                        Stage stage = new Stage();
+                        stage.setScene(new Scene(root));
+                        stage.setTitle("Perfil do Usuário - SafeScore");
+                        stage.setWidth(670);
+                        stage.setHeight(445);
+                        stage.setResizable(false);
+                        stage.centerOnScreen();
+                        currentStage.close();
+                        stage.show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
 
-            // Close the current stage
-            currentStage.close();
-
-            // Show the new stage
-            stage.show();
-
-        } catch (Exception e) {
-            aplicarEfeitoShake(cpfField);
-            mostrarMensagemAnimada("Usuário não encontrado.");
-            e.printStackTrace();
-        }
+            } catch (Exception e) {
+                javafx.application.Platform.runLater(() -> {
+                    loadingIndicator.setVisible(false); // Some o loading se erro
+                    aplicarEfeitoShake(cpfField);
+                    mostrarMensagemAnimada("Usuário não encontrado.");
+                });
+                e.printStackTrace();
+            }
+        }).start();
     }
+
 
 
     private void mostrarMensagemAnimada(String mensagem) {
