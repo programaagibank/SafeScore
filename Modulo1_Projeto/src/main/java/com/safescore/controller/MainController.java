@@ -5,6 +5,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import weka.core.Instance;
+import javafx.animation.FadeTransition;
+import javafx.util.Duration;
+import javafx.scene.control.Label;
 
 public class MainController {
 
@@ -22,6 +25,8 @@ public class MainController {
     @FXML
     private void onLimparClicked() {
         cpfField.clear();
+        mensagemLabel.setText("");
+        mensagemLabel.setVisible(false);
     }
 
     @FXML
@@ -33,7 +38,9 @@ public class MainController {
             scoreField.setText("Erro ao treinar modelo.");
             e.printStackTrace();
         }
+        configurarCpfField(); // <-- chama a função para configurar o campo
     }
+
 
     @FXML
     private void onPesquisarClicked() {
@@ -41,8 +48,7 @@ public class MainController {
 
         String cpf = cpfField.getText();
         if (cpf == null || cpf.isEmpty()) {
-            mensagemLabel.setText("Digite um CPF válido.");
-            mensagemLabel.setVisible(true);
+            mostrarMensagemAnimada("Digite um CPF válido.");
             return;
         }
 
@@ -52,10 +58,48 @@ public class MainController {
             double score = wekaController.preverScore(usuarioScoreInstancia);
             scoreField.setText(String.format("%.0f (Score previsto)", score));
         } catch (Exception e) {
-            mensagemLabel.setText("Usuário não encontrado.");
-            mensagemLabel.setVisible(true);
+            mostrarMensagemAnimada("Usuário não encontrado.");
             e.printStackTrace();
         }
     }
 
+    private void mostrarMensagemAnimada(String mensagem) {
+        mensagemLabel.setText(mensagem);
+        mensagemLabel.setOpacity(0); // Começa invisível
+        mensagemLabel.setVisible(true);
+
+        FadeTransition fadeIn = new FadeTransition(Duration.millis(500), mensagemLabel);
+        fadeIn.setFromValue(0.0);
+        fadeIn.setToValue(1.0);
+        fadeIn.play();
+    }
+
+    private void configurarCpfField() {
+        cpfField.textProperty().addListener((observable, oldValue, newValue) -> {
+            // Remove tudo que não é número
+            String somenteNumeros = newValue.replaceAll("[^\\d]", "");
+
+            // Limita a 11 dígitos
+            if (somenteNumeros.length() > 11) {
+                somenteNumeros = somenteNumeros.substring(0, 11);
+            }
+
+            // Aplica a máscara de CPF: 000.000.000-00
+            StringBuilder cpfFormatado = new StringBuilder();
+            for (int i = 0; i < somenteNumeros.length(); i++) {
+                cpfFormatado.append(somenteNumeros.charAt(i));
+                if (i == 2 || i == 5) {
+                    cpfFormatado.append(".");
+                } else if (i == 8) {
+                    cpfFormatado.append("-");
+                }
+            }
+
+            // Evita loop: só atualiza se mudar de verdade
+            if (!cpfFormatado.toString().equals(newValue)) {
+                cpfField.setText(cpfFormatado.toString());
+                cpfField.positionCaret(cpfFormatado.length()); // Mantém o cursor no final
+            }
+        });
+    }
 }
