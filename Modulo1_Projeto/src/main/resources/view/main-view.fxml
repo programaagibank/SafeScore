@@ -9,40 +9,51 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" spacing="15.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.safescore.controller.MainController">
-    <HBox alignment="CENTER">
-        <children>
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                <Image url="@../img/logo-safescore.png" />
-            <HBox.margin>
-               <Insets top="10.0" />
-            </HBox.margin>
-            </ImageView>
-        </children>
-      <opaqueInsets>
-         <Insets />
-      </opaqueInsets>
-    </HBox>
-   <VBox alignment="CENTER" prefHeight="180.0" prefWidth="100.0" spacing="15.0">
-      <children>
-      
-          <!-- Campo para o CPF -->
-          <Label styleClass="label" text="Digite o CPF:" />
-          <TextField fx:id="cpfField" alignment="CENTER" promptText="000.000.000-00" styleClass="text-field" />
-      
-          <!-- Botão de pesquisa -->
-          <Button onAction="#onPesquisarClicked" styleClass="button" text="PESQUISAR" textAlignment="CENTER" />
-      </children>
-      <padding>
-         <Insets left="20.0" right="20.0" />
-      </padding>
-   </VBox>
-   <opaqueInsets>
-      <Insets />
-   </opaqueInsets>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Region?>
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.safescore.controller.MainController"
+            stylesheets="@style.css">
 
-    <!-- Exibição do score
-    <Label styleClass="label" text="Score do cliente:" />
-    <TextField fx:id="scoreField" editable="false" styleClass="text-field" />-->
+    <!-- Topo (logo) -->
+    <top>
+        <VBox alignment="TOP_CENTER" spacing="10.0">
+            <padding>
+                <Insets top="20.0" />
+            </padding>
+            <children>
+                <ImageView fitHeight="250.0" fitWidth="330.0" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@../img/logo-safescore.png" />
+                </ImageView>
+            </children>
+        </VBox>
+    </top>
 
-</VBox>
+    <!-- Centro (formulário) -->
+    <center>
+        <VBox alignment="CENTER" spacing="15.0">
+            <children>
+                <!-- Agora o label fica dentro de um HBox alinhado à esquerda -->
+                <HBox alignment="CENTER_LEFT">
+                    <children>
+                        <Label styleClass="label" text="Digite o CPF:" textAlignment="LEFT" alignment="CENTER_LEFT" />
+                    </children>
+                </HBox>
+
+                <TextField fx:id="cpfField" alignment="CENTER" promptText="000.000.000-00" styleClass="text-field" />
+                <Region prefHeight="120.0" />
+                <HBox alignment="CENTER" spacing="10.0">
+                    <children>
+                        <Button fx:id="limparButton" minWidth="150.0" onAction="#onLimparClicked" styleClass="button-clear" text="LIMPAR" textAlignment="CENTER" />
+                        <Button fx:id="pesquisarButton" minWidth="150.0" onAction="#onPesquisarClicked" styleClass="button-search" text="PESQUISAR" textAlignment="CENTER" />
+                    </children>
+                </HBox>
+            </children>
+            <padding>
+                <Insets left="20.0" right="20.0" />
+            </padding>
+        </VBox>
+    </center>
+</BorderPane>
+
+

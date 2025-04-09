@@ -15,7 +15,10 @@ public class MainController {
 
     private WekaController wekaController = new WekaController();
 
-
+    @FXML
+    private void onLimparClicked() {
+        cpfField.clear();
+    }
 
     @FXML
     public void initialize() {

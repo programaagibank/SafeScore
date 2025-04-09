@@ -15,9 +15,10 @@
 
 /* Estilo para os outros labels (como "Digite o CPF" e "Score do cliente") */
 .label {
-    -fx-font-size: 16px;
-    -fx-text-fill: #4B5EAA; /* Azul médio para contraste */
-    -fx-padding: 5px 0;
+    -fx-font-size: 18px; /* Fonte maior */
+    -fx-font-weight: bold; /* Negrito */
+    -fx-text-fill: #3B82F6; /* Azul médio (igual aos outros labels) */
+    -fx-alignment: center-left; /* Alinhar à esquerda */
 }
 
 /* Estilo do campo de texto (CPF e Score) */
@@ -41,8 +42,29 @@
     -fx-alignment: center;
 }
 
+/* Estilo do botão "Limpar" */
+.button-clear {
+    -fx-background-color: #9CA3AF; /* Cinza bonito para limpar */
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 30px;
+    -fx-background-radius: 30px;
+    -fx-cursor: hand;
+}
+
+/* Hover do botão Limpar */
+.button-clear:hover {
+    -fx-background-color: #6B7280;
+}
+
+/* Pressionado */
+.button-clear:pressed {
+    -fx-background-color: #4B5563;
+}
+
 /* Estilo do botão "Pesquisar" */
-.button {
+.button-search {
     -fx-background-color: #3B82F6;
     -fx-text-fill: #FFFFFF;
     -fx-font-size: 16px;
@@ -50,16 +72,17 @@
     -fx-padding: 10px 30px; /* mais lateral para ficar mais largo */
     -fx-background-radius: 30px; /* quanto maior, mais arredondado */
     -fx-cursor: hand;
+    -fx-border-color: transparent;
 }
 
 /* Efeito de hover no botão */
-.button:hover {
+.button-search:hover {
     -fx-background-color: #2563EB;
     -fx-background-radius: 30px;
 }
 
 /* Efeito clique no botão */
-.button:pressed {
+.button-search:pressed {
     -fx-background-color: #1E40AF;
     -fx-background-radius: 30px;
 }
