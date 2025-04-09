@@ -18,7 +18,7 @@ public class UserView extends Application {
 
     // Define o tamanho da janela para simular um celular (360x640 pixels)
     primaryStage.setWidth(360);
-    primaryStage.setHeight(640);
+    primaryStage.setHeight(540);
 
     // Impede que a janela seja redimensionada (opcional, mas comum para simular um celular)
     primaryStage.setResizable(false);
