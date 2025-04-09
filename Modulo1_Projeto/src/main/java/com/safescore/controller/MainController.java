@@ -44,7 +44,7 @@ public class MainController {
     @FXML
     public void initialize() {
         try {
-            wekaController.treinarModelo("src/main/sources/usuarios_angelo.arff");
+            wekaController.treinarModelo("Modulo1_Projeto/src/main/sources/usuarios_angelo.arff");
             wekaController.avaliarModelo();
         } catch (Exception e) {
             scoreField.setText("Erro ao treinar modelo.");
