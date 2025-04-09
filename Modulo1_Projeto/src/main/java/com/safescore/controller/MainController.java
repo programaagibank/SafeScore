@@ -2,6 +2,7 @@ package com.safescore.controller;
 
 import com.safescore.dao.CrudMethods.Read;
 import com.safescore.model.Usuario;
+import com.safescore.script.automaticCreditRisk;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +13,8 @@ import weka.core.Instance;
 import javafx.animation.FadeTransition;
 import javafx.util.Duration;
 import javafx.scene.control.Label;
+
+import java.util.Map;
 
 public class MainController {
 
@@ -72,11 +75,12 @@ public class MainController {
                 Object[] dadosView = Read.listarDadosView(cpf);
                 Instance usuarioScoreInstancia = wekaController.converterUsuarioParaInstance(usuarioScore, wekaController.getTrainingData());
                 double score = wekaController.preverScore(usuarioScoreInstancia);
+                Map<String, String> fatores = automaticCreditRisk.extrairFatores(usuarioScore.getAllData());
 
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/profile-score.fxml"));
                 Parent root = loader.load();
                 ProfileScoreController controller = loader.getController();
-                controller.setUsuarioData(cpf, score, dadosView);
+                controller.setUsuarioData(cpf, score, dadosView, fatores);
 
                 // Executa troca de tela no JavaFX Application Thread
                 javafx.application.Platform.runLater(() -> {
