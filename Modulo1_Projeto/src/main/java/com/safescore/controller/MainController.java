@@ -1,10 +1,15 @@
 package com.safescore.controller;
 
+import com.safescore.dao.CrudMethods.Read;
 import com.safescore.model.Usuario;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import weka.core.Instance;
 import javafx.animation.FadeTransition;
 import javafx.util.Duration;
@@ -48,7 +53,7 @@ public class MainController {
 
     @FXML
     private void onPesquisarClicked() {
-        mensagemLabel.setVisible(false); // Esconde a mensagem ao começar
+        mensagemLabel.setVisible(false);
 
         String cpf = cpfField.getText();
         if (cpf == null || cpf.isEmpty()) {
@@ -59,15 +64,40 @@ public class MainController {
 
         try {
             Usuario usuarioScore = UsuarioScoreController.definirUsuario(cpf);
+            Object[] dadosView = Read.listarDadosView(cpf);
             Instance usuarioScoreInstancia = wekaController.converterUsuarioParaInstance(usuarioScore, wekaController.getTrainingData());
             double score = wekaController.preverScore(usuarioScoreInstancia);
-            scoreField.setText(String.format("%.0f (Score previsto)", score));
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/profile-score.fxml"));
+            Parent root = loader.load();
+            ProfileScoreController controller = loader.getController();
+            controller.setUsuarioData(cpf, score, dadosView);
+
+            // Get the current stage (window)
+            Stage currentStage = (Stage) cpfField.getScene().getWindow();
+
+            // Create and show the new stage
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Perfil do Usuário - SafeScore");
+            stage.setWidth(670);
+            stage.setHeight(445);
+            stage.setResizable(false);
+            stage.centerOnScreen();
+
+            // Close the current stage
+            currentStage.close();
+
+            // Show the new stage
+            stage.show();
+
         } catch (Exception e) {
             aplicarEfeitoShake(cpfField);
             mostrarMensagemAnimada("Usuário não encontrado.");
             e.printStackTrace();
         }
     }
+
 
     private void mostrarMensagemAnimada(String mensagem) {
         mensagemLabel.setText(mensagem);
