@@ -46,13 +46,13 @@ public class MainController {
         configurarCpfField(); // <-- chama a função para configurar o campo
     }
 
-
     @FXML
     private void onPesquisarClicked() {
         mensagemLabel.setVisible(false); // Esconde a mensagem ao começar
 
         String cpf = cpfField.getText();
         if (cpf == null || cpf.isEmpty()) {
+            aplicarEfeitoShake(cpfField);
             mostrarMensagemAnimada("Digite um CPF válido.");
             return;
         }
@@ -63,6 +63,7 @@ public class MainController {
             double score = wekaController.preverScore(usuarioScoreInstancia);
             scoreField.setText(String.format("%.0f (Score previsto)", score));
         } catch (Exception e) {
+            aplicarEfeitoShake(cpfField);
             mostrarMensagemAnimada("Usuário não encontrado.");
             e.printStackTrace();
         }
@@ -117,5 +118,15 @@ public class MainController {
                 pesquisarButton.setDisable(true);
             }
         });
+    }
+
+    private void aplicarEfeitoShake(TextField field) {
+        // Cria o efeito de deslocamento lateral
+        javafx.animation.TranslateTransition shake = new javafx.animation.TranslateTransition(Duration.millis(50), field);
+        shake.setFromY(0);
+        shake.setByY(10);
+        shake.setCycleCount(6); // quantas vezes vai para frente e para trás
+        shake.setAutoReverse(true);
+        shake.play();
     }
 }
