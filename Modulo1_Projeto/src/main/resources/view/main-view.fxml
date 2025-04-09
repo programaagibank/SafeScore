@@ -40,7 +40,8 @@
                     </children>
                 </HBox>
 
-                <TextField fx:id="cpfField" alignment="CENTER" promptText="000.000.000-00" styleClass="text-field" />
+                <TextField fx:id="cpfField" alignment="CENTER_LEFT" promptText="000.000.000-00" styleClass="text-field" />
+                <Label fx:id="mensagemLabel" styleClass="mensagem-label" visible="false" text="" />
                 <Region prefHeight="120.0" />
                 <HBox alignment="CENTER" spacing="10.0">
                     <children>

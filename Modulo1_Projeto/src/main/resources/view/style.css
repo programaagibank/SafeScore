@@ -33,6 +33,13 @@
     -fx-prompt-text-fill: #9CA3AF; /* Cinza para o placeholder */
 }
 
+.mensagem-label {
+    -fx-text-fill: #DC2626; /* Vermelho */
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-alignment: center-left;
+}
+
 /* Estilo específico para o campo de score (não editável) */
 #scoreField {
     -fx-background-color: #E0F2FE; /* Fundo azul claro para destacar o score */
