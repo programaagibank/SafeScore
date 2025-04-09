@@ -100,6 +100,15 @@ public class MainController {
                 cpfField.setText(cpfFormatado.toString());
                 cpfField.positionCaret(cpfFormatado.length()); // Mantém o cursor no final
             }
+
+            // Verificação de borda
+            if (somenteNumeros.length() == 11) {
+                cpfField.getStyleClass().removeAll("text-field-error", "text-field-success");
+                cpfField.getStyleClass().add("text-field-success");
+            } else {
+                cpfField.getStyleClass().removeAll("text-field-error", "text-field-success");
+                cpfField.getStyleClass().add("text-field-error");
+            }
         });
     }
 }

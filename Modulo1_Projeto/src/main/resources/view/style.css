@@ -22,15 +22,30 @@
 }
 
 /* Estilo do campo de texto (CPF e Score) */
+/* Estilo normal do campo */
 .text-field {
     -fx-background-color: #FFFFFF;
-    -fx-border-color: #D1D5DB; /* Cinza claro para borda */
+    -fx-border-color: #D1D5DB;
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
     -fx-padding: 10px;
     -fx-font-size: 14px;
-    -fx-text-fill: #1E3A8A; /* Azul escuro para o texto */
-    -fx-prompt-text-fill: #9CA3AF; /* Cinza para o placeholder */
+    -fx-text-fill: #1E3A8A;
+    -fx-prompt-text-fill: #9CA3AF;
+}
+
+/* Estilo para campo de erro (CPF incompleto) */
+.text-field-error {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #DC2626; /* Vermelho */
+    -fx-border-width: 2px;
+}
+
+/* Estilo para campo válido (CPF correto) */
+.text-field-success {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #16A34A; /* Verde */
+    -fx-border-width: 2px;
 }
 
 .mensagem-label {
