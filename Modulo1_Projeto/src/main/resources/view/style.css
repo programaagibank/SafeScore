@@ -1,7 +1,7 @@
 /* Estilo geral para o VBox (container principal) */
 .root {
     -fx-background-color: #F5F7FA; /* Fundo claro, similar ao da imagem */
-    -fx-padding: 20px;
+    -fx-padding: 0px;
     -fx-alignment: center;
 }
 
@@ -15,21 +15,44 @@
 
 /* Estilo para os outros labels (como "Digite o CPF" e "Score do cliente") */
 .label {
-    -fx-font-size: 16px;
-    -fx-text-fill: #4B5EAA; /* Azul médio para contraste */
-    -fx-padding: 5px 0;
+    -fx-font-size: 18px; /* Fonte maior */
+    -fx-font-weight: bold; /* Negrito */
+    -fx-text-fill: #3B82F6; /* Azul médio (igual aos outros labels) */
+    -fx-alignment: center-left; /* Alinhar à esquerda */
 }
 
 /* Estilo do campo de texto (CPF e Score) */
+/* Estilo normal do campo */
 .text-field {
     -fx-background-color: #FFFFFF;
-    -fx-border-color: #D1D5DB; /* Cinza claro para borda */
+    -fx-border-color: #D1D5DB;
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
     -fx-padding: 10px;
     -fx-font-size: 14px;
-    -fx-text-fill: #1E3A8A; /* Azul escuro para o texto */
-    -fx-prompt-text-fill: #9CA3AF; /* Cinza para o placeholder */
+    -fx-text-fill: #1E3A8A;
+    -fx-prompt-text-fill: #9CA3AF;
+}
+
+/* Estilo para campo de erro (CPF incompleto) */
+.text-field-error {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #DC2626; /* Vermelho */
+    -fx-border-width: 2px;
+}
+
+/* Estilo para campo válido (CPF correto) */
+.text-field-success {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #16A34A; /* Verde */
+    -fx-border-width: 2px;
+}
+
+.mensagem-label {
+    -fx-text-fill: #DC2626; /* Vermelho */
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-alignment: center-left;
 }
 
 /* Estilo específico para o campo de score (não editável) */
@@ -41,23 +64,47 @@
     -fx-alignment: center;
 }
 
-/* Estilo do botão "Pesquisar" */
-.button {
-    -fx-background-color: #3B82F6; /* Azul vibrante para o botão */
-    -fx-text-fill: #FFFFFF; /* Texto branco */
+/* Estilo do botão "Limpar" */
+.button-clear {
+    -fx-background-color: #9CA3AF; /* Cinza bonito para limpar */
+    -fx-text-fill: #FFFFFF;
     -fx-font-size: 16px;
     -fx-font-weight: bold;
-    -fx-padding: 10px 20px;
-    -fx-background-radius: 5px;
+    -fx-padding: 10px 30px;
+    -fx-background-radius: 30px;
     -fx-cursor: hand;
 }
 
-/* Efeito de hover no botão */
-.button:hover {
-    -fx-background-color: #2563EB; /* Azul mais escuro no hover */
+/* Hover do botão Limpar */
+.button-clear:hover {
+    -fx-background-color: #6B7280;
 }
 
-/* Efeito de clique no botão */
-.button:pressed {
-    -fx-background-color: #1E40AF; /* Azul ainda mais escuro ao clicar */
+/* Pressionado */
+.button-clear:pressed {
+    -fx-background-color: #4B5563;
+}
+
+/* Estilo do botão "Pesquisar" */
+.button-search {
+    -fx-background-color: #3B82F6;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 30px; /* mais lateral para ficar mais largo */
+    -fx-background-radius: 30px; /* quanto maior, mais arredondado */
+    -fx-cursor: hand;
+    -fx-border-color: transparent;
+}
+
+/* Efeito de hover no botão */
+.button-search:hover {
+    -fx-background-color: #2563EB;
+    -fx-background-radius: 30px;
+}
+
+/* Efeito clique no botão */
+.button-search:pressed {
+    -fx-background-color: #1E40AF;
+    -fx-background-radius: 30px;
 }
