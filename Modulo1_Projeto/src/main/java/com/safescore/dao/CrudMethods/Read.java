@@ -45,7 +45,7 @@ public class Read {
         dados[3] = rs.getDouble("valorEntrada");
         dados[4] = rs.getDouble("valorSaida");
       }
-
+      System.out.println(dados[3]);
     } catch (SQLException e) {
       e.printStackTrace();
     }

@@ -54,5 +54,23 @@ public class ProfileScoreController {
 
     usuarioNome.setText(nome); // ou o nome do usuário, se tiver
     usuarioScore.setText(String.format("%d", (int) score));
+
+    // Altera a cor de fundo do label baseado no score
+    String corBackground;
+    if (score < 400) {
+      corBackground = "#e74c3c"; // vermelho
+    } else if (score < 600) {
+      corBackground = "#f1c40f"; // amarelo
+    } else {
+      corBackground = "#2ecc71"; // verde
+    }
+
+    usuarioScore.setStyle(
+            "-fx-background-color: " + corBackground + ";" +
+                    "-fx-background-radius: 4%;" +
+                    "-fx-text-alignment: center;" +
+                    "-fx-alignment: center;" +
+                    "-fx-text-fill: white;"
+    );
   }
 }
