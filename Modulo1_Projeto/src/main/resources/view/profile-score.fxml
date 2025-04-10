@@ -11,7 +11,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.safescore.controller.ProfileScoreController">
+<?import javafx.scene.control.Button?>
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.safescore.controller.ProfileScoreController" stylesheets="@./profile-score.css">
     <children>
         <AnchorPane prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
             <children>
@@ -68,11 +69,25 @@
                 </Pane>
 
                 <!-- Logo -->
-                <ImageView fitHeight="92.0" fitWidth="241.0" layoutX="61.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="150.0" fitWidth="300.0" layoutX="40.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../img/logo-safescore.png" />
                     </image>
                 </ImageView>
+                <Button fx:id="voltarButton"
+                        layoutX="20.0"
+                        layoutY="20.0"
+                        onAction="#onVoltarClicked"
+                        styleClass="button-voltar">
+                    <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../img/arrow-back.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+
 
                 <!-- Personal Info Labels -->
                 <Label fx:id="usuarioNome" layoutX="29.0" layoutY="160.0" text="Marcia Teresinha" textFill="#313131">
@@ -81,11 +96,11 @@
                     </font>
                 </Label>
 
-                <VBox layoutX="16.0" layoutY="204.0" prefHeight="185.0" prefWidth="330.0" stylesheets="@./profile-score.css">
+                <VBox layoutX="16.0" layoutY="204.0" prefHeight="215.0" prefWidth="330.0" stylesheets="@./profile-score.css">
                     <padding>
                         <Insets bottom="10" left="10" right="10" top="10" />
                     </padding>
-                    <TableView id="dadosTabela" fx:id="verificacoesTable" prefHeight="153.0" prefWidth="310.0" styleClass="tabela-moderna">
+                    <TableView id="dadosTabela" fx:id="verificacoesTable" prefHeight="175.0" prefWidth="310.0" styleClass="tabela-moderna">
                         <columnResizePolicy>
                             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                         </columnResizePolicy>

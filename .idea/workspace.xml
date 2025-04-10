@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="756a22da-b579-402a-b1d6-0b7f7d4d5e31" name="Changes" comment="">
+    <list default="true" id="66a73d9e-4357-47fd-a747-174667f1daa7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -20,9 +20,6 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
-        <task path="$PROJECT_DIR$/Modulo1_Projeto">
-          <activation />
-        </task>
         <projects_view>
           <tree_state>
             <expand>
@@ -47,64 +44,38 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;RodrigoSecco&quot;
-  }
-}</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/programaagibank/SafeScore.git&quot;,
-    &quot;accountId&quot;: &quot;1ba7e20a-26fb-44e4-aa3f-b863eb2b2273&quot;
-  }
-}</component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.controlsfx/controlsfx/11.2.1/e0f2568b8ee6e7a1639741f21b0024277ecbb7a7/controlsfx-11.2.1.jar!/org/controlsfx/control/textfield/TextFields.class" root0="SKIP_INSPECTION" />
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
-  &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 4
 }</component>
-  <component name="ProjectId" id="2ulQytOKGmC7PvD3IPNKFWGCz5O" />
+  <component name="ProjectId" id="2uk68FljMYwb6Nepa4FN3YgTGvE" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.DatabaseSeeder.executor": "Run",
-    "Gradle.Download Sources.executor": "Run",
+    "Application.Main.executor": "Run",
+    "Application.com.safescore.sql.CrudMethods.Main.executor": "Run",
     "Gradle.Modulo1_Projeto [:com.safescore.Main.main()].executor": "Run",
     "Gradle.Modulo1_Projeto [:com.safescore.script.ArffExporter.main()].executor": "Run",
     "Gradle.Modulo1_Projeto [:com.safescore.script.ArffFixer.main()].executor": "Run",
     "Gradle.Modulo1_Projeto [:com.safescore.script.DatabaseSeeder.main()].executor": "Run",
-    "Gradle.Modulo1_Projeto [:com.safescore.script.TreinamentoModelo.main()].executor": "Run",
     "Gradle.Modulo1_Projeto [:com.safescore.sql.DatabaseSeeder.main()].executor": "Run",
-    "Gradle.Modulo1_Projeto [:com.safescore.view.MainApp.main()].executor": "Run",
-    "Gradle.Modulo1_Projeto [dependencies].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "rodrigo/loading",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/rodrigo.nogueira/Desktop/SafeScoreV2/SafeScore/Modulo1_Projeto/src/main/resources/images",
-    "onboarding.tips.debug.path": "C:/Users/rodrigo.nogueira/Desktop/SafeScoreV2/SafeScore/Modulo1_Projeto/src/main/resources/src/Main.java",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.37126437",
+    "last_opened_file_path": "C:/Users/Rodrigo/Desktop/SafeScoreV2/SafeScore",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
     "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\rodrigo.nogueira\Desktop\SafeScoreV2\SafeScore\Modulo1_Projeto\src\main\resources\images" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\rodrigo.nogueira\Desktop\SafeScoreV2\SafeScore\Modulo1_Projeto\src\main\resources\com.safescore\view" />
-      <recent name="C:\Users\rodrigo.nogueira\Desktop\SafeScoreV2\SafeScore\Modulo1_Projeto\src\main\resources" />
-    </key>
-  </component>
   <component name="RunManager" selected="Application.Main">
     <configuration name="ArffExporter" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.safescore.script.ArffExporter" />
@@ -112,6 +83,32 @@
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.safescore.script.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ArffFixer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.safescore.script.ArffFixer" />
+      <module name="Modulo1_Projeto.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.safescore.script.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DatabaseSeeder" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.safescore.sql.DatabaseSeeder" />
+      <module name="Modulo1_Projeto.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.safescore.sql.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -132,32 +129,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MainApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.safescore.view.MainApp" />
-      <module name="Modulo1_Projeto.main" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.safescore.view.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TreinamentoModelo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.safescore.script.TreinamentoModelo" />
-      <module name="Modulo1_Projeto.main" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.safescore.script.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="com.safescore.script.DatabaseSeeder" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.safescore.script.DatabaseSeeder" />
       <module name="Modulo1_Projeto.main" />
@@ -171,54 +142,25 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="Modulo1_Projeto" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="Modulo1_Projeto" />
-      <option name="filePath" />
-      <method v="2" />
-    </configuration>
-    <list>
-      <item itemvalue="Application.ArffExporter" />
-      <item itemvalue="Application.TreinamentoModelo" />
-      <item itemvalue="Application.com.safescore.script.DatabaseSeeder" />
-      <item itemvalue="Application.Main" />
-      <item itemvalue="Application.MainApp" />
-    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main" />
-        <item itemvalue="Application.ArffExporter" />
-        <item itemvalue="Application.TreinamentoModelo" />
         <item itemvalue="Application.com.safescore.script.DatabaseSeeder" />
-        <item itemvalue="Application.MainApp" />
+        <item itemvalue="Application.ArffFixer" />
+        <item itemvalue="Application.ArffExporter" />
+        <item itemvalue="Application.DatabaseSeeder" />
+        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="756a22da-b579-402a-b1d6-0b7f7d4d5e31" name="Changes" comment="" />
-      <created>1742820938461</created>
+      <changelist id="66a73d9e-4357-47fd-a747-174667f1daa7" name="Changes" comment="" />
+      <created>1742780063264</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1742820938461</updated>
+      <updated>1742780063264</updated>
     </task>
     <servers />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Modulo1_Projeto/src/main/resources/src/Main.java</url>
-          <line>11</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

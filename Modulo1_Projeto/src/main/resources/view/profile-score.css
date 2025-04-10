@@ -72,3 +72,19 @@
 .table-view .decrement-button {
     -fx-background-color: transparent;
 }
+
+.button-voltar {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-padding: 5px;
+}
+
+.button-voltar:hover {
+    -fx-opacity: 0.8;
+}
+
+.button-voltar:pressed {
+    -fx-opacity: 0.6;
+}
+
+
