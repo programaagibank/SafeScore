@@ -44,10 +44,15 @@ public class WekaController {
       avaliacao.crossValidateModel(model, trainingData, folds, new Random(1));
 
       System.out.println("\n🔍 === Avaliação do Modelo (Regressão) ===");
-      System.out.printf("📈 Erro Médio Absoluto: %.2f\n", avaliacao.meanAbsoluteError());
-      System.out.printf("📉 Erro Quadrático Médio: %.2f\n", avaliacao.rootMeanSquaredError());
-      System.out.printf("🔗 Correlação com valor real: %.2f\n", avaliacao.correlationCoefficient());
-      System.out.println("\n📋 Resumo:");
+
+      // Exibição de métricas individuais
+      System.out.printf("📈 Erro Médio Absoluto (MAE): %.2f\n", avaliacao.meanAbsoluteError());
+      System.out.printf("📉 Erro Quadrático Médio (RMSE): %.2f\n", avaliacao.rootMeanSquaredError());
+      System.out.printf("🔗 Coeficiente de Correlação (R): %.2f\n", avaliacao.correlationCoefficient());
+      System.out.printf("🧮 Erro Relativo Absoluto (RAE): %.2f%%\n", avaliacao.relativeAbsoluteError());
+      System.out.printf("🧮 Erro Relativo Quadrático (RRSE): %.2f%%\n", avaliacao.rootRelativeSquaredError());
+      System.out.printf("🧩 Número total de instâncias: %d\n", (int) avaliacao.numInstances());
+      System.out.println("\n📋 Resumo Completo:");
       System.out.println(avaliacao.toSummaryString());
 
     } catch (Exception e) {
@@ -55,7 +60,6 @@ public class WekaController {
       e.printStackTrace();
     }
   }
-
 
   public Instance converterUsuarioParaInstance(Usuario usuario, Instances datasetTemplate) {
     double[] valores = new double[datasetTemplate.numAttributes()];
