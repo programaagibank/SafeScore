@@ -17,23 +17,19 @@ public class UsuarioScoreController {
 
       return new Usuario(
               cpf,
-              // Informações Pessoais
               getString(informacoesPessoais, 0),
               getInt(informacoesPessoais, 1),
               getString(informacoesPessoais, 2),
               getString(informacoesPessoais, 3),
 
-              // Estabilidade Endereço
               getInt(estabilidadeEndereco, 0),
               getInt(estabilidadeEndereco, 1),
               getString(estabilidadeEndereco, 2),
 
-              // Emprego/Vínculo
               getString(empregoVinculoTrabalhista, 0),
               getInt(empregoVinculoTrabalhista, 1),
               getDouble(empregoVinculoTrabalhista, 2),
 
-              // Histórico Financeiro
               getDouble(historicoFinanceiro, 0),
               getDouble(historicoFinanceiro, 1),
               getDouble(historicoFinanceiro, 2),

@@ -113,15 +113,12 @@ public class automaticCreditRisk {
   public static Map<String, String> extrairFatores(Object[] dados) {
     Map<String, String> resultado = new HashMap<>();
 
-    // Listas de candidatos por categoria
     List<String> positivos = new ArrayList<>();
     List<String> medios = new ArrayList<>();
     List<String> negativos = new ArrayList<>();
 
-    // Associar nomes dos campos para controle de duplicidade
     Set<String> usados = new HashSet<>();
 
-    // DADOS
     String rangeIdade = dados[0].toString();
     int tempoEndereco = Integer.parseInt(dados[4].toString());
     int inadimplenciaEstado = Integer.parseInt(dados[5].toString());
@@ -133,31 +130,25 @@ public class automaticCreditRisk {
     int mesesAtrasado = Integer.parseInt(dados[16].toString());
     double creditoRestante = Double.parseDouble(dados[17].toString());
 
-    // POSITIVOS
     if (saldo > 50000) positivos.add("Saldo alto");
     if (restanteMensal > 6000) positivos.add("Sobra mensal boa");
     if (mesesAtrasado == 0) positivos.add("Sem Atraso em creditos");
     if (tempoEndereco > 5) positivos.add("Estabilidade de Endereço");
 
-    // MÉDIOS
     if (valorParcela > salarioLiquido * 0.3) medios.add("Parcela compromete mais de 30%");
     if (inadimplenciaEstado > 40 && inadimplenciaEstado <= 50) medios.add("Estado com inadimplência média");
     if (tempoEndereco < 2) medios.add("Pouco tempo no endereço atual");
     if (mesesAtrasado == 1) medios.add("Indicativo de Atraso em credito");
 
-
-    // NEGATIVOS
     if (mesesAtrasado > 1) negativos.add("Atraso em pagamento");
     if (estaInadimplente) negativos.add("Inadimplente atualmente");
     if (creditoRestante > 10000) negativos.add("Muito crédito pendente");
     if (inadimplenciaEstado > 50) negativos.add("Estado com inadimplência alta");
 
-    // Mistura os candidatos
     Collections.shuffle(positivos);
     Collections.shuffle(medios);
     Collections.shuffle(negativos);
 
-    // Escolhe o primeiro de cada lista
     if (!positivos.isEmpty()) resultado.put("positivo", positivos.getFirst());
     if (!medios.isEmpty()) resultado.put("medio", medios.getFirst());
     if (!negativos.isEmpty()) resultado.put("negativo", negativos.getFirst());

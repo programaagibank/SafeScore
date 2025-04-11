@@ -22,34 +22,32 @@ public class Usuario {
     private int mesesAtrasado;
     private double valorCreditoRestanteTotal;
 
-    // Construtor
-        public Usuario(String cpf, String rangeIdade, int numeroDependentes, String estadoCivil, String escolaridade,
-                       int tempoEnderecoAnos, int nivelInadimplenciaEstado, String tipoContratoResidencia,
-                       String tipoEmprego, int tempoEmpregoAtual, double salarioLiquidoMensal,
-                       double montanteInvestimentos, double montanteBens, double saldo, double restanteMensal,
-                       boolean estaInadimplente, double valorParcelaAtiva, int mesesAtrasado, double valorCreditoRestanteTotal) {
-        this.cpf = cpf;
-        this.rangeIdade = rangeIdade;
-        this.numeroDependentes = numeroDependentes;
-        this.estadoCivil = estadoCivil;
-        this.escolaridade = escolaridade;
-        this.tempoEnderecoAnos = tempoEnderecoAnos;
-        this.nivelInadimplenciaEstado = nivelInadimplenciaEstado;
-        this.tipoContratoResidencia = tipoContratoResidencia;
-        this.tipoEmprego = tipoEmprego;
-        this.tempoEmpregoAtual = tempoEmpregoAtual;
-        this.salarioLiquidoMensal = salarioLiquidoMensal;
-        this.montanteInvestimentos = montanteInvestimentos;
-        this.montanteBens = montanteBens;
-        this.saldo = saldo;
-        this.restanteMensal = restanteMensal;
-        this.estaInadimplente = estaInadimplente;
-        this.valorParcelaAtiva = valorParcelaAtiva;
-        this.mesesAtrasado = mesesAtrasado;
-        this.valorCreditoRestanteTotal = valorCreditoRestanteTotal;
-    }
+    public Usuario(String cpf, String rangeIdade, int numeroDependentes, String estadoCivil, String escolaridade,
+                   int tempoEnderecoAnos, int nivelInadimplenciaEstado, String tipoContratoResidencia,
+                   String tipoEmprego, int tempoEmpregoAtual, double salarioLiquidoMensal,
+                   double montanteInvestimentos, double montanteBens, double saldo, double restanteMensal,
+                   boolean estaInadimplente, double valorParcelaAtiva, int mesesAtrasado, double valorCreditoRestanteTotal) {
+    this.cpf = cpf;
+    this.rangeIdade = rangeIdade;
+    this.numeroDependentes = numeroDependentes;
+    this.estadoCivil = estadoCivil;
+    this.escolaridade = escolaridade;
+    this.tempoEnderecoAnos = tempoEnderecoAnos;
+    this.nivelInadimplenciaEstado = nivelInadimplenciaEstado;
+    this.tipoContratoResidencia = tipoContratoResidencia;
+    this.tipoEmprego = tipoEmprego;
+    this.tempoEmpregoAtual = tempoEmpregoAtual;
+    this.salarioLiquidoMensal = salarioLiquidoMensal;
+    this.montanteInvestimentos = montanteInvestimentos;
+    this.montanteBens = montanteBens;
+    this.saldo = saldo;
+    this.restanteMensal = restanteMensal;
+    this.estaInadimplente = estaInadimplente;
+    this.valorParcelaAtiva = valorParcelaAtiva;
+    this.mesesAtrasado = mesesAtrasado;
+    this.valorCreditoRestanteTotal = valorCreditoRestanteTotal;
+}
 
-    // Getters e Setters
     public String getCpf() { return cpf; }
     public void setCpf(String cpf) { this.cpf = cpf; }
 

@@ -7,17 +7,14 @@ import java.net.URL;
 
 public class IndicadoresService {
 
-    // Método para buscar a Taxa Selic
     public static String getTaxaSelic() {
         return consultarApiBCB("https://api.bcb.gov.br/dados/serie/bcdata.sgs.432/dados/ultimos/1?formato=json", "Taxa Selic");
     }
 
-    // Método para buscar a Inflação (IPCA)
     public static String getInflacaoIPCA() {
         return consultarApiBCB("https://api.bcb.gov.br/dados/serie/bcdata.sgs.433/dados/ultimos/1?formato=json", "Inflação IPCA");
     }
 
-    // Método genérico para consultar a API do Banco Central
     private static String consultarApiBCB(String urlString, String nomeIndicador) {
         try {
             URL url = new URL(urlString);

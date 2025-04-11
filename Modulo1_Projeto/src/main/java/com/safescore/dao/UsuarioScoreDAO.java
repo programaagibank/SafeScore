@@ -92,7 +92,6 @@ public class UsuarioScoreDAO {
 
   public static Object[] historicoFinanceiro(String cpf) {
     try {
-      // Initialize default values
       double montanteInvestimentos = 0.0;
       double montanteBens = 0.0;
       double saldoBancario = 0.0;
@@ -102,7 +101,6 @@ public class UsuarioScoreDAO {
       int mesesAtrasado = 0;
       double valorCreditoRestanteTotal = 0.0;
 
-      // Handle patrimonio data
       try {
         Object[] patrimonio = Read.listarPatrimonios(cpf);
         if (patrimonio != null && patrimonio.length >= 4) {
@@ -114,7 +112,6 @@ public class UsuarioScoreDAO {
         System.err.println("⚠️ Erro ao ler patrimônios para CPF " + cpf + ": " + e.getMessage());
       }
 
-      // Handle transacoes data
       try {
         List<Object[]> transacoes = Read.listarTransacoes(cpf);
         if (transacoes != null && !transacoes.isEmpty()) {
@@ -129,28 +126,23 @@ public class UsuarioScoreDAO {
         System.err.println("⚠️ Erro ao ler transações para CPF " + cpf + ": " + e.getMessage());
       }
 
-      // Handle creditos data
       try {
         List<Object[]> creditos = Read.listarHistoricoCredito(cpf);
         if (creditos != null && !creditos.isEmpty()) {
           for (Object[] credito : creditos) {
             if (credito != null && credito.length >= 6) {
-              // Check if has been delinquent
               if (credito[4] != null && (boolean) credito[4]) {
                 jaFoiInadimplente = true;
               }
 
-              // Calculate active installments
               double valorCredito = credito[2] != null ? (double) credito[2] : 0.0;
               double valorRestante = credito[5] != null ? (double) credito[5] : 0.0;
 
               valorParcelasAtivas += valorRestante > 0 ? valorCredito : 0;
 
-              // Track max months late
               int mesesAtraso = credito[3] != null ? (int) credito[3] : 0;
               mesesAtrasado = Math.max(mesesAtrasado, mesesAtraso);
 
-              // Sum remaining credit
               valorCreditoRestanteTotal += valorRestante > 0 ? valorRestante : 0;
             }
           }
@@ -174,7 +166,6 @@ public class UsuarioScoreDAO {
       System.err.println("⚠️ Erro crítico ao processar histórico financeiro para CPF " + cpf);
       e.printStackTrace();
 
-      // Return safe default values in case of critical failure
       return new Object[]{
               0.0,  // montanteInvestimentos
               0.0,  // montanteBens

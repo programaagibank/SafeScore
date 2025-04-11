@@ -30,17 +30,17 @@
 .table-view .table-cell {
     -fx-padding: 8px;
 }
-/* Cabeçalho da tabela */
+
 .table-view .column-header-background {
-    -fx-background-color: #f4f6f8; /* Cor de fundo suave */
+    -fx-background-color: #f4f6f8;
     -fx-border-color: #e0e0e0;
     -fx-border-width: 0 0 1 0;
-    -fx-effect: none; /* Remove sombra */
+    -fx-effect: none;
     -fx-padding: 6px;
 }
 
 .table-view .column-header {
-    -fx-background-color: transparent; /* Remove qualquer overlay */
+    -fx-background-color: transparent;
 }
 
 .table-view .column-header .label {
@@ -51,8 +51,6 @@
     -fx-padding: 0 0 0 5px;
 }
 
-
-/* Scrollbar vertical e horizontal */
 .table-view .scroll-bar:vertical,
 .table-view .scroll-bar:horizontal {
     -fx-background-color: transparent;

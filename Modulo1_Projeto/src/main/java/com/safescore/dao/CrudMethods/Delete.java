@@ -20,7 +20,7 @@ public class Delete {
         String sqlDeleteVinculoTrabalhista = "DELETE FROM vinculoTrabalhista WHERE idVinculoTrabalhista IN (SELECT idVinculoTrabalhista FROM emprego WHERE cpf = ?)";
 
         try (Connection conn = DBconexao.connect()) {
-            conn.setAutoCommit(false); // Inicia uma transação para garantir que tudo seja deletado ou nada.
+            conn.setAutoCommit(false);
 
             try (PreparedStatement stmtContratos = conn.prepareStatement(sqlDeleteContratos);
                  PreparedStatement stmtEmpregos = conn.prepareStatement(sqlDeleteEmpregos);
@@ -34,7 +34,7 @@ public class Delete {
                  PreparedStatement stmtVinculoTrabalhista = conn.prepareStatement(sqlDeleteVinculoTrabalhista);
                  PreparedStatement stmtUsuario = conn.prepareStatement(sqlDeleteUsuario)) {
 
-                // Define o CPF como parâmetro para todas as queries
+
                 stmtContratos.setString(1, cpf);
                 stmtEmpregos.setString(1, cpf);
                 stmtAcessos.setString(1, cpf);
@@ -47,7 +47,6 @@ public class Delete {
                 stmtVinculoTrabalhista.setString(1, cpf);
                 stmtUsuario.setString(1, cpf);
 
-                // Executa as exclusões nas tabelas relacionadas
                 stmtContratos.executeUpdate();
                 stmtEmpregos.executeUpdate();
                 stmtAcessos.executeUpdate();
@@ -59,18 +58,17 @@ public class Delete {
                 stmtTipoContrato.executeUpdate();
                 stmtVinculoTrabalhista.executeUpdate();
 
-                // Agora deleta o usuário
                 int linhasAfetadas = stmtUsuario.executeUpdate();
 
                 if (linhasAfetadas > 0) {
                     System.out.println("Usuário e suas informações foram deletados com sucesso.");
-                    conn.commit(); // Confirma a transação
-                } else {
+                    conn.commit();
+
                     System.out.println("Nenhum usuário encontrado com esse CPF.");
-                    conn.rollback(); // Desfaz a transação se não encontrar o usuário
+                    conn.rollback();
                 }
             } catch (SQLException e) {
-                conn.rollback(); // Caso ocorra um erro, faz rollback para não deixar o banco em um estado inconsistente
+                conn.rollback();
                 e.printStackTrace();
             }
         } catch (SQLException e) {

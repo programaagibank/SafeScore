@@ -13,7 +13,6 @@ import weka.core.Instance;
 import javafx.animation.FadeTransition;
 import javafx.util.Duration;
 import javafx.scene.control.Label;
-
 import java.util.Map;
 
 public class MainController {
@@ -52,7 +51,7 @@ public class MainController {
             e.printStackTrace();
         }
         pesquisarButton.setDisable(true);
-        configurarCpfField(); // <-- chama a função para configurar o campo
+        configurarCpfField();
     }
 
     @FXML
@@ -66,9 +65,8 @@ public class MainController {
             return;
         }
 
-        loadingIndicator.setVisible(true); // <-- MOSTRAR o loading
+        loadingIndicator.setVisible(true);
 
-        // Executar a busca e carregamento de forma assíncrona para evitar travar a tela
         new Thread(() -> {
             try {
                 Usuario usuarioScore = UsuarioScoreController.definirUsuario(cpf);
@@ -82,7 +80,6 @@ public class MainController {
                 ProfileScoreController controller = loader.getController();
                 controller.setUsuarioData(cpf, score, dadosView, fatores);
 
-                // Executa troca de tela no JavaFX Application Thread
                 javafx.application.Platform.runLater(() -> {
                     try {
                         Stage currentStage = (Stage) cpfField.getScene().getWindow();
@@ -102,7 +99,7 @@ public class MainController {
 
             } catch (Exception e) {
                 javafx.application.Platform.runLater(() -> {
-                    loadingIndicator.setVisible(false); // Some o loading se erro
+                    loadingIndicator.setVisible(false);
                     aplicarEfeitoShake(cpfField);
                     mostrarMensagemAnimada("Usuário não encontrado.");
                 });
@@ -126,15 +123,12 @@ public class MainController {
 
     private void configurarCpfField() {
         cpfField.textProperty().addListener((observable, oldValue, newValue) -> {
-            // Remove tudo que não é número
             String somenteNumeros = newValue.replaceAll("[^\\d]", "");
 
-            // Limita a 11 dígitos
             if (somenteNumeros.length() > 11) {
                 somenteNumeros = somenteNumeros.substring(0, 11);
             }
 
-            // Aplica a máscara de CPF: 000.000.000-00
             StringBuilder cpfFormatado = new StringBuilder();
             for (int i = 0; i < somenteNumeros.length(); i++) {
                 cpfFormatado.append(somenteNumeros.charAt(i));
@@ -145,13 +139,11 @@ public class MainController {
                 }
             }
 
-            // Evita loop: só atualiza se mudar de verdade
             if (!cpfFormatado.toString().equals(newValue)) {
                 cpfField.setText(cpfFormatado.toString());
                 cpfField.positionCaret(cpfFormatado.length()); // Mantém o cursor no final
             }
 
-            // Verificação de borda
             if (somenteNumeros.length() == 11) {
                 cpfField.getStyleClass().removeAll("text-field-error", "text-field-success");
                 cpfField.getStyleClass().add("text-field-success");
@@ -167,18 +159,15 @@ public class MainController {
     private void aplicarEfeitoShake(TextField field) {
         field.getStyleClass().removeAll("text-field-success");
         field.getStyleClass().add("text-field-error");
-        // Cria o efeito de deslocamento lateral
         javafx.animation.TranslateTransition shake = new javafx.animation.TranslateTransition(Duration.millis(50), field);
         shake.setFromY(0);
         shake.setByY(10);
-        shake.setCycleCount(6); // quantas vezes vai para frente e para trás
+        shake.setCycleCount(6);
         shake.setAutoReverse(true);
         shake.setOnFinished(event -> {
-            // Depois do shake, volta para o estado original (borda normal de erro)
             field.setTranslateX(0);
         });
 
-        // Tocar beep (alerta sonoro)
         java.awt.Toolkit.getDefaultToolkit().beep();
         shake.play();
     }

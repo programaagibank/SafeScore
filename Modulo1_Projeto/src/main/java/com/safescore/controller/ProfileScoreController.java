@@ -61,7 +61,6 @@ public class ProfileScoreController {
     try {
       Stage currentStage = (Stage) voltarButton.getScene().getWindow();
 
-      // Animação de Fade-Out antes de trocar a tela
       javafx.animation.FadeTransition fadeOut = new javafx.animation.FadeTransition(Duration.millis(300), currentStage.getScene().getRoot());
       fadeOut.setFromValue(1.0);
       fadeOut.setToValue(0.0);
@@ -79,7 +78,6 @@ public class ProfileScoreController {
           stage.setResizable(false);
           stage.centerOnScreen();
 
-          // Animação de Fade-In na nova tela
           root.setOpacity(0);
           javafx.animation.FadeTransition fadeIn = new javafx.animation.FadeTransition(Duration.millis(300), root);
           fadeIn.setFromValue(0.0);
@@ -125,14 +123,13 @@ public class ProfileScoreController {
     pontoRuin.setText(fatores.getOrDefault("medio", "Nenhum fator médio identificado"));
     pontoMedio.setText(fatores.getOrDefault("negativo", "Nenhum fator negativo identificado"));
 
-    // Altera a cor de fundo do label baseado no score
     String corBackground;
     if (score < 400) {
-      corBackground = "#e74c3c"; // vermelho
+      corBackground = "#e74c3c";
     } else if (score < 600) {
-      corBackground = "#f1c40f"; // amarelo
+      corBackground = "#f1c40f";
     } else {
-      corBackground = "#2ecc71"; // verde
+      corBackground = "#2ecc71";
     }
 
     usuarioScore.setStyle(

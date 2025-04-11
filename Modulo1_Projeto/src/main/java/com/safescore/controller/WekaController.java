@@ -7,7 +7,6 @@ import weka.classifiers.trees.J48;
 import weka.core.*;
 import weka.core.converters.ConverterUtils.DataSource;
 import weka.classifiers.Evaluation;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -17,7 +16,6 @@ public class WekaController {
   private Classifier model;
   private Instances trainingData;
 
-  // Inicializa e treina o modelo
   public void treinarModelo(String caminho) throws Exception {
 
     DataSource source = new DataSource(caminho);
@@ -30,8 +28,6 @@ public class WekaController {
     System.out.println("[✓] Modelo treinado com sucesso!");
   }
 
-
-  // Extrai características do banco e retorna um vetor de atributos
   public void avaliarModelo() {
     try {
       if (trainingData == null || model == null) {
@@ -45,7 +41,6 @@ public class WekaController {
 
       System.out.println("\n🔍 === Avaliação do Modelo (Regressão) ===");
 
-      // Exibição de métricas individuais
       System.out.printf("📈 Erro Médio Absoluto (MAE): %.2f\n", avaliacao.meanAbsoluteError());
       System.out.printf("📉 Erro Quadrático Médio (RMSE): %.2f\n", avaliacao.rootMeanSquaredError());
       System.out.printf("🔗 Coeficiente de Correlação (R): %.2f\n", avaliacao.correlationCoefficient());
@@ -83,10 +78,8 @@ public class WekaController {
     valores[16] = usuario.getMesesAtrasado();
     valores[17] = usuario.getValorCreditoRestanteTotal();
 
-    // classe alvo (seraInadimplente) é desconhecida no momento da previsão
     valores[18] = Utils.missingValue();
 
-    // cria a instância e associa ao dataset
     Instance instancia = new DenseInstance(1.0, valores);
     instancia.setDataset(datasetTemplate); // importante!
 

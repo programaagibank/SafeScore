@@ -52,14 +52,12 @@ public class ArffExporter {
     writer.println("@attribute valorParcelaAtiva numeric");
     writer.println("@attribute mesesAtrasado numeric");
     writer.println("@attribute valorCreditoRestanteTotal numeric");
-//    writer.println("@attribute seraInadimplente {0,1}");
     writer.println("@attribute score numeric");
     writer.println();
     writer.println("@data");
   }
 
   public static void appendUserToArff(String caminhoArff, Usuario usuario) {
-//    boolean seraInadimplente = automaticCreditRisk.calcularRiscoCredito(usuario);
     int score = automaticCreditRisk.calcularScoreCredito(usuario);
 
     try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(caminhoArff, true)))) {
@@ -129,7 +127,6 @@ public class ArffExporter {
   }
 
   public static void main(String[] args) {
-    //Crie seu proprio arquivo, na hora de juntarmos nn teremos conflito 😎👍
     exportAllUsersToArff("src/main/sources/usuarios_angelo.arff");
   }
 }

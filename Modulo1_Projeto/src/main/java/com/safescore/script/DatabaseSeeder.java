@@ -16,7 +16,6 @@ public class DatabaseSeeder {
   static Faker faker = new Faker(Locale.of("pt", "BR"));
 
   public static void test() {
-    //VariaveisGerais
     LocalDate data = faker.date().birthday(18, 100).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
     int[] nivelAltoValores = {1000, 7000, 100000};
@@ -101,8 +100,6 @@ public class DatabaseSeeder {
 
     }
 
-
-
 //TODO: AJUSTAR O TIPO CONTRATO RESIDENCIA
 
     int anosNoBanco = faker.number().numberBetween(0, 3);
@@ -116,7 +113,6 @@ public class DatabaseSeeder {
     }
 
   }
-
 
   public static Object[] criarUsuarioAleatorio(LocalDate dataNascimento) {
     String cpf = faker.cpf().valid();

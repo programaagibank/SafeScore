@@ -16,7 +16,6 @@
             fx:controller="com.safescore.controller.MainController"
             stylesheets="@style.css">
 
-    <!-- Topo (logo) -->
     <top>
         <VBox alignment="TOP_CENTER" spacing="10.0">
             <padding>
@@ -30,12 +29,10 @@
         </VBox>
     </top>
 
-    <!-- Centro (formulário) -->
     <center>
         <VBox alignment="CENTER" spacing="15.0">
             <children>
                 <Region prefHeight="10.0" />
-                <!-- Agora o label fica dentro de um HBox alinhado à esquerda -->
                 <HBox alignment="CENTER_LEFT">
                     <children>
                         <Label styleClass="label" text="Digite o CPF:" textAlignment="LEFT" alignment="CENTER_LEFT" />

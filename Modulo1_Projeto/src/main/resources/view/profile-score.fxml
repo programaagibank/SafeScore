@@ -17,7 +17,6 @@
         <AnchorPane prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
             <children>
 
-                <!-- Credit Score Pane -->
                 <Pane layoutX="360.0" layoutY="6.0" prefHeight="383.0" prefWidth="272.0" style="-fx-background-color: #3c5191; -fx-background-radius: 4%;">
                     <children>
                         <Label fx:id="usuarioScore" layoutX="22.0" layoutY="55.0" prefHeight="140.0" prefWidth="231.0" style="-fx-background-color: #449432; -fx-background-radius: 4%; -fx-text-alignment: center; -fx-alignment: center;" text="681" textFill="WHITE">
@@ -68,7 +67,6 @@
                     </children>
                 </Pane>
 
-                <!-- Logo -->
                 <ImageView fitHeight="150.0" fitWidth="300.0" layoutX="40.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../img/logo-safescore.png" />
@@ -88,8 +86,6 @@
                     </graphic>
                 </Button>
 
-
-                <!-- Personal Info Labels -->
                 <Label fx:id="usuarioNome" layoutX="29.0" layoutY="160.0" text="Marcia Teresinha" textFill="#313131">
                     <font>
                         <Font name="System Bold" size="28.0" />
